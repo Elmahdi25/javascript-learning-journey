@@ -1,0 +1,37 @@
+* {
+  margin: 0;
+  font-family: monospace;
+}
+
+h1 {
+  margin: 15px;
+}
+
+button {
+  margin-left: 15px;
+  color: black;
+  background-color: rgb(26, 220, 71);
+  padding: 10px;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: box-shadow 0.15s;
+  font-weight: 500;
+}
+
+button:hover {
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+.show_quantity {
+  background-color: rgb(64, 145, 245);
+}
+
+.reset {
+  background-color: rgb(249, 82, 82);
+}
+
+.confirm {
+  background-color: rgb(226, 43, 223);
+  font-weight: bold;
+}

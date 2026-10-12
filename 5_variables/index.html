@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Variables</title>
+</head>
+
+<body>
+    <!--OPEN INSPECT in GOOGLE CHROME-->
+
+    <h1>Cart Quantity</h1>
+    <button class="show_quantity" onclick="
+    console.log(`Cart quantity: ${quantity}`);
+        
+    ">Show Quantity</button>
+    <button onclick="
+    quantity ++;
+    console.log(`Cart quantity: ${quantity}`);
+    
+    ">Add to cart</button>
+    <button onclick="
+    quantity += 2;
+    console.log(`Cart quantity: ${quantity}`);
+    ">+2</button>
+    <button onclick="
+    quantity += 3;
+    console.log(`Cart quantity: ${quantity}`);
+    ">+3</button>
+    <button class="reset" onclick="
+    console.log('Cart was reset, Feel free to choose again');
+     
+    quantity = 0; 
+    console.log(`Cart quantity: ${quantity}`);
+    ">Reset</button>
+
+    <button class="confirm" onclick="
+    if (quantity >= 2) {
+        alert(`Your ${quantity} Items are confirmed, Thank for your visit`)
+
+    } else if (quantity == 1) {
+        alert(`Your ${quantity} Item is confirmed, Thank for your visit`);
+
+    }else{
+        alert(`Please confirm at leat 1 Item`);
+
+    }
+    
+    quantity = 0
+    ">
+        Confirm
+    </button>
+    <script>
+        let quantity = 0;
+    </script>
+</body>
+
+</html>
