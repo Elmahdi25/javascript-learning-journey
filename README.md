@@ -32,6 +32,7 @@ This repository is a learning journal that will grow as I continue the course.
 | [02](#chapter-02--numbers--math) | Numbers & Math | Covered |
 | [03](#chapter-03--strings) | Strings | Covered |
 | [04](#chapter-04--html-css--javascript) | HTML, CSS & JavaScript | Covered |
+| [05](#chapter-05--variables) | Variables | Covered |
 
 Each chapter uses a stable two-digit number. Subsections use the same prefix, such as **03.1**, so new lessons can be added without renumbering earlier chapters.
 
@@ -547,6 +548,257 @@ I open the browser’s DevTools with **F12**, then select **Console** to see the
 <br>
 
 ![9](docs/9.gif)
+
+
+## Chapter 05 — Variables
+
+### 05.1 Saving and using values
+
+A **variable** is a named place to store a value so I can use it later.
+
+```js
+let cartQuantity = 0;
+console.log(cartQuantity); // 0
+```
+
+- `let` declares the variable.
+- `cartQuantity` is its name.
+- `=` assigns a value.
+- `0` is the initial value.
+
+Without quotes, JavaScript reads the variable's value. With quotes, it reads ordinary text:
+
+```js
+console.log(cartQuantity);   // 0
+console.log('cartQuantity'); // "cartQuantity"
+```
+
+### 05.2 Storing calculation results
+
+A variable can store a number, a string, or the result of an expression.
+
+```js
+const calculation = 2 + 2;
+const result = calculation + 2;
+const message = 'Hello';
+
+console.log(calculation); // 4
+console.log(result);      // 6
+console.log(message);     // "Hello"
+```
+
+The expression on the right is evaluated first, then its result is stored.
+
+A calculation is not automatically repeated when another variable changes:
+
+```js
+let price = 5;
+const total = price + 3; // Stores 8.
+
+price = 10;
+console.log(total); // Still 8.
+```
+
+### 05.3 Reassigning a variable
+
+**Reassignment** replaces a variable's current value.
+
+```js
+let quantity = 3;
+console.log(quantity); // 3
+
+quantity = 5;
+console.log(quantity); // 5
+```
+
+I declare the variable with `let` once. To update it, I use its name without repeating `let`.
+
+`=` means **assign**, not “check whether two values are equal.”
+
+### 05.4 Updating a value using itself
+
+```js
+let cartQuantity = 0;
+
+cartQuantity = cartQuantity + 1;
+console.log(cartQuantity); // 1
+```
+
+JavaScript:
+
+1. Reads the current value: `0`.
+2. Adds `1`.
+3. Stores the result back in `cartQuantity`.
+
+Simply calculating `cartQuantity + 1` does not update the variable. The result must be assigned back.
+
+### 05.5 Assignment shortcuts
+
+For a numeric variable, these shortcuts make updates shorter:
+
+| Shortcut | Equivalent |
+| --- | --- |
+| `quantity += 2;` | `quantity = quantity + 2;` |
+| `quantity -= 2;` | `quantity = quantity - 2;` |
+| `quantity *= 2;` | `quantity = quantity * 2;` |
+| `quantity /= 2;` | `quantity = quantity / 2;` |
+| `quantity++;` | Increase by 1 |
+| `quantity--;` | Decrease by 1 |
+
+For example:
+
+```js
+let quantity = 0;
+
+quantity++;    // 1
+quantity += 2; // 3
+quantity--;    // 2
+quantity = 0; // Reset to 0.
+```
+
+### 05.6 Choosing const, let, or var
+
+| Keyword | Can be reassigned? | When I use it |
+| --- | --- | --- |
+| `const` | No | Default choice when reassignment is unnecessary |
+| `let` | Yes | When the value needs to change |
+| `var` | Yes | Older code; prefer `const` or `let` in new code |
+
+```js
+const message = 'Welcome!';
+let cartQuantity = 0;
+
+cartQuantity += 1; // Works.
+// message = 'Hello'; // Would cause an error.
+```
+
+A `const` declaration needs an initial value.
+
+`const` prevents **reassignment**. Later, when working with objects and arrays, their contents can still change.
+
+### 05.7 Naming variables clearly
+
+I use **camelCase**: the first word starts lowercase, and each following word starts uppercase.
+
+```js
+let cartQuantity = 0;
+const totalPrice = 28.94;
+const welcomeMessage = 'Hello!';
+```
+
+Essential naming rules:
+
+- Names cannot start with a digit.
+- Names cannot contain spaces or hyphens.
+- Reserved keywords such as `let` cannot be used as names.
+- Letters, digits after the first character, `_`, and `$` are allowed.
+- Names are case-sensitive: `cartQuantity` and `cartquantity` are different.
+
+| Style | Example | Typical use |
+| --- | --- | --- |
+| camelCase | `cartQuantity` | JavaScript variables |
+| PascalCase | `CartQuantity` | JavaScript classes, covered later |
+| kebab-case | `cart-quantity` | File names and CSS classes; invalid as a variable name |
+| snake_case | `cart_quantity` | Valid in JavaScript, but not my default style |
+
+I choose names that explain their purpose without becoming unnecessarily long.
+
+### 05.8 Variables inside strings and typeof
+
+Template literals let me display a variable's current value:
+
+```js
+let cartQuantity = 3;
+
+console.log(`Cart quantity: ${cartQuantity}`);
+// "Cart quantity: 3"
+```
+
+`typeof` identifies the type of the value currently stored:
+
+```js
+const quantity = 3;
+const message = 'Hello';
+
+console.log(typeof quantity); // "number"
+console.log(typeof message);  // "string"
+```
+
+### 05.9 Mini project: cart quantity
+
+This example connects variables to button clicks. Results appear in the browser console.
+
+```html
+<button onclick="console.log(`Cart quantity: ${cartQuantity}`);">
+  Show quantity
+</button>
+
+<button onclick="
+  cartQuantity++;
+  console.log(`Cart quantity: ${cartQuantity}`);
+">
+  Add to cart
+</button>
+
+<button onclick="
+  cartQuantity += 2;
+  console.log(`Cart quantity: ${cartQuantity}`);
+">
+  +2
+</button>
+
+<button onclick="
+  cartQuantity += 3;
+  console.log(`Cart quantity: ${cartQuantity}`);
+">
+  +3
+</button>
+
+<button onclick="
+  cartQuantity = 0;
+  console.log('Cart was reset.');
+  console.log(`Cart quantity: ${cartQuantity}`);
+">
+  Reset cart
+</button>
+
+<script>
+  let cartQuantity = 0;
+</script>
+```
+
+The variable stores the current quantity between clicks. Each button reads or updates that same variable.
+
+Refreshing the page runs the script again and resets the quantity to `0`. Saving values between page visits is a separate topic.
+
+### 05.10 Semicolons
+
+A semicolon ends a JavaScript statement:
+
+```js
+const message = 'Hello';
+console.log(message);
+```
+
+JavaScript can automatically insert semicolons in some situations. I use them consistently in these exercises to make statement boundaries clear.
+
+### 05.11 Chapter recap
+
+- Variables store values for later use.
+- Expressions are evaluated before their results are assigned.
+- Reassignment updates an existing variable without declaring it again.
+- `+=`, `-=`, `*=`, `/=`, `++`, and `--` simplify updates.
+- I use `const` by default and `let` when reassignment is needed.
+- Clear camelCase names make code easier to understand.
+- Template literals display variable values; `typeof` checks their types.
+- Variables let interactive features remember their current state between actions.
+
+
+![11](docs/11.png)
+
+![10](docs/10.gif)
+
+
 
 
 ## Feedback and contributions

@@ -408,6 +408,11 @@ code {
 <td>HTML, CSS &amp; JavaScript</td>
 <td>Covered</td>
 </tr>
+<tr>
+<td><a href="#chapter-05--variables">05</a></td>
+<td>Variables</td>
+<td>Covered</td>
+</tr>
 </tbody>
 </table>
 <p>Each chapter uses a stable two-digit number. Subsections use the same prefix, such as <strong>03.1</strong>, so new lessons can be added without renumbering earlier chapters.</p>
@@ -918,6 +923,262 @@ JavaScript`</span>);
 <p><img src="docs/8.png" alt="8"></p>
 <br>
 <p><img src="docs/9.gif" alt="9"></p>
+<h2 id="chapter-05--variables">Chapter 05 — Variables</h2>
+<h3 id="051-saving-and-using-values">05.1 Saving and using values</h3>
+<p>A <strong>variable</strong> is a named place to store a value so I can use it later.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> cartQuantity = <span class="hljs-number">0</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(cartQuantity); <span class="hljs-comment">// 0</span>
+</div></code></pre>
+<ul>
+<li><code>let</code> declares the variable.</li>
+<li><code>cartQuantity</code> is its name.</li>
+<li><code>=</code> assigns a value.</li>
+<li><code>0</code> is the initial value.</li>
+</ul>
+<p>Without quotes, JavaScript reads the variable's value. With quotes, it reads ordinary text:</p>
+<pre class="hljs"><code><div><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(cartQuantity);   <span class="hljs-comment">// 0</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;cartQuantity&#x27;</span>); <span class="hljs-comment">// &quot;cartQuantity&quot;</span>
+</div></code></pre>
+<h3 id="052-storing-calculation-results">05.2 Storing calculation results</h3>
+<p>A variable can store a number, a string, or the result of an expression.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> calculation = <span class="hljs-number">2</span> + <span class="hljs-number">2</span>;
+<span class="hljs-keyword">const</span> result = calculation + <span class="hljs-number">2</span>;
+<span class="hljs-keyword">const</span> message = <span class="hljs-string">&#x27;Hello&#x27;</span>;
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(calculation); <span class="hljs-comment">// 4</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(result);      <span class="hljs-comment">// 6</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(message);     <span class="hljs-comment">// &quot;Hello&quot;</span>
+</div></code></pre>
+<p>The expression on the right is evaluated first, then its result is stored.</p>
+<p>A calculation is not automatically repeated when another variable changes:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> price = <span class="hljs-number">5</span>;
+<span class="hljs-keyword">const</span> total = price + <span class="hljs-number">3</span>; <span class="hljs-comment">// Stores 8.</span>
+
+price = <span class="hljs-number">10</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(total); <span class="hljs-comment">// Still 8.</span>
+</div></code></pre>
+<h3 id="053-reassigning-a-variable">05.3 Reassigning a variable</h3>
+<p><strong>Reassignment</strong> replaces a variable's current value.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> quantity = <span class="hljs-number">3</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(quantity); <span class="hljs-comment">// 3</span>
+
+quantity = <span class="hljs-number">5</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(quantity); <span class="hljs-comment">// 5</span>
+</div></code></pre>
+<p>I declare the variable with <code>let</code> once. To update it, I use its name without repeating <code>let</code>.</p>
+<p><code>=</code> means <strong>assign</strong>, not “check whether two values are equal.”</p>
+<h3 id="054-updating-a-value-using-itself">05.4 Updating a value using itself</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> cartQuantity = <span class="hljs-number">0</span>;
+
+cartQuantity = cartQuantity + <span class="hljs-number">1</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(cartQuantity); <span class="hljs-comment">// 1</span>
+</div></code></pre>
+<p>JavaScript:</p>
+<ol>
+<li>Reads the current value: <code>0</code>.</li>
+<li>Adds <code>1</code>.</li>
+<li>Stores the result back in <code>cartQuantity</code>.</li>
+</ol>
+<p>Simply calculating <code>cartQuantity + 1</code> does not update the variable. The result must be assigned back.</p>
+<h3 id="055-assignment-shortcuts">05.5 Assignment shortcuts</h3>
+<p>For a numeric variable, these shortcuts make updates shorter:</p>
+<table>
+<thead>
+<tr>
+<th>Shortcut</th>
+<th>Equivalent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>quantity += 2;</code></td>
+<td><code>quantity = quantity + 2;</code></td>
+</tr>
+<tr>
+<td><code>quantity -= 2;</code></td>
+<td><code>quantity = quantity - 2;</code></td>
+</tr>
+<tr>
+<td><code>quantity *= 2;</code></td>
+<td><code>quantity = quantity * 2;</code></td>
+</tr>
+<tr>
+<td><code>quantity /= 2;</code></td>
+<td><code>quantity = quantity / 2;</code></td>
+</tr>
+<tr>
+<td><code>quantity++;</code></td>
+<td>Increase by 1</td>
+</tr>
+<tr>
+<td><code>quantity--;</code></td>
+<td>Decrease by 1</td>
+</tr>
+</tbody>
+</table>
+<p>For example:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> quantity = <span class="hljs-number">0</span>;
+
+quantity++;    <span class="hljs-comment">// 1</span>
+quantity += <span class="hljs-number">2</span>; <span class="hljs-comment">// 3</span>
+quantity--;    <span class="hljs-comment">// 2</span>
+quantity = <span class="hljs-number">0</span>; <span class="hljs-comment">// Reset to 0.</span>
+</div></code></pre>
+<h3 id="056-choosing-const-let-or-var">05.6 Choosing const, let, or var</h3>
+<table>
+<thead>
+<tr>
+<th>Keyword</th>
+<th>Can be reassigned?</th>
+<th>When I use it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>const</code></td>
+<td>No</td>
+<td>Default choice when reassignment is unnecessary</td>
+</tr>
+<tr>
+<td><code>let</code></td>
+<td>Yes</td>
+<td>When the value needs to change</td>
+</tr>
+<tr>
+<td><code>var</code></td>
+<td>Yes</td>
+<td>Older code; prefer <code>const</code> or <code>let</code> in new code</td>
+</tr>
+</tbody>
+</table>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> message = <span class="hljs-string">&#x27;Welcome!&#x27;</span>;
+<span class="hljs-keyword">let</span> cartQuantity = <span class="hljs-number">0</span>;
+
+cartQuantity += <span class="hljs-number">1</span>; <span class="hljs-comment">// Works.</span>
+<span class="hljs-comment">// message = &#x27;Hello&#x27;; // Would cause an error.</span>
+</div></code></pre>
+<p>A <code>const</code> declaration needs an initial value.</p>
+<p><code>const</code> prevents <strong>reassignment</strong>. Later, when working with objects and arrays, their contents can still change.</p>
+<h3 id="057-naming-variables-clearly">05.7 Naming variables clearly</h3>
+<p>I use <strong>camelCase</strong>: the first word starts lowercase, and each following word starts uppercase.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> cartQuantity = <span class="hljs-number">0</span>;
+<span class="hljs-keyword">const</span> totalPrice = <span class="hljs-number">28.94</span>;
+<span class="hljs-keyword">const</span> welcomeMessage = <span class="hljs-string">&#x27;Hello!&#x27;</span>;
+</div></code></pre>
+<p>Essential naming rules:</p>
+<ul>
+<li>Names cannot start with a digit.</li>
+<li>Names cannot contain spaces or hyphens.</li>
+<li>Reserved keywords such as <code>let</code> cannot be used as names.</li>
+<li>Letters, digits after the first character, <code>_</code>, and <code>$</code> are allowed.</li>
+<li>Names are case-sensitive: <code>cartQuantity</code> and <code>cartquantity</code> are different.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Style</th>
+<th>Example</th>
+<th>Typical use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>camelCase</td>
+<td><code>cartQuantity</code></td>
+<td>JavaScript variables</td>
+</tr>
+<tr>
+<td>PascalCase</td>
+<td><code>CartQuantity</code></td>
+<td>JavaScript classes, covered later</td>
+</tr>
+<tr>
+<td>kebab-case</td>
+<td><code>cart-quantity</code></td>
+<td>File names and CSS classes; invalid as a variable name</td>
+</tr>
+<tr>
+<td>snake_case</td>
+<td><code>cart_quantity</code></td>
+<td>Valid in JavaScript, but not my default style</td>
+</tr>
+</tbody>
+</table>
+<p>I choose names that explain their purpose without becoming unnecessarily long.</p>
+<h3 id="058-variables-inside-strings-and-typeof">05.8 Variables inside strings and typeof</h3>
+<p>Template literals let me display a variable's current value:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> cartQuantity = <span class="hljs-number">3</span>;
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Cart quantity: <span class="hljs-subst">${cartQuantity}</span>`</span>);
+<span class="hljs-comment">// &quot;Cart quantity: 3&quot;</span>
+</div></code></pre>
+<p><code>typeof</code> identifies the type of the value currently stored:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> quantity = <span class="hljs-number">3</span>;
+<span class="hljs-keyword">const</span> message = <span class="hljs-string">&#x27;Hello&#x27;</span>;
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-keyword">typeof</span> quantity); <span class="hljs-comment">// &quot;number&quot;</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-keyword">typeof</span> message);  <span class="hljs-comment">// &quot;string&quot;</span>
+</div></code></pre>
+<h3 id="059-mini-project-cart-quantity">05.9 Mini project: cart quantity</h3>
+<p>This example connects variables to button clicks. Results appear in the browser console.</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;console.log(`Cart quantity: ${cartQuantity}`);&quot;</span>&gt;</span>
+  Show quantity
+<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;
+  cartQuantity++;
+  console.log(`Cart quantity: ${cartQuantity}`);
+&quot;</span>&gt;</span>
+  Add to cart
+<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;
+  cartQuantity += 2;
+  console.log(`Cart quantity: ${cartQuantity}`);
+&quot;</span>&gt;</span>
+  +2
+<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;
+  cartQuantity += 3;
+  console.log(`Cart quantity: ${cartQuantity}`);
+&quot;</span>&gt;</span>
+  +3
+<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;
+  cartQuantity = 0;
+  console.log(&#x27;Cart was reset.&#x27;);
+  console.log(`Cart quantity: ${cartQuantity}`);
+&quot;</span>&gt;</span>
+  Reset cart
+<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript">
+  <span class="hljs-keyword">let</span> cartQuantity = <span class="hljs-number">0</span>;
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</div></code></pre>
+<p>The variable stores the current quantity between clicks. Each button reads or updates that same variable.</p>
+<p>Refreshing the page runs the script again and resets the quantity to <code>0</code>. Saving values between page visits is a separate topic.</p>
+<h3 id="0510-semicolons">05.10 Semicolons</h3>
+<p>A semicolon ends a JavaScript statement:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> message = <span class="hljs-string">&#x27;Hello&#x27;</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(message);
+</div></code></pre>
+<p>JavaScript can automatically insert semicolons in some situations. I use them consistently in these exercises to make statement boundaries clear.</p>
+<h3 id="0511-chapter-recap">05.11 Chapter recap</h3>
+<ul>
+<li>Variables store values for later use.</li>
+<li>Expressions are evaluated before their results are assigned.</li>
+<li>Reassignment updates an existing variable without declaring it again.</li>
+<li><code>+=</code>, <code>-=</code>, <code>*=</code>, <code>/=</code>, <code>++</code>, and <code>--</code> simplify updates.</li>
+<li>I use <code>const</code> by default and <code>let</code> when reassignment is needed.</li>
+<li>Clear camelCase names make code easier to understand.</li>
+<li>Template literals display variable values; <code>typeof</code> checks their types.</li>
+<li>Variables let interactive features remember their current state between actions.</li>
+</ul>
+<p><img src="docs/11.png" alt="11"></p>
+<p><img src="docs/10.gif" alt="10"></p>
 <h2 id="feedback-and-contributions">Feedback and contributions</h2>
 <p>This is a personal learning repository. Suggestions, clear explanations, and feedback are welcome through GitHub issues. I want to understand improvements and practice applying them myself.</p>
 <h2 id="credits-and-license">Credits and license</h2>
