@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>README.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> or <div class="page"></div> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<div align="center">
+<h1 id="-javascript-learning-journey---part-1">⚡ JavaScript Learning Journey - PART-1</h1>
+<p><strong>Small exercises. New concepts. One step closer to building interactive websites.</strong></p>
+<p><img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&amp;logo=javascript&amp;logoColor=black" alt="JavaScript">
+<img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&amp;logo=html5&amp;logoColor=white" alt="HTML5">
+<img src="https://img.shields.io/badge/Status-Learning_in_progress-blue?style=for-the-badge" alt="Status"></p>
+<p>My practice repository as I learn JavaScript with <strong>SuperSimpleDev</strong>, following my HTML and CSS studies.</p>
+<p><a href="#what-i-learned">Explore the lessons</a> · <a href="#how-to-use">Try it yourself</a> · <a href="https://github.com/Elmahdi25">Meet the author</a></p>
+</div>
+<hr>
+<h2 id="about-this-repository">About this repository</h2>
+<p>This is where I practice JavaScript, experiment with examples, and document what I understand along the way. My goal is to move from writing simple instructions to building interactive websites and solving problems independently.</p>
+<p>This repository is a learning journal that will grow as I continue the course.</p>
+<h2 id="preview">Preview</h2>
+<p>From my first popup to calculating a shopping total:</p>
+<pre class="hljs"><code><div><span class="hljs-title function_">alert</span>(<span class="hljs-string">&#x27;Hello!&#x27;</span>);
+
+<span class="hljs-comment">// Calculate prices in cents, then convert to dollars.</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>((<span class="hljs-number">2095</span> + <span class="hljs-number">799</span>) / <span class="hljs-number">100</span>); <span class="hljs-comment">// 28.94</span>
+
+<span class="hljs-comment">// Round tax to the nearest cent before converting.</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">Math</span>.<span class="hljs-title function_">round</span>((<span class="hljs-number">2095</span> + <span class="hljs-number">799</span>) * <span class="hljs-number">0.1</span>) / <span class="hljs-number">100</span>); <span class="hljs-comment">// 2.89</span>
+</div></code></pre>
+<h2 id="tools-i-use">Tools I use</h2>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>JavaScript</td>
+<td>Instructions, calculations, and page changes</td>
+</tr>
+<tr>
+<td>HTML</td>
+<td>The page that loads my JavaScript</td>
+</tr>
+<tr>
+<td>VS Code</td>
+<td>Writing and organizing my files</td>
+</tr>
+<tr>
+<td>Browser DevTools</td>
+<td>Trying expressions and checking errors</td>
+</tr>
+<tr>
+<td>Git &amp; GitHub</td>
+<td>Tracking changes and sharing my progress</td>
+</tr>
+</tbody>
+</table>
+<h2 id="project-structure">Project structure</h2>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>index.html</code></td>
+<td>Entry page that loads the JavaScript file</td>
+</tr>
+<tr>
+<td><code>basics.js</code></td>
+<td>JavaScript practice and experiments</td>
+</tr>
+<tr>
+<td><code>README.md</code></td>
+<td>Learning notes and progress</td>
+</tr>
+</tbody>
+</table>
+<h2 id="how-to-use">How to use</h2>
+<ol>
+<li>Download the repository, or clone it using its GitHub <strong>Code</strong> button.</li>
+<li>Open the project folder in VS Code.</li>
+<li>Open <code>index.html</code> in a browser.</li>
+<li>Press <strong>F12</strong> and select <strong>Console</strong> to inspect output and errors.</li>
+<li>Edit <code>basics.js</code>, save it, and refresh the page to try your changes.</li>
+</ol>
+<p>No package installation is needed for these browser-based exercises.</p>
+<p>To load the script after the HTML has been parsed, use this inside <code>&lt;head&gt;</code>:</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;basics.js&quot;</span> <span class="hljs-attr">defer</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</div></code></pre>
+<h2 id="what-i-learned">What I learned</h2>
+<h3 id="1-javascript-basics">1. JavaScript basics</h3>
+<ul>
+<li><strong>Code</strong> is a set of instructions that a computer follows.</li>
+<li><strong>Running code</strong> means executing those instructions.</li>
+<li><strong>Syntax</strong> is the set of rules for writing valid code.</li>
+<li>JavaScript is <strong>case-sensitive</strong>: <code>innerHTML</code> and <code>innerHtml</code> are different names.</li>
+<li>The browser console lets me test small pieces of JavaScript immediately.</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-title function_">alert</span>(<span class="hljs-string">&#x27;Hello&#x27;</span>);
+<span class="hljs-title function_">alert</span>(<span class="hljs-string">&#x27;Good job!&#x27;</span>);
+</div></code></pre>
+<h3 id="2-changing-a-web-page">2. Changing a web page</h3>
+<pre class="hljs"><code><div><span class="hljs-variable language_">document</span>.<span class="hljs-property">body</span>.<span class="hljs-property">innerHTML</span> = <span class="hljs-string">&#x27;Hello&#x27;</span>;
+</div></code></pre>
+<p>This replaces the content inside the page's <code>&lt;body&gt;</code> with <code>Hello</code>. The body must exist before this instruction runs.</p>
+<h3 id="3-numbers-and-arithmetic">3. Numbers and arithmetic</h3>
+<pre class="hljs"><code><div><span class="hljs-number">2</span> + <span class="hljs-number">2</span>;  <span class="hljs-comment">// 4 — addition</span>
+<span class="hljs-number">10</span> - <span class="hljs-number">3</span>; <span class="hljs-comment">// 7 — subtraction</span>
+<span class="hljs-number">3</span> * <span class="hljs-number">4</span>;  <span class="hljs-comment">// 12 — multiplication</span>
+<span class="hljs-number">10</span> / <span class="hljs-number">2</span>; <span class="hljs-comment">// 5 — division</span>
+</div></code></pre>
+<p>I learned the difference between <strong>integers</strong>, such as <code>2</code>, and <strong>floating-point numbers</strong>, such as <code>2.8</code>.</p>
+<h3 id="4-order-of-operations">4. Order of operations</h3>
+<p>Multiplication and division happen before addition and subtraction. Parentheses let me control which calculation happens first.</p>
+<pre class="hljs"><code><div><span class="hljs-number">2</span> + <span class="hljs-number">3</span> * <span class="hljs-number">4</span>;   <span class="hljs-comment">// 14</span>
+(<span class="hljs-number">2</span> + <span class="hljs-number">3</span>) * <span class="hljs-number">4</span>; <span class="hljs-comment">// 20</span>
+</div></code></pre>
+<h3 id="5-calculating-money">5. Calculating money</h3>
+<p>Some decimal numbers cannot be represented exactly by the computer:</p>
+<pre class="hljs"><code><div><span class="hljs-number">0.1</span> + <span class="hljs-number">0.2</span>; <span class="hljs-comment">// 0.30000000000000004</span>
+</div></code></pre>
+<p>For these shopping exercises, I calculate prices using integer cents and convert to dollars at the end.</p>
+<pre class="hljs"><code><div>(<span class="hljs-number">2095</span> + <span class="hljs-number">799</span>) / <span class="hljs-number">100</span>; <span class="hljs-comment">// 28.94</span>
+</div></code></pre>
+<p>For a 10% tax, I round the calculated cents before converting:</p>
+<pre class="hljs"><code><div><span class="hljs-title class_">Math</span>.<span class="hljs-title function_">round</span>((<span class="hljs-number">2095</span> + <span class="hljs-number">799</span>) * <span class="hljs-number">0.1</span>) / <span class="hljs-number">100</span>; <span class="hljs-comment">// 2.89</span>
+</div></code></pre>
+<h3 id="6-rounding-numbers">6. Rounding numbers</h3>
+<p>The course introduced <code>Math.round()</code>. I also explored rounding up, rounding down, and removing the decimal part.</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Meaning</th>
+<th>Example</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Math.round()</code></td>
+<td>Round to the nearest integer</td>
+<td><code>Math.round(2.8)</code></td>
+<td><code>3</code></td>
+</tr>
+<tr>
+<td><code>Math.floor()</code></td>
+<td>Round down</td>
+<td><code>Math.floor(2.8)</code></td>
+<td><code>2</code></td>
+</tr>
+<tr>
+<td><code>Math.ceil()</code></td>
+<td>Round up</td>
+<td><code>Math.ceil(2.1)</code></td>
+<td><code>3</code></td>
+</tr>
+<tr>
+<td><code>Math.trunc()</code></td>
+<td>Remove the decimal part</td>
+<td><code>Math.trunc(2.8)</code></td>
+<td><code>2</code></td>
+</tr>
+</tbody>
+</table>
+<p>Negative numbers helped me understand the difference:</p>
+<pre class="hljs"><code><div><span class="hljs-title class_">Math</span>.<span class="hljs-title function_">floor</span>(-<span class="hljs-number">2.8</span>); <span class="hljs-comment">// -3</span>
+<span class="hljs-title class_">Math</span>.<span class="hljs-title function_">ceil</span>(-<span class="hljs-number">2.8</span>);  <span class="hljs-comment">// -2</span>
+<span class="hljs-title class_">Math</span>.<span class="hljs-title function_">trunc</span>(-<span class="hljs-number">2.8</span>); <span class="hljs-comment">// -2</span>
+</div></code></pre>
+<h3 id="7-learning-to-find-answers">7. Learning to find answers</h3>
+<p>I am practicing how to describe a problem clearly, search for the JavaScript feature I need, and test an example before using it. Understanding why the code works is part of the exercise.</p>
+<h2 id="problems-i-worked-through">Problems I worked through</h2>
+<table>
+<thead>
+<tr>
+<th>Problem</th>
+<th>What I learned</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Cannot set properties of null</code> when changing the body</td>
+<td>Run the script after the body exists, using <code>defer</code> or placing the script before <code>&lt;/body&gt;</code>.</td>
+</tr>
+<tr>
+<td><code>removeChild</code> reports that a node is not a child</td>
+<td>The node must be a direct child of that parent; replacing <code>innerHTML</code> can also remove existing nodes.</td>
+</tr>
+<tr>
+<td>Unexpected decimal results</td>
+<td>Use integer cents for the price calculations in these exercises.</td>
+</tr>
+<tr>
+<td>Choosing a rounding method</td>
+<td>Decide whether I need the nearest integer, rounding down, rounding up, or truncation.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="8-screenshots-for-exercices">8. Screenshots for exercices</h3>
+<p><img src="docs/1.png" alt="1"></p>
+<br>
+<p><img src="docs/2.png" alt="2"></p>
+<br>
+<p><img src="docs/3.png" alt="3"></p>
+<br>
+<p><img src="docs/4.png" alt="4"></p>
+<p>I am practicing how to describe a problem clearly, search for the JavaScript feature I need, and test an example before using it. Understanding why the code works is part of the exercise.</p>
+<h2 id="next-improvements">Next improvements</h2>
+<ul>
+<li><input type="checkbox" id="checkbox0"><label for="checkbox0">Continue with the next course lesson.</label></li>
+<li><input type="checkbox" id="checkbox1"><label for="checkbox1">Add more exercises and organize them by topic.</label></li>
+<li><input type="checkbox" id="checkbox2"><label for="checkbox2">Learn variables, conditions, functions, and loops.</label></li>
+<li><input type="checkbox" id="checkbox3"><label for="checkbox3">Practice targeting individual page elements.</label></li>
+<li><input type="checkbox" id="checkbox4"><label for="checkbox4">Build small interactive projects as I progress.</label></li>
+</ul>
+<h2 id="feedback-and-contributions">Feedback and contributions</h2>
+<p>This is a personal learning repository. Suggestions, clear explanations, and feedback are welcome through GitHub issues. I want to understand improvements and practice applying them myself.</p>
+<h2 id="credits-and-license">Credits and license</h2>
+<p>Learning journal by <strong><a href="https://github.com/Elmahdi25">Elmahdi Benabbou</a></strong>, following the JavaScript course by <strong>Simon from <a href="https://supersimple.dev">SuperSimple.dev</a></strong>.</p>
+<p>The examples in this README summarize my current learning progress. Credit for the course and its teaching material belongs to SuperSimpleDev.</p>
+<h2 id="support-the-project">Support the project</h2>
+<p>If this learning journey helps you, a ⭐ or useful feedback is appreciated. You can follow my progress on <strong><a href="https://github.com/Elmahdi25">GitHub</a></strong>.</p>
+<hr>
+<div align="center">
+<p><strong>Learning by doing — one JavaScript lesson at a time. ⚡</strong></p>
+</div>
+
+</body>
+</html>
