@@ -366,7 +366,7 @@ code {
     });
   </script>
 <div align="center">
-<h1 id="-javascript-learning-journey---part-1">⚡ JavaScript Learning Journey - PART-1</h1>
+<h1 id="-javascript-learning-journey">⚡ JavaScript Learning Journey</h1>
 <p><strong>Small exercises. New concepts. One step closer to building interactive websites.</strong></p>
 <p><img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&amp;logo=javascript&amp;logoColor=black" alt="JavaScript">
 <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&amp;logo=html5&amp;logoColor=white" alt="HTML5">
@@ -377,7 +377,36 @@ code {
 <hr>
 <h2 id="about-this-repository">About this repository</h2>
 <p>This is where I practice JavaScript, experiment with examples, and document what I understand along the way. My goal is to move from writing simple instructions to building interactive websites and solving problems independently.</p>
+<p><strong>Current progress:</strong> Chapters 01–03: JavaScript Basics, Numbers &amp; Math, and Strings (through approximately <strong>1:07:09</strong>).</p>
 <p>This repository is a learning journal that will grow as I continue the course.</p>
+<h2 id="chapter-index">Chapter index</h2>
+<table>
+<thead>
+<tr>
+<th>Chapter</th>
+<th>Topic</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#chapter-01--javascript-basics">01</a></td>
+<td>JavaScript Basics</td>
+<td>Covered</td>
+</tr>
+<tr>
+<td><a href="#chapter-02--numbers--math">02</a></td>
+<td>Numbers &amp; Math</td>
+<td>Covered</td>
+</tr>
+<tr>
+<td><a href="#chapter-03--strings">03</a></td>
+<td>Strings</td>
+<td>Covered</td>
+</tr>
+</tbody>
+</table>
+<p>Each chapter uses a stable two-digit number. Subsections use the same prefix, such as <strong>03.1</strong>, so new lessons can be added without renumbering earlier chapters.</p>
 <h2 id="preview">Preview</h2>
 <p>From my first popup to calculating a shopping total:</p>
 <pre class="hljs"><code><div><span class="hljs-title function_">alert</span>(<span class="hljs-string">&#x27;Hello!&#x27;</span>);
@@ -437,6 +466,10 @@ code {
 <td>JavaScript practice and experiments</td>
 </tr>
 <tr>
+<td><code>3_strings/exersices.js</code></td>
+<td>String exercises (current local chapter file)</td>
+</tr>
+<tr>
 <td><code>README.md</code></td>
 <td>Learning notes and progress</td>
 </tr>
@@ -448,14 +481,15 @@ code {
 <li>Open the project folder in VS Code.</li>
 <li>Open <code>index.html</code> in a browser.</li>
 <li>Press <strong>F12</strong> and select <strong>Console</strong> to inspect output and errors.</li>
-<li>Edit <code>basics.js</code>, save it, and refresh the page to try your changes.</li>
+<li>Edit the JavaScript file loaded by the page, save it, and refresh to try your changes.</li>
 </ol>
 <p>No package installation is needed for these browser-based exercises.</p>
 <p>To load the script after the HTML has been parsed, use this inside <code>&lt;head&gt;</code>:</p>
 <pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;basics.js&quot;</span> <span class="hljs-attr">defer</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
 </div></code></pre>
 <h2 id="what-i-learned">What I learned</h2>
-<h3 id="1-javascript-basics">1. JavaScript basics</h3>
+<h2 id="chapter-01--javascript-basics">Chapter 01 — JavaScript Basics</h2>
+<h3 id="011-code-syntax-and-the-console">01.1 Code, syntax, and the console</h3>
 <ul>
 <li><strong>Code</strong> is a set of instructions that a computer follows.</li>
 <li><strong>Running code</strong> means executing those instructions.</li>
@@ -466,23 +500,24 @@ code {
 <pre class="hljs"><code><div><span class="hljs-title function_">alert</span>(<span class="hljs-string">&#x27;Hello&#x27;</span>);
 <span class="hljs-title function_">alert</span>(<span class="hljs-string">&#x27;Good job!&#x27;</span>);
 </div></code></pre>
-<h3 id="2-changing-a-web-page">2. Changing a web page</h3>
+<h3 id="012-changing-a-web-page">01.2 Changing a web page</h3>
 <pre class="hljs"><code><div><span class="hljs-variable language_">document</span>.<span class="hljs-property">body</span>.<span class="hljs-property">innerHTML</span> = <span class="hljs-string">&#x27;Hello&#x27;</span>;
 </div></code></pre>
 <p>This replaces the content inside the page's <code>&lt;body&gt;</code> with <code>Hello</code>. The body must exist before this instruction runs.</p>
-<h3 id="3-numbers-and-arithmetic">3. Numbers and arithmetic</h3>
+<h2 id="chapter-02--numbers--math">Chapter 02 — Numbers &amp; Math</h2>
+<h3 id="021-numbers-and-arithmetic">02.1 Numbers and arithmetic</h3>
 <pre class="hljs"><code><div><span class="hljs-number">2</span> + <span class="hljs-number">2</span>;  <span class="hljs-comment">// 4 — addition</span>
 <span class="hljs-number">10</span> - <span class="hljs-number">3</span>; <span class="hljs-comment">// 7 — subtraction</span>
 <span class="hljs-number">3</span> * <span class="hljs-number">4</span>;  <span class="hljs-comment">// 12 — multiplication</span>
 <span class="hljs-number">10</span> / <span class="hljs-number">2</span>; <span class="hljs-comment">// 5 — division</span>
 </div></code></pre>
 <p>I learned the difference between <strong>integers</strong>, such as <code>2</code>, and <strong>floating-point numbers</strong>, such as <code>2.8</code>.</p>
-<h3 id="4-order-of-operations">4. Order of operations</h3>
+<h3 id="022-order-of-operations">02.2 Order of operations</h3>
 <p>Multiplication and division happen before addition and subtraction. Parentheses let me control which calculation happens first.</p>
 <pre class="hljs"><code><div><span class="hljs-number">2</span> + <span class="hljs-number">3</span> * <span class="hljs-number">4</span>;   <span class="hljs-comment">// 14</span>
 (<span class="hljs-number">2</span> + <span class="hljs-number">3</span>) * <span class="hljs-number">4</span>; <span class="hljs-comment">// 20</span>
 </div></code></pre>
-<h3 id="5-calculating-money">5. Calculating money</h3>
+<h3 id="023-calculating-money">02.3 Calculating money</h3>
 <p>Some decimal numbers cannot be represented exactly by the computer:</p>
 <pre class="hljs"><code><div><span class="hljs-number">0.1</span> + <span class="hljs-number">0.2</span>; <span class="hljs-comment">// 0.30000000000000004</span>
 </div></code></pre>
@@ -492,7 +527,7 @@ code {
 <p>For a 10% tax, I round the calculated cents before converting:</p>
 <pre class="hljs"><code><div><span class="hljs-title class_">Math</span>.<span class="hljs-title function_">round</span>((<span class="hljs-number">2095</span> + <span class="hljs-number">799</span>) * <span class="hljs-number">0.1</span>) / <span class="hljs-number">100</span>; <span class="hljs-comment">// 2.89</span>
 </div></code></pre>
-<h3 id="6-rounding-numbers">6. Rounding numbers</h3>
+<h3 id="024-rounding-numbers">02.4 Rounding numbers</h3>
 <p>The course introduced <code>Math.round()</code>. I also explored rounding up, rounding down, and removing the decimal part.</p>
 <table>
 <thead>
@@ -535,8 +570,131 @@ code {
 <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">ceil</span>(-<span class="hljs-number">2.8</span>);  <span class="hljs-comment">// -2</span>
 <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">trunc</span>(-<span class="hljs-number">2.8</span>); <span class="hljs-comment">// -2</span>
 </div></code></pre>
-<h3 id="7-learning-to-find-answers">7. Learning to find answers</h3>
+<h3 id="025-learning-to-find-answers">02.5 Learning to find answers</h3>
 <p>I am practicing how to describe a problem clearly, search for the JavaScript feature I need, and test an example before using it. Understanding why the code works is part of the exercise.</p>
+<h2 id="chapter-03--strings">Chapter 03 — Strings</h2>
+<h3 id="031-what-is-a-string">03.1 What is a string?</h3>
+<p>A <strong>string</strong> represents text. Numbers and strings are different value types.</p>
+<pre class="hljs"><code><div><span class="hljs-string">&#x27;Hello&#x27;</span>;
+<span class="hljs-string">&#x27;123&#x27;</span>; <span class="hljs-comment">// A string, even though it contains digits.</span>
+<span class="hljs-number">123</span>;   <span class="hljs-comment">// A number.</span>
+
+<span class="hljs-keyword">typeof</span> <span class="hljs-string">&#x27;Hello&#x27;</span>; <span class="hljs-comment">// &quot;string&quot;</span>
+<span class="hljs-keyword">typeof</span> <span class="hljs-number">123</span>;     <span class="hljs-comment">// &quot;number&quot;</span>
+</div></code></pre>
+<h3 id="032-concatenation">03.2 Concatenation</h3>
+<p><strong>Concatenation</strong> means joining strings with <code>+</code>. Spaces must be included explicitly.</p>
+<pre class="hljs"><code><div><span class="hljs-string">&#x27;some&#x27;</span> + <span class="hljs-string">&#x27;text&#x27;</span>;           <span class="hljs-comment">// &quot;sometext&quot;</span>
+<span class="hljs-string">&#x27;some&#x27;</span> + <span class="hljs-string">&#x27; &#x27;</span> + <span class="hljs-string">&#x27;text&#x27;</span>;     <span class="hljs-comment">// &quot;some text&quot;</span>
+<span class="hljs-string">&#x27;some&#x27;</span> + <span class="hljs-string">&#x27; more&#x27;</span> + <span class="hljs-string">&#x27; text&#x27;</span>; <span class="hljs-comment">// &quot;some more text&quot;</span>
+</div></code></pre>
+<h3 id="033-strings-numbers-and-type-coercion">03.3 Strings, numbers, and type coercion</h3>
+<p>With a string operand, <code>+</code> joins text instead of adding numbers. JavaScript automatically converts the other number to a string: this is <strong>type coercion</strong>.</p>
+<pre class="hljs"><code><div><span class="hljs-string">&#x27;Hello &#x27;</span> + <span class="hljs-number">3</span>; <span class="hljs-comment">// &quot;Hello 3&quot;</span>
+<span class="hljs-number">2</span> + <span class="hljs-number">3</span>;       <span class="hljs-comment">// 5</span>
+<span class="hljs-string">&#x27;2&#x27;</span> + <span class="hljs-number">3</span>;     <span class="hljs-comment">// &quot;23&quot;</span>
+</div></code></pre>
+<p>Addition and concatenation are evaluated from left to right:</p>
+<pre class="hljs"><code><div><span class="hljs-string">&#x27;$&#x27;</span> + <span class="hljs-number">5</span> + <span class="hljs-number">3</span>; <span class="hljs-comment">// &quot;$53&quot;</span>
+<span class="hljs-number">5</span> + <span class="hljs-number">3</span> + <span class="hljs-string">&#x27;$&#x27;</span>; <span class="hljs-comment">// &quot;8$&quot;</span>
+</div></code></pre>
+<h3 id="034-parentheses-before-concatenation">03.4 Parentheses before concatenation</h3>
+<p>Expressions involving strings follow the same order of operations. Expressions inside parentheses are evaluated first.</p>
+<pre class="hljs"><code><div><span class="hljs-string">&#x27;$&#x27;</span> + (<span class="hljs-number">5</span> + <span class="hljs-number">3</span>); <span class="hljs-comment">// &quot;$8&quot;</span>
+
+<span class="hljs-comment">// Calculate in cents, then join the result to the text.</span>
+<span class="hljs-string">&#x27;$&#x27;</span> + (<span class="hljs-number">2095</span> + <span class="hljs-number">799</span>) / <span class="hljs-number">100</span>; <span class="hljs-comment">// &quot;$28.94&quot;</span>
+
+<span class="hljs-string">&#x27;Items (&#x27;</span> + (<span class="hljs-number">1</span> + <span class="hljs-number">1</span>) + <span class="hljs-string">&#x27;): $&#x27;</span> + (<span class="hljs-number">2095</span> + <span class="hljs-number">799</span>) / <span class="hljs-number">100</span>;
+<span class="hljs-comment">// &quot;Items (2): $28.94&quot;</span>
+</div></code></pre>
+<h3 id="035-three-ways-to-write-strings">03.5 Three ways to write strings</h3>
+<pre class="hljs"><code><div><span class="hljs-string">&#x27;Hello&#x27;</span>; <span class="hljs-comment">// Single quotes.</span>
+<span class="hljs-string">&quot;Hello&quot;</span>; <span class="hljs-comment">// Double quotes.</span>
+<span class="hljs-string">`Hello`</span>; <span class="hljs-comment">// Backticks: a template literal (template string).</span>
+</div></code></pre>
+<p>I use single quotes for simple text, double quotes when convenient for an apostrophe, and backticks for interpolation or multiline text.</p>
+<pre class="hljs"><code><div><span class="hljs-string">&quot;I&#x27;m learning JavaScript&quot;</span>;
+</div></code></pre>
+<h3 id="036-escape-sequences">03.6 Escape sequences</h3>
+<p>A backslash introduces an <strong>escape sequence</strong>. It lets me include special characters without ending the string.</p>
+<table>
+<thead>
+<tr>
+<th>Sequence</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>\'</code></td>
+<td>Single quote</td>
+</tr>
+<tr>
+<td><code>\&quot;</code></td>
+<td>Double quote</td>
+</tr>
+<tr>
+<td><code>\n</code></td>
+<td>New line</td>
+</tr>
+<tr>
+<td><code>\\</code></td>
+<td>Backslash</td>
+</tr>
+</tbody>
+</table>
+<pre class="hljs"><code><div><span class="hljs-string">&#x27;I\&#x27;m learning JavaScript&#x27;</span>;
+<span class="hljs-string">&quot;He said: \&quot;Hello!\&quot;&quot;</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;Hello\nJavaScript&#x27;</span>);
+</div></code></pre>
+<p>The last example prints:</p>
+<pre class="hljs"><code><div>Hello
+JavaScript
+</div></code></pre>
+<h3 id="037-template-literals-and-interpolation">03.7 Template literals and interpolation</h3>
+<p>Backticks let me insert an expression directly into a string using <code>${...}</code>. This is <strong>interpolation</strong>.</p>
+<pre class="hljs"><code><div><span class="hljs-string">`Total cost: $<span class="hljs-subst">${<span class="hljs-number">5</span> + <span class="hljs-number">3</span>}</span>`</span>; <span class="hljs-comment">// &quot;Total cost: $8&quot;</span>
+
+<span class="hljs-string">`Items (<span class="hljs-subst">${<span class="hljs-number">1</span> + <span class="hljs-number">1</span>}</span>): $<span class="hljs-subst">${(<span class="hljs-number">2095</span> + <span class="hljs-number">799</span>) / <span class="hljs-number">100</span>}</span>`</span>;
+<span class="hljs-comment">// &quot;Items (2): $28.94&quot;</span>
+</div></code></pre>
+<p>In <code>$${5 + 3}</code>, the first <code>$</code> is ordinary text for the currency sign. The second <code>$</code> starts the <code>${...}</code> expression.</p>
+<h3 id="038-multiline-strings">03.8 Multiline strings</h3>
+<p>Template literals can contain actual line breaks:</p>
+<pre class="hljs"><code><div><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Hello
+JavaScript`</span>);
+</div></code></pre>
+<p>This prints two lines, just like <code>'Hello\nJavaScript'</code>.</p>
+<h3 id="039-displaying-strings-browser-vs-terminal">03.9 Displaying strings: browser vs terminal</h3>
+<p><code>alert()</code> creates a browser popup. It is not available in Node.js. <code>console.log()</code> works in both environments.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// Browser popup:</span>
+<span class="hljs-title function_">alert</span>(<span class="hljs-string">`Total cost: $<span class="hljs-subst">${<span class="hljs-number">5</span> + <span class="hljs-number">3</span>}</span>`</span>);
+
+<span class="hljs-comment">// Browser console or Node.js terminal:</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Total cost: $<span class="hljs-subst">${<span class="hljs-number">5</span> + <span class="hljs-number">3</span>}</span>`</span>);
+</div></code></pre>
+<h3 id="0310-extra-practice-two-decimal-places">03.10 Extra practice: two decimal places</h3>
+<p>I also explored <code>.toFixed(2)</code> to format prices. It rounds to two decimal places and returns a <strong>string</strong>.</p>
+<pre class="hljs"><code><div>(<span class="hljs-number">6.786</span>).<span class="hljs-title function_">toFixed</span>(<span class="hljs-number">2</span>); <span class="hljs-comment">// &quot;6.79&quot;</span>
+(<span class="hljs-number">2.8</span>).<span class="hljs-title function_">toFixed</span>(<span class="hljs-number">2</span>);   <span class="hljs-comment">// &quot;2.80&quot;</span>
+
+<span class="hljs-string">`Total cost: $<span class="hljs-subst">${((<span class="hljs-number">2095</span> + <span class="hljs-number">799</span>) / <span class="hljs-number">100</span>).toFixed(<span class="hljs-number">2</span>)}</span>`</span>;
+<span class="hljs-comment">// &quot;Total cost: $28.94&quot;</span>
+
+<span class="hljs-title class_">Number</span>((<span class="hljs-number">6.786</span>).<span class="hljs-title function_">toFixed</span>(<span class="hljs-number">2</span>)); <span class="hljs-comment">// 6.79 (a number)</span>
+</div></code></pre>
+<p>Floating-point representation can affect rounding at some boundaries. For these money exercises, I keep calculations in cents and format the result for display at the end.</p>
+<h3 id="0311-chapter-recap">03.11 Chapter recap</h3>
+<ul>
+<li>A string represents text; <code>typeof</code> identifies its type.</li>
+<li><code>+</code> can add numbers or concatenate strings.</li>
+<li>Parentheses help calculate numbers before joining them to text.</li>
+<li>Single quotes, double quotes, and backticks create strings.</li>
+<li>Escape sequences represent quotes, line breaks, and backslashes.</li>
+<li>Template literals support interpolation and multiline text.</li>
+<li><code>.toFixed(2)</code> returns rounded text with two decimal places.</li>
+</ul>
 <h2 id="problems-i-worked-through">Problems I worked through</h2>
 <table>
 <thead>
@@ -559,12 +717,32 @@ code {
 <td>Use integer cents for the price calculations in these exercises.</td>
 </tr>
 <tr>
+<td><code>alert is not defined</code> in the VS Code terminal</td>
+<td>Node.js does not provide browser popups; use <code>console.log()</code> or run the script in a browser.</td>
+</tr>
+<tr>
+<td>Getting <code>&quot;$53&quot;</code> instead of <code>&quot;$8&quot;</code></td>
+<td>Calculate with parentheses or interpolate the numeric expression in a template literal.</td>
+</tr>
+<tr>
+<td>An apostrophe ends a string early</td>
+<td>Use double quotes or escape the apostrophe with a backslash.</td>
+</tr>
+<tr>
 <td>Choosing a rounding method</td>
 <td>Decide whether I need the nearest integer, rounding down, rounding up, or truncation.</td>
 </tr>
 </tbody>
 </table>
-<h3 id="8-screenshots-for-exercices">8. Screenshots for exercices</h3>
+<h2 id="next-improvements">Next improvements</h2>
+<ul>
+<li><input type="checkbox" id="checkbox0"><label for="checkbox0">Add Chapter 04 after completing the next lesson.</label></li>
+<li><input type="checkbox" id="checkbox1"><label for="checkbox1">Add more exercises and organize them by topic.</label></li>
+<li><input type="checkbox" id="checkbox2"><label for="checkbox2">Learn variables, conditions, functions, and loops.</label></li>
+<li><input type="checkbox" id="checkbox3"><label for="checkbox3">Practice targeting individual page elements.</label></li>
+<li><input type="checkbox" id="checkbox4"><label for="checkbox4">Build small interactive projects as I progress.</label></li>
+</ul>
+<h3 id="screenshots-from-exercises">Screenshots from exercises</h3>
 <p><img src="docs/1.png" alt="1"></p>
 <br>
 <p><img src="docs/2.png" alt="2"></p>
@@ -572,20 +750,17 @@ code {
 <p><img src="docs/3.png" alt="3"></p>
 <br>
 <p><img src="docs/4.png" alt="4"></p>
-<p>I am practicing how to describe a problem clearly, search for the JavaScript feature I need, and test an example before using it. Understanding why the code works is part of the exercise.</p>
-<h2 id="next-improvements">Next improvements</h2>
-<ul>
-<li><input type="checkbox" id="checkbox0"><label for="checkbox0">Continue with the next course lesson.</label></li>
-<li><input type="checkbox" id="checkbox1"><label for="checkbox1">Add more exercises and organize them by topic.</label></li>
-<li><input type="checkbox" id="checkbox2"><label for="checkbox2">Learn variables, conditions, functions, and loops.</label></li>
-<li><input type="checkbox" id="checkbox3"><label for="checkbox3">Practice targeting individual page elements.</label></li>
-<li><input type="checkbox" id="checkbox4"><label for="checkbox4">Build small interactive projects as I progress.</label></li>
-</ul>
+<br>
+<p><img src="docs/5.png" alt="5"></p>
+<br>
+<p><img src="docs/6.png" alt="6"></p>
+<br>
+<p><img src="docs/7.png" alt="7"></p>
 <h2 id="feedback-and-contributions">Feedback and contributions</h2>
 <p>This is a personal learning repository. Suggestions, clear explanations, and feedback are welcome through GitHub issues. I want to understand improvements and practice applying them myself.</p>
 <h2 id="credits-and-license">Credits and license</h2>
 <p>Learning journal by <strong><a href="https://github.com/Elmahdi25">Elmahdi Benabbou</a></strong>, following the JavaScript course by <strong>Simon from <a href="https://supersimple.dev">SuperSimple.dev</a></strong>.</p>
-<p>The examples in this README summarize my current learning progress. Credit for the course and its teaching material belongs to SuperSimpleDev.</p>
+<p>The examples in this README summarize my current learning progress. Credit for the course and its teaching material belongs to SuperSimpleDev. No license is declared in this README.</p>
 <h2 id="support-the-project">Support the project</h2>
 <p>If this learning journey helps you, a ⭐ or useful feedback is appreciated. You can follow my progress on <strong><a href="https://github.com/Elmahdi25">GitHub</a></strong>.</p>
 <hr>
