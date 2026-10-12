@@ -20,7 +20,7 @@ My practice repository as I learn JavaScript with **SuperSimpleDev**, following 
 
 This is where I practice JavaScript, experiment with examples, and document what I understand along the way. My goal is to move from writing simple instructions to building interactive websites and solving problems independently.
 
-**Current progress:** Chapters 01–03: JavaScript Basics, Numbers & Math, and Strings (through approximately **1:07:09**).
+
 
 This repository is a learning journal that will grow as I continue the course.
 
@@ -31,6 +31,7 @@ This repository is a learning journal that will grow as I continue the course.
 | [01](#chapter-01--javascript-basics) | JavaScript Basics | Covered |
 | [02](#chapter-02--numbers--math) | Numbers & Math | Covered |
 | [03](#chapter-03--strings) | Strings | Covered |
+| [04](#chapter-04--html-css--javascript) | HTML, CSS & JavaScript | Covered |
 
 Each chapter uses a stable two-digit number. Subsections use the same prefix, such as **03.1**, so new lessons can be added without renumbering earlier chapters.
 
@@ -378,6 +379,174 @@ Floating-point representation can affect rounding at some boundaries. For these 
 ![7](docs/7.png)
 
 
+## Chapter 04 — HTML, CSS & JavaScript
+
+### 04.1 How the three languages work together
+
+| Language | Role |
+| --- | --- |
+| HTML | Creates the page structure and elements |
+| CSS | Controls their appearance and layout |
+| JavaScript | Adds behavior and interactivity |
+
+HTML connects the page to its CSS and JavaScript.
+
+### 04.2 JavaScript inside HTML
+
+The `<script>` element lets me write JavaScript directly inside an HTML file.
+
+```html
+<body>
+  <button>Click me</button>
+
+  <script>
+    alert('Hello!');
+  </script>
+</body>
+```
+
+This script runs when the browser reaches it while loading the page.
+
+Placing it just before `</body>` means the HTML elements above it already exist when the JavaScript runs.
+
+### 04.3 Using a separate JavaScript file
+
+I can keep the three languages in separate files:
+
+| File | Purpose |
+| --- | --- |
+| `index.html` | Page structure |
+| `style.css` | Styling |
+| `script.js` | JavaScript behavior |
+
+Inside the HTML `<head>`:
+
+```html
+<link rel="stylesheet" href="style.css">
+<script src="script.js" defer></script>
+```
+
+`defer` tells the browser to run the external script after it has parsed the HTML—after reading it and creating its elements.
+
+Alternatively, I can load the script just before `</body>`:
+
+```html
+<script src="script.js"></script>
+```
+
+### 04.4 Running code when a button is clicked
+
+The `onclick` attribute runs JavaScript when the user clicks an element.
+
+```html
+<button onclick="alert('Good job!');">
+  Click me
+</button>
+```
+
+The outer double quotes contain the JavaScript code. The inner single quotes contain the message.
+
+| Location | When the code runs |
+| --- | --- |
+| A regular `<script>` element | When the browser reaches the script |
+| An external script with `defer` | After the HTML has been parsed |
+| An `onclick` handler | Each time the element is clicked |
+
+### 04.5 Keeping the click behavior in script.js
+
+I also practiced attaching the click behavior from a separate JavaScript file.
+
+**HTML:**
+
+```html
+<button id="hello-button">Click me</button>
+```
+
+**JavaScript:**
+
+```js
+document.querySelector('#hello-button').onclick = function () {
+  alert('Good job!');
+};
+```
+
+- `querySelector('#hello-button')` finds the element with that ID.
+- `.onclick` assigns its click handler.
+- The function body runs when the button is clicked.
+
+The button must exist before this code runs, so I use `defer` or load the script at the bottom of the body.
+
+### 04.6 Comments
+
+Comments explain code to people. They are not executed.
+
+**JavaScript:**
+
+```js
+// A single-line comment.
+
+/*
+  A comment that
+  spans several lines.
+*/
+```
+
+**HTML:**
+
+```html
+<!-- An HTML comment. -->
+```
+
+**CSS:**
+
+```css
+/* A CSS comment. */
+```
+
+I can also temporarily disable a line by commenting it out:
+
+```js
+// alert('Hello!');
+```
+
+Comments remain part of the source file and appear on GitHub when committed and pushed.
+
+### 04.7 Displaying results with console.log()
+
+An expression inside a script is evaluated, but its result is not automatically displayed.
+
+```js
+2 + 2; // Calculated, but no visible output.
+```
+
+To inspect the result, I use `console.log()`:
+
+```js
+console.log(2 + 2);              // 4
+console.log('some' + ' text');   // "some text"
+console.log(`Total: $${5 + 3}`); // "Total: $8"
+```
+
+I open the browser’s DevTools with **F12**, then select **Console** to see the output.
+
+`console.log()` writes to the console; it does not add text to the web page.
+
+### 04.8 Chapter recap
+
+- HTML creates structure, CSS adds styling, and JavaScript adds behavior.
+- `<script>` runs JavaScript inside HTML.
+- `src` loads JavaScript from a separate file.
+- `defer` lets the HTML be parsed before an external script runs.
+- `onclick` runs code when an element is clicked.
+- Comments explain or temporarily disable code.
+- `console.log()` helps inspect results and debug code.
+
+
+![8](docs/8.png)
+
+<br>
+
+![9](docs/9.gif)
 
 
 ## Feedback and contributions

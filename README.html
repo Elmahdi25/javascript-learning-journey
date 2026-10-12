@@ -377,7 +377,6 @@ code {
 <hr>
 <h2 id="about-this-repository">About this repository</h2>
 <p>This is where I practice JavaScript, experiment with examples, and document what I understand along the way. My goal is to move from writing simple instructions to building interactive websites and solving problems independently.</p>
-<p><strong>Current progress:</strong> Chapters 01–03: JavaScript Basics, Numbers &amp; Math, and Strings (through approximately <strong>1:07:09</strong>).</p>
 <p>This repository is a learning journal that will grow as I continue the course.</p>
 <h2 id="chapter-index">Chapter index</h2>
 <table>
@@ -402,6 +401,11 @@ code {
 <tr>
 <td><a href="#chapter-03--strings">03</a></td>
 <td>Strings</td>
+<td>Covered</td>
+</tr>
+<tr>
+<td><a href="#chapter-04--html-css--javascript">04</a></td>
+<td>HTML, CSS &amp; JavaScript</td>
 <td>Covered</td>
 </tr>
 </tbody>
@@ -756,6 +760,164 @@ JavaScript`</span>);
 <p><img src="docs/6.png" alt="6"></p>
 <br>
 <p><img src="docs/7.png" alt="7"></p>
+<h2 id="chapter-04--html-css--javascript">Chapter 04 — HTML, CSS &amp; JavaScript</h2>
+<h3 id="041-how-the-three-languages-work-together">04.1 How the three languages work together</h3>
+<table>
+<thead>
+<tr>
+<th>Language</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HTML</td>
+<td>Creates the page structure and elements</td>
+</tr>
+<tr>
+<td>CSS</td>
+<td>Controls their appearance and layout</td>
+</tr>
+<tr>
+<td>JavaScript</td>
+<td>Adds behavior and interactivity</td>
+</tr>
+</tbody>
+</table>
+<p>HTML connects the page to its CSS and JavaScript.</p>
+<h3 id="042-javascript-inside-html">04.2 JavaScript inside HTML</h3>
+<p>The <code>&lt;script&gt;</code> element lets me write JavaScript directly inside an HTML file.</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">button</span>&gt;</span>Click me<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript">
+    <span class="hljs-title function_">alert</span>(<span class="hljs-string">&#x27;Hello!&#x27;</span>);
+  </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+</div></code></pre>
+<p>This script runs when the browser reaches it while loading the page.</p>
+<p>Placing it just before <code>&lt;/body&gt;</code> means the HTML elements above it already exist when the JavaScript runs.</p>
+<h3 id="043-using-a-separate-javascript-file">04.3 Using a separate JavaScript file</h3>
+<p>I can keep the three languages in separate files:</p>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>index.html</code></td>
+<td>Page structure</td>
+</tr>
+<tr>
+<td><code>style.css</code></td>
+<td>Styling</td>
+</tr>
+<tr>
+<td><code>script.js</code></td>
+<td>JavaScript behavior</td>
+</tr>
+</tbody>
+</table>
+<p>Inside the HTML <code>&lt;head&gt;</code>:</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;stylesheet&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;style.css&quot;</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;script.js&quot;</span> <span class="hljs-attr">defer</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</div></code></pre>
+<p><code>defer</code> tells the browser to run the external script after it has parsed the HTML—after reading it and creating its elements.</p>
+<p>Alternatively, I can load the script just before <code>&lt;/body&gt;</code>:</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;script.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</div></code></pre>
+<h3 id="044-running-code-when-a-button-is-clicked">04.4 Running code when a button is clicked</h3>
+<p>The <code>onclick</code> attribute runs JavaScript when the user clicks an element.</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;alert(&#x27;Good job!&#x27;);&quot;</span>&gt;</span>
+  Click me
+<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+</div></code></pre>
+<p>The outer double quotes contain the JavaScript code. The inner single quotes contain the message.</p>
+<table>
+<thead>
+<tr>
+<th>Location</th>
+<th>When the code runs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A regular <code>&lt;script&gt;</code> element</td>
+<td>When the browser reaches the script</td>
+</tr>
+<tr>
+<td>An external script with <code>defer</code></td>
+<td>After the HTML has been parsed</td>
+</tr>
+<tr>
+<td>An <code>onclick</code> handler</td>
+<td>Each time the element is clicked</td>
+</tr>
+</tbody>
+</table>
+<h3 id="045-keeping-the-click-behavior-in-scriptjs">04.5 Keeping the click behavior in script.js</h3>
+<p>I also practiced attaching the click behavior from a separate JavaScript file.</p>
+<p><strong>HTML:</strong></p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;hello-button&quot;</span>&gt;</span>Click me<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+</div></code></pre>
+<p><strong>JavaScript:</strong></p>
+<pre class="hljs"><code><div><span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#x27;#hello-button&#x27;</span>).<span class="hljs-property">onclick</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) {
+  <span class="hljs-title function_">alert</span>(<span class="hljs-string">&#x27;Good job!&#x27;</span>);
+};
+</div></code></pre>
+<ul>
+<li><code>querySelector('#hello-button')</code> finds the element with that ID.</li>
+<li><code>.onclick</code> assigns its click handler.</li>
+<li>The function body runs when the button is clicked.</li>
+</ul>
+<p>The button must exist before this code runs, so I use <code>defer</code> or load the script at the bottom of the body.</p>
+<h3 id="046-comments">04.6 Comments</h3>
+<p>Comments explain code to people. They are not executed.</p>
+<p><strong>JavaScript:</strong></p>
+<pre class="hljs"><code><div><span class="hljs-comment">// A single-line comment.</span>
+
+<span class="hljs-comment">/*
+  A comment that
+  spans several lines.
+*/</span>
+</div></code></pre>
+<p><strong>HTML:</strong></p>
+<pre class="hljs"><code><div><span class="hljs-comment">&lt;!-- An HTML comment. --&gt;</span>
+</div></code></pre>
+<p><strong>CSS:</strong></p>
+<pre class="hljs"><code><div><span class="hljs-comment">/* A CSS comment. */</span>
+</div></code></pre>
+<p>I can also temporarily disable a line by commenting it out:</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// alert(&#x27;Hello!&#x27;);</span>
+</div></code></pre>
+<p>Comments remain part of the source file and appear on GitHub when committed and pushed.</p>
+<h3 id="047-displaying-results-with-consolelog">04.7 Displaying results with console.log()</h3>
+<p>An expression inside a script is evaluated, but its result is not automatically displayed.</p>
+<pre class="hljs"><code><div><span class="hljs-number">2</span> + <span class="hljs-number">2</span>; <span class="hljs-comment">// Calculated, but no visible output.</span>
+</div></code></pre>
+<p>To inspect the result, I use <code>console.log()</code>:</p>
+<pre class="hljs"><code><div><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">2</span> + <span class="hljs-number">2</span>);              <span class="hljs-comment">// 4</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;some&#x27;</span> + <span class="hljs-string">&#x27; text&#x27;</span>);   <span class="hljs-comment">// &quot;some text&quot;</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Total: $<span class="hljs-subst">${<span class="hljs-number">5</span> + <span class="hljs-number">3</span>}</span>`</span>); <span class="hljs-comment">// &quot;Total: $8&quot;</span>
+</div></code></pre>
+<p>I open the browser’s DevTools with <strong>F12</strong>, then select <strong>Console</strong> to see the output.</p>
+<p><code>console.log()</code> writes to the console; it does not add text to the web page.</p>
+<h3 id="048-chapter-recap">04.8 Chapter recap</h3>
+<ul>
+<li>HTML creates structure, CSS adds styling, and JavaScript adds behavior.</li>
+<li><code>&lt;script&gt;</code> runs JavaScript inside HTML.</li>
+<li><code>src</code> loads JavaScript from a separate file.</li>
+<li><code>defer</code> lets the HTML be parsed before an external script runs.</li>
+<li><code>onclick</code> runs code when an element is clicked.</li>
+<li>Comments explain or temporarily disable code.</li>
+<li><code>console.log()</code> helps inspect results and debug code.</li>
+</ul>
+<p><img src="docs/8.png" alt="8"></p>
+<br>
+<p><img src="docs/9.gif" alt="9"></p>
 <h2 id="feedback-and-contributions">Feedback and contributions</h2>
 <p>This is a personal learning repository. Suggestions, clear explanations, and feedback are welcome through GitHub issues. I want to understand improvements and practice applying them myself.</p>
 <h2 id="credits-and-license">Credits and license</h2>
