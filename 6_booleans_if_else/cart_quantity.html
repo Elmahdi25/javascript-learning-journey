@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Variables</title>
+</head>
+
+<body>
+    <!--OPEN INSPECT in GOOGLE CHROME-->
+
+    <h1>Cart Quantity</h1>
+
+    <button class="show_quantity" onclick="
+
+    console.log(`Cart quantity: ${quantity}`);
+    ">Show Quantity</button>
+
+
+    <button onclick="
+    if (quantity+1<=10) {
+        quantity ++;    
+    } else {
+        alert('The cart is Full');
+    }
+    console.log(`Cart quantity: ${quantity}`);
+    ">Add to cart</button>
+
+
+    <button onclick="
+    if (quantity+2<=10) {
+        quantity+=2
+        console.log(`Cart quantity: ${quantity}`);
+    } else {
+        alert('The cart is Full');
+    }
+    ">+2</button>
+
+
+    <button onclick="
+    if (quantity + 3 <=10) {
+        quantity += 3;
+        console.log(`Cart quantity: ${quantity}`);
+    } else {
+        alert('The cart is Full');
+    }
+    ">+3</button>
+
+
+    <button onclick="
+
+    if (quantity + 4 <=10) {
+        quantity += 4;
+        console.log(`Cart quantity: ${quantity}`);
+    } else {
+        alert('The cart is Full');
+    }
+    ">+4</button>
+
+
+    <button onclick="
+
+     if (quantity + 5 <=10) {
+        quantity += 5;
+        console.log(`Cart quantity: ${quantity}`);
+    } else {
+        alert('The cart is Full');
+    }
+    ">+5</button>
+
+    <button class="remove" onclick="
+         
+         if (quantity - 1 >= 0) {
+            quantity --;
+            console.log(`Cart quantity: ${quantity}`);
+        } else {
+            alert('Not enough items in the cart');
+    }
+        ">Remove from cart</button>
+
+
+    <button class="remove" onclick="
+         
+         if (quantity - 2 >= 0) {
+            quantity -=2;
+            console.log(`Cart quantity: ${quantity}`);
+        } else {
+            alert('Not enough items in the cart');
+    }
+        ">-2</button>
+
+
+
+    <button class="remove" onclick="
+        if (quantity - 3 >= 0) {
+            quantity -=3;
+            console.log(`Cart quantity: ${quantity}`);
+        } else {
+            alert('Not enough items in the cart');
+    }
+        ">-3</button>
+
+    <button class="reset" onclick="
+
+    console.log('Cart was reset, Feel free to choose again');
+     
+    quantity = 0; 
+    console.log(`Cart quantity: ${quantity}`);
+    ">Reset</button>
+
+    <button class="confirm" onclick="
+
+    if (quantity >= 2) {
+        alert(`Your ${quantity} Items are confirmed, Thank for your visit`)
+
+    } else if (quantity === 1) {
+        alert(`Your ${quantity} Item is confirmed, Thank for your visit`);
+
+    }else{
+        alert(`Please confirm at leat 1 Item`);
+
+    }
+    
+    quantity = 0
+    ">
+        Confirm
+    </button>
+    <script>
+        let quantity = 0;
+    </script>
+</body>
+
+</html>
