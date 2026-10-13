@@ -1086,6 +1086,6 @@ If this learning journey helps you, a ⭐ or useful feedback is appreciated. You
 
 <div align="center">
 
-**Learning by doing — one JavaScript lesson at a time. ⚡**
+**From small exercises to interactive projects — growing my JavaScript skills step by step. ⚡**
 
 </div>
