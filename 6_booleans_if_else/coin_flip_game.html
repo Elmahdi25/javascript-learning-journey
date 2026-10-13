@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coin Flipe Game</title>
+</head>
+
+<body>
+    <h1>hey</h1>
+    <script>
+        console.log('hey');
+        let random_nbr = Math.random()
+        let result = '';
+        let guess = 'tails';
+        console.log(random_nbr);
+        /*Method-1*/
+        random_nbr < 0.5 ? result = 'heads' : result = 'tails';
+
+        console.log(result);
+
+        guess === result ? console.log('You Win!'): console.log('You Lose!');
+        
+        /*Methode-2}*/
+        if (random_nbr< 0.5) {
+            result = 'heads';
+        } else{ 
+            result='tails';
+        }
+        console.log(result);
+        
+        if (guess === result) {
+            console.log('You Win!');
+            
+        } else {
+            console.log('You Lose!');
+            
+        }
+    </script>
+</body>
+
+</html>
