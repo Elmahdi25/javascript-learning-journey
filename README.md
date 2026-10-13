@@ -34,6 +34,7 @@ This repository is a learning journal that will grow as I continue the course.
 | [04](#chapter-04--html-css--javascript) | HTML, CSS & JavaScript | Covered |
 | [05](#chapter-05--variables) | Variables | Covered |
 | [06](#chapter-06--booleans--if-statements) | Booleans & If Statements | Covered |
+| [07](#chapter-07--functions) | Functions | Covered |
 
 Each chapter uses a stable two-digit number. Subsections use the same prefix, such as **03.1**, so new lessons can be added without renumbering earlier chapters.
 
@@ -1067,6 +1068,203 @@ This can provide a **default value**. However, it replaces every falsy value, in
 - Ternary expressions choose values; short-circuit operators can guard code or provide defaults.
 
 ![12](docs/12.gif)
+
+## Chapter 07 — Functions
+
+### 07.1 Creating and calling a function
+
+A **function** groups code that I can reuse instead of repeating it.
+
+```js
+function showMessage() {
+  console.log('Hello!');
+  console.log(2 + 2);
+}
+
+showMessage();
+showMessage();
+```
+
+- `function` declares the function.
+- `showMessage` is its name.
+- `{ ... }` contains its body.
+- `showMessage()` calls it and runs the code inside.
+
+**Declaring a function does not run its body.** Each call runs it again.
+
+I use clear camelCase names that describe an action, such as `calculateTax` or `pickComputerMove`.
+
+### 07.2 Parameters and arguments: inputs
+
+**Parameters** are names declared in a function's parentheses. **Arguments** are the actual values supplied when calling it.
+
+```js
+function greet(name) {
+  console.log(`Hello, ${name}!`);
+}
+
+greet('Mehdi'); // "Hello, Mehdi!"
+greet('Sara');  // "Hello, Sara!"
+```
+
+Here, `name` is the parameter, and `'Mehdi'` is an argument.
+
+Parameters let the same function work with different inputs.
+
+A function can take multiple parameters, separated by commas. Arguments match them by position:
+
+```js
+function showTotal(price, quantity) {
+  console.log(price * quantity);
+}
+
+showTotal(5, 3); // 15
+```
+
+### 07.3 Return values: outputs
+
+`return` sends a value back to the code that called the function.
+
+```js
+function add(firstNumber, secondNumber) {
+  return firstNumber + secondNumber;
+}
+
+const total = add(5, 3);
+console.log(total); // 8
+```
+
+I can store the returned value, display it, or use it in another calculation.
+
+**`console.log()` displays a value; `return` makes a value available to the caller.** They are different operations.
+
+```js
+function displaySum(a, b) {
+  console.log(a + b);
+}
+
+const result = displaySum(5, 3);
+// Prints 8, but result contains undefined.
+```
+
+A function returns `undefined` if it finishes without returning a value.
+
+### 07.4 Return ends the current function call
+
+Once JavaScript reaches `return`, it exits that function call immediately.
+
+```js
+function checkQuantity(quantity) {
+  if (quantity > 10) {
+    return 'Cart is full.';
+  }
+
+  return 'Quantity accepted.';
+}
+
+console.log(checkQuantity(11)); // "Cart is full."
+console.log(checkQuantity(5));  // "Quantity accepted."
+```
+
+Code after a return is not executed on that path.
+
+### 07.5 Scope: where variables are accessible
+
+Parameters and variables declared inside a function are local to it.
+
+```js
+function createMessage() {
+  const message = 'Hello!';
+  return message;
+}
+
+const greeting = createMessage();
+console.log(greeting); // "Hello!"
+
+// console.log(message); // ReferenceError: message is not defined.
+```
+
+Returning `message` gives the caller its **value**. It does not make the local variable accessible outside the function.
+
+Variables declared with `let` or `const` inside an `if` block are also limited to that block.
+
+I prefer local variables and return values over unnecessary global variables. This reduces naming conflicts and makes functions easier to understand.
+
+### 07.6 Default parameters
+
+A default parameter provides a value when an argument is omitted or explicitly passed as `undefined`.
+
+```js
+function calculateTax(costInCents, taxRate = 0.1) {
+  return Math.round(costInCents * taxRate);
+}
+
+console.log(calculateTax(2000, 0.2)); // 400 cents
+console.log(calculateTax(5000));      // 500 cents
+```
+
+- The first call supplies a 20% rate.
+- The second uses the default 10% rate.
+
+Without a default, a missing argument gives the parameter the value `undefined`. Using it in multiplication can produce `NaN`.
+
+A supplied value of `0` is kept; it does not trigger the default.
+
+### 07.7 Reusing code in Rock Paper Scissors
+
+Instead of copying the computer-move logic into every button, I put it in one function:
+
+```js
+function pickComputerMove() {
+  const randomNumber = Math.random();
+
+  if (randomNumber < 1 / 3) {
+    return 'rock';
+  } else if (randomNumber < 2 / 3) {
+    return 'paper';
+  } else {
+    return 'scissors';
+  }
+}
+
+const computerMove = pickComputerMove();
+console.log(computerMove);
+```
+
+The game can use a second function, `playGame(playerMove)`, to handle different player choices:
+
+```html
+<button onclick="playGame('rock');">Rock</button>
+<button onclick="playGame('paper');">Paper</button>
+<button onclick="playGame('scissors');">Scissors</button>
+```
+
+Inside `playGame`, I can call `pickComputerMove()`, compare the moves, and display the result.
+
+**Functions can call other functions.** This lets me split a larger task into smaller, reusable steps.
+
+Removing duplication means I only need to update shared logic in one place.
+
+### 07.8 Tracing a function call
+
+To understand the execution order, I follow the code step by step:
+
+1. The caller supplies arguments.
+2. The function receives them through its parameters.
+3. Its body runs from top to bottom.
+4. `return` sends a result back and ends the call.
+5. The caller continues using that result.
+
+### 07.9 Chapter recap
+
+- Functions group reusable code and reduce duplication.
+- Declaring a function and calling it are separate actions.
+- Parameters receive inputs; arguments supply them.
+- `return` provides an output and ends the current call.
+- Logging a result does not return it.
+- Local variables and parameters stay inside their scope.
+- Default parameters handle omitted or undefined arguments.
+- Functions can call other functions to organize larger tasks.
 
 ## Feedback and contributions
 
