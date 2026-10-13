@@ -35,3 +35,7 @@ button:hover {
   background-color: rgb(226, 43, 223);
   font-weight: bold;
 }
+
+.remove{
+  background-color: red;
+}
