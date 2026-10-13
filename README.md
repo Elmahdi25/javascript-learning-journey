@@ -33,6 +33,7 @@ This repository is a learning journal that will grow as I continue the course.
 | [03](#chapter-03--strings) | Strings | Covered |
 | [04](#chapter-04--html-css--javascript) | HTML, CSS & JavaScript | Covered |
 | [05](#chapter-05--variables) | Variables | Covered |
+| [06](#chapter-06--booleans--if-statements) | Booleans & If Statements | Covered |
 
 Each chapter uses a stable two-digit number. Subsections use the same prefix, such as **03.1**, so new lessons can be added without renumbering earlier chapters.
 
@@ -799,7 +800,273 @@ JavaScript can automatically insert semicolons in some situations. I use them co
 ![10](docs/10.gif)
 
 
+## Chapter 06 — Booleans & If Statements
 
+### 06.1 Boolean values
+
+A **boolean** represents whether something is true or false. It has only two possible values: `true` and `false`.
+
+```js
+console.log(3 < 5); // true
+console.log(3 > 5); // false
+
+console.log(typeof true);   // "boolean"
+console.log(typeof 'true'); // "string"
+```
+
+Booleans do not use quotes. `'false'` is text, not the boolean `false`.
+
+### 06.2 Comparison operators
+
+Comparisons produce a boolean result.
+
+| Operator | Meaning | Example | Result |
+| --- | --- | --- | --- |
+| `>` | Greater than | `5 > 3` | `true` |
+| `<` | Less than | `5 < 3` | `false` |
+| `>=` | Greater than or equal to | `5 >= 5` | `true` |
+| `<=` | Less than or equal to | `3 <= 5` | `true` |
+| `===` | Strict equality | `5 === '5'` | `false` |
+| `!==` | Strict inequality | `5 !== '5'` | `true` |
+
+I use `===` and `!==` by default because they do not automatically convert different value types.
+
+```js
+5 == '5';  // true — type conversion.
+5 === '5'; // false — different types.
+```
+
+`=` assigns a value; `===` compares values.
+
+Arithmetic is evaluated before comparisons:
+
+```js
+3 > 5 - 5; // true, because 3 > 0.
+```
+
+### 06.3 Making decisions with if, else if, and else
+
+An `if` statement runs a block of code when its condition is truthy.
+
+```js
+const cartQuantity = 3;
+
+if (cartQuantity > 0) {
+  console.log('The cart has products.');
+} else {
+  console.log('The cart is empty.');
+}
+```
+
+`else if` adds another condition:
+
+```js
+const score = 75;
+
+if (score >= 80) {
+  console.log('Excellent!');
+} else if (score >= 50) {
+  console.log('Passed.');
+} else {
+  console.log('Try again.');
+}
+```
+
+Conditions are checked from top to bottom. **Only the first matching branch runs.** If none match, the optional `else` branch runs.
+
+I keep curly braces `{}` around each branch to make the code clear.
+
+### 06.4 Logical operators
+
+Logical operators combine or reverse conditions.
+
+| Operator | Meaning with boolean conditions |
+| --- | --- |
+| `&&` | AND: both conditions must be true |
+| `\|\|` | OR: at least one condition must be true |
+| `!` | NOT: reverses true and false |
+
+```js
+const quantity = 5;
+
+console.log(quantity > 0 && quantity <= 10); // true
+console.log(quantity === 0 || quantity === 5); // true
+console.log(!(quantity > 0)); // false
+```
+
+To check a range, I compare both boundaries explicitly:
+
+```js
+quantity > 0 && quantity <= 10;
+```
+
+I do not write `0 < quantity <= 10`, because JavaScript does not interpret it as a mathematical range.
+
+### 06.5 Random numbers and algorithms
+
+`Math.random()` produces a number greater than or equal to `0` and less than `1`.
+
+I can divide that range into three parts to choose a computer move:
+
+```js
+const randomNumber = Math.random();
+let computerMove = '';
+
+if (randomNumber < 1 / 3) {
+  computerMove = 'rock';
+} else if (randomNumber < 2 / 3) {
+  computerMove = 'paper';
+} else {
+  computerMove = 'scissors';
+}
+
+console.log(computerMove);
+```
+
+The second branch is reached only when the first condition is false, so it already excludes numbers below `1 / 3`.
+
+An **algorithm** is a sequence of steps for solving a problem. For Rock Paper Scissors:
+
+1. Read the player's move.
+2. Generate the computer's move.
+3. Compare the moves.
+4. Display the result.
+
+Example for a player who chooses rock:
+
+```js
+let result = '';
+
+if (computerMove === 'rock') {
+  result = 'Tie.';
+} else if (computerMove === 'paper') {
+  result = 'You lose.';
+} else {
+  result = 'You win.';
+}
+
+console.log(`You picked rock. Computer picked ${computerMove}. ${result}`);
+```
+
+### 06.6 Truthy and falsy values
+
+Conditions can use values other than booleans.
+
+- **Truthy** values behave like `true` in a condition.
+- **Falsy** values behave like `false` in a condition.
+
+Common falsy values are:
+
+| Value | Meaning |
+| --- | --- |
+| `false` | Boolean false |
+| `0` | Zero |
+| `''` | Empty string |
+| `NaN` | An invalid numeric result |
+| `undefined` | Often a value that has not been assigned |
+| `null` | Intentional absence of a value |
+
+`-0` and the BigInt value `0n` are also falsy.
+
+```js
+if (5) {
+  console.log('Runs.');
+}
+
+if (0) {
+  console.log('Does not run.');
+}
+```
+
+Nonempty strings and negative numbers are truthy:
+
+```js
+console.log(Boolean('false')); // true
+console.log(Boolean('0'));     // true
+console.log(Boolean(-1));      // true
+```
+
+For quantities, `cartQuantity > 0` expresses the intention more clearly than simply checking `cartQuantity`, especially if negative values are possible.
+
+### 06.7 NaN and undefined
+
+`NaN` means “Not a Number.” It can result from an invalid numeric calculation.
+
+```js
+console.log('Hello' / 5); // NaN
+```
+
+A variable declared with `let` without an initial value contains `undefined`:
+
+```js
+let message;
+console.log(message); // undefined
+```
+
+A `const` declaration must have an initial value.
+
+### 06.8 Ternary operator
+
+The **ternary operator** selects one of two values:
+
+```js
+condition ? valueIfTruthy : valueIfFalsy;
+```
+
+It is useful for assigning a simple conditional result:
+
+```js
+const quantity = 3;
+const message = quantity > 0 ? 'Cart has products.' : 'Cart is empty.';
+
+console.log(message); // "Cart has products."
+```
+
+For several actions or complicated conditions, an `if` statement is easier to read.
+
+### 06.9 Short-circuit evaluation
+
+`&&` and `||` can stop before evaluating their right-hand side.
+
+**AND (`&&`):** if the left value is falsy, it returns that value immediately. Otherwise, it evaluates and returns the right value.
+
+```js
+false && console.log('Hello'); // Does not print.
+true && console.log('Hello');  // Prints "Hello".
+
+console.log(0 && 'Hello'); // 0
+console.log(5 && 'Hello'); // "Hello"
+```
+
+This can act as a **guard** that allows code to run only when a condition is truthy.
+
+**OR (`||`):** if the left value is truthy, it returns that value immediately. Otherwise, it evaluates and returns the right value.
+
+```js
+const selectedCurrency = '';
+const currency = selectedCurrency || 'USD';
+
+console.log(currency); // "USD"
+console.log('EUR' || 'USD'); // "EUR"
+```
+
+This can provide a **default value**. However, it replaces every falsy value, including `0`, `false`, and `''`.
+
+`&&` and `||` return operand values—not necessarily booleans.
+
+### 06.10 Chapter recap
+
+- Booleans are `true` or `false`, without quotes.
+- Comparisons produce boolean results.
+- `===` and `!==` avoid automatic type conversion.
+- `if`, `else if`, and `else` select which branch runs.
+- `&&`, `||`, and `!` combine or reverse conditions.
+- `Math.random()` helps generate random choices.
+- Algorithms turn a problem into clear steps.
+- Truthy and falsy values determine how conditions behave.
+- Ternary expressions choose values; short-circuit operators can guard code or provide defaults.
+
+![12](docs/12.gif)
 
 ## Feedback and contributions
 
