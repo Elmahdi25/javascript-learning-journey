@@ -1,0 +1,11 @@
+* {
+  font-family: monospace;
+}
+
+button {
+  cursor: pointer;
+  font-size: 20px;
+  padding: 10px;
+  font-weight: bold;
+  border: none;
+}
