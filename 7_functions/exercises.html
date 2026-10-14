@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Functions_exercises</title>
+</head>
+
+<body>
+    <h1>Hey</h1>
+    <script>
+        /*------------EX1------------*/
+        /*Methode-1*/
+        console.log('EX1');
+        
+        console.log('Methode-1');
+
+        function greet1(name) {
+            if (!name) {
+                console.log('Hello budy');
+
+            } else {
+                console.log(`Hello ${name}`);
+            }
+
+        }
+
+        /*Methode-2*/
+        function greet(name = 'buddy') {
+            console.log(`Hello ${name}`);
+        }
+        greet1('Sara')
+        greet1('Jason')
+        greet1()
+        console.log('-----------------');
+        console.log('Methode-2');
+        greet('Elmahdi');
+        greet('Phill');
+        greet('Yamal');
+        greet();
+        console.log('-------------------------------------------------------------');
+
+
+        /*------------EX2------------*/
+        console.log('EX2');
+        function convert_to_Fahrenheit(celius) {
+            const fahrenheit = (celius * 9 / 5) + 32
+            return fahrenheit;
+        }
+        function convert_to_celius(fahrenheit) {
+            const celius = (fahrenheit - 32) * 5 / 9
+            return celius;
+        }
+
+        function convert_temparature(degrees, unit) {
+            if (unit === 'c') {
+                converted_degree = convert_to_Fahrenheit(degrees) + 'F';
+            } else {
+                converted_degree = convert_to_celius(degrees) + 'C';
+            }
+            return converted_degree;
+        }
+
+        console.log(convert_to_Fahrenheit(25));
+        console.log(convert_to_celius(86));
+        console.log(convert_temparature(25, 'c'));
+        console.log(convert_temparature(86, 'f'));
+        console.log('-------------------------------------------------------------');
+
+
+        /*------------EX3------------*/
+        console.log('EX3');
+        function convert_length(length, from, to) {
+            let converted_length = '';
+            if ((from !== 'km') && (from !== 'miles') && (from !== 'ft')) {
+                return `Invalid unit ${from}`
+            } else if ((to !== 'km') && (to !== 'miles') && (to !== 'ft')) {
+                return `Invalid unit ${to}`
+            } else if (from === to) {
+                converted_length = length + ' ' + from;
+            } else if (from === 'miles' && to === 'km') {
+                converted_length = length * 1.6 + ' Km'
+            } else if (from === 'km' && to === 'miles') {
+                converted_length = length * 0.625 + ' Miles'
+            } else if (from === 'miles' && to === 'ft') {
+                converted_length = length * 5280 + ' Ft'
+            } else if (from === 'km' && to === 'ft') {
+                converted_length = length * 3281 + ' Ft'
+            } else if (from === 'ft' && to === 'miles') {
+                converted_length = length * 0.000189394 + ' Mile'
+            } else if (from === 'ft' && to === 'km') {
+                converted_length = length * 0.0003048 + ' Km'
+            }
+            return converted_length;
+        }
+
+        
+        console.log(convert_length(1, 'km', 'ftd'));
+        console.log(convert_length(1, 'mhmh', 'mhmh'));
+        console.log(convert_length(5, 'km', 'miles'));
+        console.log(convert_length(5, 'km', 'ft'));
+        console.log(convert_length(5, 'miles', 'ft'));
+        console.log(convert_length(50, 'miles', 'miles'));
+        console.log(convert_length(32, 'km', 'miles'));
+        console.log(convert_length(50, 'miles', 'km'));
+        console.log(convert_length(80000, 'ft', 'miles'));
+    </script>
+</body>
+
+</html>
