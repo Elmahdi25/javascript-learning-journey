@@ -58,11 +58,11 @@
                 score.wins++;
             } else if (result === 'You Lose') {
                 score.loses++;
-            } else {
+            } else if (result === 'Tie') {
                 score.tie++;
             }
 
-            alert(`You picked ${play_move}, robot picked ${robot_move}. ${result},\n Wins: ${score.wins}, Loses: ${score.loses}, ties: ${score.tie}`)
+            alert(`You picked ${play_move}, robot picked ${robot_move}. ${result}.\nWins: ${score.wins}, Loses: ${score.loses}, Ties: ${score.tie}`)
         }
 
 
@@ -81,7 +81,7 @@
         }
 
         function show_score() {
-            alert(`Score:\n Wins: ${score.wins}, Loses: ${score.loses}, ties: ${score.tie}`)
+            alert(`Score:\nWins: ${score.wins}, Loses: ${score.loses}, Ties: ${score.tie}`)
         }
 
         function reset_score() {
