@@ -13,21 +13,20 @@
     <button onclick="play('rock')">Rock</button>
     <button onclick="play('paper')">Paper</button>
     <button onclick="play('scissors')">Scissors</button>
+    <button onclick="show_score()">Show Score</button>
+    <button onclick="reset_score()">Reset Score</button>
 
 
     <script>
         let score = {
-            wins: '',
-            loses: '',
-            tie: ''
+            wins: 0,
+            loses: 0,
+            tie: 0
         };
 
         function play(play_move) {
             const robot_move = pick_robot_move();
-
-
             let result = '';
-
 
             if (play_move === 'rock') {
                 if (robot_move === 'rock') {
@@ -63,10 +62,7 @@
                 score.tie++;
             }
 
-            console.log(`You picked ${play_move}, robot picked ${robot_move}. ${result},\n Wins: ${score.wins}, Loses: ${score.loses}, ties: ${score.tie}`)
-
-
-
+            alert(`You picked ${play_move}, robot picked ${robot_move}. ${result},\n Wins: ${score.wins}, Loses: ${score.loses}, ties: ${score.tie}`)
         }
 
 
@@ -81,13 +77,19 @@
             } else {
                 robot_move = 'scissors'
             }
-
             return robot_move;
         }
 
+        function show_score() {
+            alert(`Score:\n Wins: ${score.wins}, Loses: ${score.loses}, ties: ${score.tie}`)
+        }
 
-
-
+        function reset_score() {
+            score.wins =0;
+            score.loses =0;
+            score.tie =0;
+            show_score() ;
+        }
     </script>
 </body>
 
