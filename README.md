@@ -35,6 +35,7 @@ This repository is a learning journal that will grow as I continue the course.
 | [05](#chapter-05--variables) | Variables | Covered |
 | [06](#chapter-06--booleans--if-statements) | Booleans & If Statements | Covered |
 | [07](#chapter-07--functions) | Functions | Covered |
+| [08](#chapter-08--objects--json) | Objects & JSON | In progress |
 
 Each chapter uses a stable two-digit number. Subsections use the same prefix, such as **03.1**, so new lessons can be added without renumbering earlier chapters.
 
@@ -1265,6 +1266,265 @@ To understand the execution order, I follow the code step by step:
 - Local variables and parameters stay inside their scope.
 - Default parameters handle omitted or undefined arguments.
 - Functions can call other functions to organize larger tasks.
+
+## Chapter 08 — Objects & JSON
+
+### 08.1 Grouping related values
+
+An **object** groups related values into properties.
+
+```js
+const product = {
+  name: 'Socks',
+  price: 1090
+};
+```
+
+Each property has a **key** and a **value**, separated by a colon. Properties are separated by commas.
+
+Objects help organize related data instead of keeping everything in separate variables.
+
+### 08.2 Reading, updating, adding, and deleting properties
+
+**Dot notation** accesses a property by name:
+
+```js
+console.log(product.name);  // "Socks"
+console.log(product.price); // 1090
+```
+
+I can also modify the object:
+
+```js
+product.name = 'Cotton socks'; // Update.
+product.inStock = true;       // Add.
+
+delete product.inStock;       // Delete.
+
+console.log(product.inStock); // undefined.
+```
+
+Reading a property that does not exist returns `undefined`.
+
+**An object declared with `const` can still have its properties changed.** `const` prevents reassigning the variable to a different value.
+
+```js
+product.price = 1200; // Allowed.
+// product = {};     // Not allowed.
+```
+
+### 08.3 Bracket notation
+
+Bracket notation provides another way to access properties:
+
+```js
+console.log(product['name']); // "Cotton socks"
+```
+
+It is useful when a property contains characters that do not work with dot notation, or when its name comes from a variable.
+
+```js
+const delivery = {
+  'delivery-time': '1 day'
+};
+
+console.log(delivery['delivery-time']); // "1 day"
+
+const propertyName = 'price';
+console.log(product[propertyName]); // 1200.
+```
+
+`product[propertyName]` uses the value stored in the variable. `product.propertyName` looks for a property literally named `propertyName`.
+
+I use dot notation for simple, fixed property names and brackets when needed.
+
+### 08.4 Nested objects
+
+An object can contain another object.
+
+```js
+const shirt = {
+  name: 'Shirt',
+  rating: {
+    stars: 4.5,
+    count: 87
+  }
+};
+
+console.log(shirt.rating.stars); // 4.5
+console.log(shirt.rating.count); // 87
+```
+
+Nested objects help group related details within a larger object.
+
+### 08.5 Methods: functions inside objects
+
+A function stored as an object's property is called a **method**.
+
+```js
+const person = {
+  name: 'Mehdi',
+
+  sayHello: function () {
+    console.log('Hello!');
+  }
+};
+
+person.sayHello();
+```
+
+- `person` is the object.
+- `sayHello` is its method.
+- `person.sayHello()` calls that method.
+
+Methods I have already used include:
+
+| Object | Method | Purpose |
+| --- | --- | --- |
+| `console` | `log()` | Display information |
+| `Math` | `random()` | Generate a random number |
+| `JSON` | `stringify()` | Convert a supported value to JSON text |
+| `JSON` | `parse()` | Convert JSON text to a JavaScript value |
+
+`Math` and `JSON` are built into JavaScript. `console` is provided by the runtime, such as a browser or Node.js.
+
+### 08.6 Using an object to track a score
+
+Related counters can be stored in one object:
+
+```js
+const score = {
+  wins: 0,
+  losses: 0,
+  ties: 0
+};
+```
+
+After determining a round's result:
+
+```js
+if (result === 'You Win') {
+  score.wins++;
+} else if (result === 'You Lose') {
+  score.losses++;
+} else if (result === 'Tie') {
+  score.ties++;
+}
+```
+
+I create the score outside the function that runs each round so it is not reset on every call.
+
+Displaying and resetting the score have separate responsibilities:
+
+```js
+function showScore() {
+  console.log(
+    `Wins: ${score.wins}, Losses: ${score.losses}, Ties: ${score.ties}`
+  );
+}
+
+function resetScore() {
+  score.wins = 0;
+  score.losses = 0;
+  score.ties = 0;
+
+  showScore();
+}
+```
+
+Showing or resetting the score should not play a round or increase a counter.
+
+The object keeps its values between rounds while the page stays open. Keeping them after a refresh requires storage, which is a separate topic.
+
+### 08.7 What is JSON?
+
+**JSON** stands for **JavaScript Object Notation**. It is a text format used to exchange and store data.
+
+Its syntax resembles JavaScript object syntax, but the rules are stricter.
+
+| JavaScript object syntax | JSON syntax |
+| --- | --- |
+| Property names can often be unquoted | Property names must use double quotes |
+| Strings can use single or double quotes | Strings must use double quotes |
+| Properties can contain functions | Functions are not supported |
+| Trailing commas are allowed | Trailing commas are not allowed |
+
+Example JSON:
+
+```json
+{
+  "name": "Socks",
+  "price": 1090,
+  "inStock": true
+}
+```
+
+JSON is understood by many programming languages, making it useful for sharing data between different systems.
+
+### 08.8 JSON.stringify(): from a value to JSON text
+
+`JSON.stringify()` converts a supported JavaScript value into a JSON string.
+
+```js
+const product = {
+  name: 'Socks',
+  price: 1090
+};
+
+const jsonString = JSON.stringify(product);
+
+console.log(jsonString);
+// '{"name":"Socks","price":1090}'
+
+console.log(typeof jsonString); // "string"
+```
+
+The result is **text**, not an object with directly accessible product properties.
+
+Function-valued properties are omitted when an object is converted:
+
+```js
+const example = {
+  message: 'Hello',
+  greet: function () {
+    console.log('Hello');
+  }
+};
+
+console.log(JSON.stringify(example));
+// '{"message":"Hello"}'
+```
+
+### 08.9 JSON.parse(): from JSON text to a value
+
+`JSON.parse()` reads valid JSON text and produces the corresponding JavaScript value.
+
+```js
+const jsonString = '{"name":"Socks","price":1090}';
+const restoredProduct = JSON.parse(jsonString);
+
+console.log(restoredProduct.name);  // "Socks"
+console.log(restoredProduct.price); // 1090
+```
+
+| Method | Input | Output |
+| --- | --- | --- |
+| `JSON.stringify()` | A supported JavaScript value | JSON string |
+| `JSON.parse()` | Valid JSON string | JavaScript value |
+
+`JSON.parse()` throws an error if the text is not valid JSON. Functions omitted during stringification are not restored.
+
+### 08.10 Chapter recap
+
+- Objects group related values into properties.
+- Dot and bracket notation access those properties.
+- Properties can be updated, added, or deleted.
+- `const` allows property changes while preventing variable reassignment.
+- Nested objects organize related groups of data.
+- A function stored in an object is called a method.
+- A score object keeps related counters together.
+- JSON is a text format for exchanging and storing data.
+- `JSON.stringify()` creates JSON text; `JSON.parse()` reads it.
 
 ## Feedback and contributions
 

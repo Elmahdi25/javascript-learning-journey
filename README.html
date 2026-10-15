@@ -423,6 +423,11 @@ code {
 <td>Functions</td>
 <td>Covered</td>
 </tr>
+<tr>
+<td><a href="#chapter-08--objects--json">08</a></td>
+<td>Objects &amp; JSON</td>
+<td>In progress</td>
+</tr>
 </tbody>
 </table>
 <p>Each chapter uses a stable two-digit number. Subsections use the same prefix, such as <strong>03.1</strong>, so new lessons can be added without renumbering earlier chapters.</p>
@@ -1603,6 +1608,254 @@ cartQuantity += <span class="hljs-number">1</span>; <span class="hljs-comment">/
 <li>Local variables and parameters stay inside their scope.</li>
 <li>Default parameters handle omitted or undefined arguments.</li>
 <li>Functions can call other functions to organize larger tasks.</li>
+</ul>
+<h2 id="chapter-08--objects--json">Chapter 08 — Objects &amp; JSON</h2>
+<h3 id="081-grouping-related-values">08.1 Grouping related values</h3>
+<p>An <strong>object</strong> groups related values into properties.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> product = {
+  <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;Socks&#x27;</span>,
+  <span class="hljs-attr">price</span>: <span class="hljs-number">1090</span>
+};
+</div></code></pre>
+<p>Each property has a <strong>key</strong> and a <strong>value</strong>, separated by a colon. Properties are separated by commas.</p>
+<p>Objects help organize related data instead of keeping everything in separate variables.</p>
+<h3 id="082-reading-updating-adding-and-deleting-properties">08.2 Reading, updating, adding, and deleting properties</h3>
+<p><strong>Dot notation</strong> accesses a property by name:</p>
+<pre class="hljs"><code><div><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(product.<span class="hljs-property">name</span>);  <span class="hljs-comment">// &quot;Socks&quot;</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(product.<span class="hljs-property">price</span>); <span class="hljs-comment">// 1090</span>
+</div></code></pre>
+<p>I can also modify the object:</p>
+<pre class="hljs"><code><div>product.<span class="hljs-property">name</span> = <span class="hljs-string">&#x27;Cotton socks&#x27;</span>; <span class="hljs-comment">// Update.</span>
+product.<span class="hljs-property">inStock</span> = <span class="hljs-literal">true</span>;       <span class="hljs-comment">// Add.</span>
+
+<span class="hljs-keyword">delete</span> product.<span class="hljs-property">inStock</span>;       <span class="hljs-comment">// Delete.</span>
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(product.<span class="hljs-property">inStock</span>); <span class="hljs-comment">// undefined.</span>
+</div></code></pre>
+<p>Reading a property that does not exist returns <code>undefined</code>.</p>
+<p><strong>An object declared with <code>const</code> can still have its properties changed.</strong> <code>const</code> prevents reassigning the variable to a different value.</p>
+<pre class="hljs"><code><div>product.<span class="hljs-property">price</span> = <span class="hljs-number">1200</span>; <span class="hljs-comment">// Allowed.</span>
+<span class="hljs-comment">// product = {};     // Not allowed.</span>
+</div></code></pre>
+<h3 id="083-bracket-notation">08.3 Bracket notation</h3>
+<p>Bracket notation provides another way to access properties:</p>
+<pre class="hljs"><code><div><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(product[<span class="hljs-string">&#x27;name&#x27;</span>]); <span class="hljs-comment">// &quot;Cotton socks&quot;</span>
+</div></code></pre>
+<p>It is useful when a property contains characters that do not work with dot notation, or when its name comes from a variable.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> delivery = {
+  <span class="hljs-string">&#x27;delivery-time&#x27;</span>: <span class="hljs-string">&#x27;1 day&#x27;</span>
+};
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(delivery[<span class="hljs-string">&#x27;delivery-time&#x27;</span>]); <span class="hljs-comment">// &quot;1 day&quot;</span>
+
+<span class="hljs-keyword">const</span> propertyName = <span class="hljs-string">&#x27;price&#x27;</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(product[propertyName]); <span class="hljs-comment">// 1200.</span>
+</div></code></pre>
+<p><code>product[propertyName]</code> uses the value stored in the variable. <code>product.propertyName</code> looks for a property literally named <code>propertyName</code>.</p>
+<p>I use dot notation for simple, fixed property names and brackets when needed.</p>
+<h3 id="084-nested-objects">08.4 Nested objects</h3>
+<p>An object can contain another object.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> shirt = {
+  <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;Shirt&#x27;</span>,
+  <span class="hljs-attr">rating</span>: {
+    <span class="hljs-attr">stars</span>: <span class="hljs-number">4.5</span>,
+    <span class="hljs-attr">count</span>: <span class="hljs-number">87</span>
+  }
+};
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(shirt.<span class="hljs-property">rating</span>.<span class="hljs-property">stars</span>); <span class="hljs-comment">// 4.5</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(shirt.<span class="hljs-property">rating</span>.<span class="hljs-property">count</span>); <span class="hljs-comment">// 87</span>
+</div></code></pre>
+<p>Nested objects help group related details within a larger object.</p>
+<h3 id="085-methods-functions-inside-objects">08.5 Methods: functions inside objects</h3>
+<p>A function stored as an object's property is called a <strong>method</strong>.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> person = {
+  <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;Mehdi&#x27;</span>,
+
+  <span class="hljs-attr">sayHello</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;Hello!&#x27;</span>);
+  }
+};
+
+person.<span class="hljs-title function_">sayHello</span>();
+</div></code></pre>
+<ul>
+<li><code>person</code> is the object.</li>
+<li><code>sayHello</code> is its method.</li>
+<li><code>person.sayHello()</code> calls that method.</li>
+</ul>
+<p>Methods I have already used include:</p>
+<table>
+<thead>
+<tr>
+<th>Object</th>
+<th>Method</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>console</code></td>
+<td><code>log()</code></td>
+<td>Display information</td>
+</tr>
+<tr>
+<td><code>Math</code></td>
+<td><code>random()</code></td>
+<td>Generate a random number</td>
+</tr>
+<tr>
+<td><code>JSON</code></td>
+<td><code>stringify()</code></td>
+<td>Convert a supported value to JSON text</td>
+</tr>
+<tr>
+<td><code>JSON</code></td>
+<td><code>parse()</code></td>
+<td>Convert JSON text to a JavaScript value</td>
+</tr>
+</tbody>
+</table>
+<p><code>Math</code> and <code>JSON</code> are built into JavaScript. <code>console</code> is provided by the runtime, such as a browser or Node.js.</p>
+<h3 id="086-using-an-object-to-track-a-score">08.6 Using an object to track a score</h3>
+<p>Related counters can be stored in one object:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> score = {
+  <span class="hljs-attr">wins</span>: <span class="hljs-number">0</span>,
+  <span class="hljs-attr">losses</span>: <span class="hljs-number">0</span>,
+  <span class="hljs-attr">ties</span>: <span class="hljs-number">0</span>
+};
+</div></code></pre>
+<p>After determining a round's result:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">if</span> (result === <span class="hljs-string">&#x27;You Win&#x27;</span>) {
+  score.<span class="hljs-property">wins</span>++;
+} <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (result === <span class="hljs-string">&#x27;You Lose&#x27;</span>) {
+  score.<span class="hljs-property">losses</span>++;
+} <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (result === <span class="hljs-string">&#x27;Tie&#x27;</span>) {
+  score.<span class="hljs-property">ties</span>++;
+}
+</div></code></pre>
+<p>I create the score outside the function that runs each round so it is not reset on every call.</p>
+<p>Displaying and resetting the score have separate responsibilities:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">function</span> <span class="hljs-title function_">showScore</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(
+    <span class="hljs-string">`Wins: <span class="hljs-subst">${score.wins}</span>, Losses: <span class="hljs-subst">${score.losses}</span>, Ties: <span class="hljs-subst">${score.ties}</span>`</span>
+  );
+}
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">resetScore</span>(<span class="hljs-params"></span>) {
+  score.<span class="hljs-property">wins</span> = <span class="hljs-number">0</span>;
+  score.<span class="hljs-property">losses</span> = <span class="hljs-number">0</span>;
+  score.<span class="hljs-property">ties</span> = <span class="hljs-number">0</span>;
+
+  <span class="hljs-title function_">showScore</span>();
+}
+</div></code></pre>
+<p>Showing or resetting the score should not play a round or increase a counter.</p>
+<p>The object keeps its values between rounds while the page stays open. Keeping them after a refresh requires storage, which is a separate topic.</p>
+<h3 id="087-what-is-json">08.7 What is JSON?</h3>
+<p><strong>JSON</strong> stands for <strong>JavaScript Object Notation</strong>. It is a text format used to exchange and store data.</p>
+<p>Its syntax resembles JavaScript object syntax, but the rules are stricter.</p>
+<table>
+<thead>
+<tr>
+<th>JavaScript object syntax</th>
+<th>JSON syntax</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Property names can often be unquoted</td>
+<td>Property names must use double quotes</td>
+</tr>
+<tr>
+<td>Strings can use single or double quotes</td>
+<td>Strings must use double quotes</td>
+</tr>
+<tr>
+<td>Properties can contain functions</td>
+<td>Functions are not supported</td>
+</tr>
+<tr>
+<td>Trailing commas are allowed</td>
+<td>Trailing commas are not allowed</td>
+</tr>
+</tbody>
+</table>
+<p>Example JSON:</p>
+<pre class="hljs"><code><div><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Socks&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;price&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1090</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;inStock&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span>
+<span class="hljs-punctuation">}</span>
+</div></code></pre>
+<p>JSON is understood by many programming languages, making it useful for sharing data between different systems.</p>
+<h3 id="088-jsonstringify-from-a-value-to-json-text">08.8 JSON.stringify(): from a value to JSON text</h3>
+<p><code>JSON.stringify()</code> converts a supported JavaScript value into a JSON string.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> product = {
+  <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;Socks&#x27;</span>,
+  <span class="hljs-attr">price</span>: <span class="hljs-number">1090</span>
+};
+
+<span class="hljs-keyword">const</span> jsonString = <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(product);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(jsonString);
+<span class="hljs-comment">// &#x27;{&quot;name&quot;:&quot;Socks&quot;,&quot;price&quot;:1090}&#x27;</span>
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-keyword">typeof</span> jsonString); <span class="hljs-comment">// &quot;string&quot;</span>
+</div></code></pre>
+<p>The result is <strong>text</strong>, not an object with directly accessible product properties.</p>
+<p>Function-valued properties are omitted when an object is converted:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> example = {
+  <span class="hljs-attr">message</span>: <span class="hljs-string">&#x27;Hello&#x27;</span>,
+  <span class="hljs-attr">greet</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;Hello&#x27;</span>);
+  }
+};
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(example));
+<span class="hljs-comment">// &#x27;{&quot;message&quot;:&quot;Hello&quot;}&#x27;</span>
+</div></code></pre>
+<h3 id="089-jsonparse-from-json-text-to-a-value">08.9 JSON.parse(): from JSON text to a value</h3>
+<p><code>JSON.parse()</code> reads valid JSON text and produces the corresponding JavaScript value.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> jsonString = <span class="hljs-string">&#x27;{&quot;name&quot;:&quot;Socks&quot;,&quot;price&quot;:1090}&#x27;</span>;
+<span class="hljs-keyword">const</span> restoredProduct = <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">parse</span>(jsonString);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(restoredProduct.<span class="hljs-property">name</span>);  <span class="hljs-comment">// &quot;Socks&quot;</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(restoredProduct.<span class="hljs-property">price</span>); <span class="hljs-comment">// 1090</span>
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Input</th>
+<th>Output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>JSON.stringify()</code></td>
+<td>A supported JavaScript value</td>
+<td>JSON string</td>
+</tr>
+<tr>
+<td><code>JSON.parse()</code></td>
+<td>Valid JSON string</td>
+<td>JavaScript value</td>
+</tr>
+</tbody>
+</table>
+<p><code>JSON.parse()</code> throws an error if the text is not valid JSON. Functions omitted during stringification are not restored.</p>
+<h3 id="0810-chapter-recap">08.10 Chapter recap</h3>
+<ul>
+<li>Objects group related values into properties.</li>
+<li>Dot and bracket notation access those properties.</li>
+<li>Properties can be updated, added, or deleted.</li>
+<li><code>const</code> allows property changes while preventing variable reassignment.</li>
+<li>Nested objects organize related groups of data.</li>
+<li>A function stored in an object is called a method.</li>
+<li>A score object keeps related counters together.</li>
+<li>JSON is a text format for exchanging and storing data.</li>
+<li><code>JSON.stringify()</code> creates JSON text; <code>JSON.parse()</code> reads it.</li>
 </ul>
 <h2 id="feedback-and-contributions">Feedback and contributions</h2>
 <p>This is a personal learning repository. Suggestions, clear explanations, and feedback are welcome through GitHub issues. I want to understand improvements and practice applying them myself.</p>
