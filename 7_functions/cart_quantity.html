@@ -38,61 +38,60 @@
             if (nbr_quantity === 'show_quantity') {
                 console.log(`Cart quantity: ${quantity}`);
             } else if (nbr_quantity === 'add_to_cart') {
-                if (quantity + 1 <= 10) {
-                    quantity++;
-                    console.log(`Cart quantity: ${quantity}`);
-
+                if (!(quantity + 1 <= 10)) {
                     alert('The cart is Full')
                     return;
                 }
+                quantity++;
+                console.log(`Cart quantity: ${quantity}`);
             } else if (nbr_quantity === '2') {
-                if (quantity + 2 <= 10) {
-                    quantity += 2;
-                } else {
+                if (!(quantity + 2 <= 10)) {
                     alert('The cart is Full')
+                    return;
                 }
+                quantity += 2;
                 console.log(`Cart quantity: ${quantity}`);
             } else if (nbr_quantity === '3') {
-                if (quantity + 3 <= 10) {
-                    quantity += 3;
-                } else {
+                if (!(quantity + 3 <= 10)) {
                     alert('The cart is Full')
+                    return;
                 }
+                quantity += 3;
                 console.log(`Cart quantity: ${quantity}`);
             } else if (nbr_quantity === '4') {
-                if (quantity + 4 <= 10) {
-                    quantity += 4;
-                } else {
+                if (!(quantity + 4 <= 10)) {
                     alert('The cart is Full')
+                    return;
                 }
+                quantity += 4;
                 console.log(`Cart quantity: ${quantity}`);
             } else if (nbr_quantity === '5') {
-                if (quantity + 5 <= 10) {
-                    quantity += 5;
-                } else {
+                if (!(quantity + 5 <= 10)) {
                     alert('The cart is Full')
+                    return;
                 }
+                quantity += 5;
                 console.log(`Cart quantity: ${quantity}`);
             } else if (nbr_quantity === 'remove_from_cart') {
-                if (quantity - 1 >= 0) {
-                    quantity--;
-                } else {
+                if (!(quantity - 1 >= 0)) {
                     alert('Not enough Items in the Cart')
+                    return;
                 }
+                quantity--;
                 console.log(`Cart quantity: ${quantity}`);
             } else if (nbr_quantity === '-2') {
-                if (quantity - 2 >= 0) {
-                    quantity -= 2;
-                } else {
+                if (!(quantity - 2 >= 0)) {
                     alert('Not enough Items in the Cart')
+                    return;
                 }
+                quantity -= 2;
                 console.log(`Cart quantity: ${quantity}`);
             } else if (nbr_quantity === '-3') {
-                if (quantity - 3 >= 0) {
-                    quantity -= 3;
-                } else {
+                if (!(quantity - 3 >= 0)) {
                     alert('Not enough Items in the Cart')
+                    return;
                 }
+                quantity -= 3;
                 console.log(`Cart quantity: ${quantity}`);
             } else if (nbr_quantity === 'reset') {
                 quantity = 0;
@@ -100,18 +99,21 @@
                 console.log(`Cart quantity: ${quantity}`);
             }
         }
-        //*not complete*//
+        
         function confirm_items() {
-            if (quantity >= 2) {
-                alert(`Your ${quantity} Items are confirmed, Thank your for visit`)
-
-            } else if (quantity === 1) {
-                alert(`Your ${quantity} Item is confirmed, Thank your for visit`);
-
-            } else {
-                alert(`Please confirm at leat 1 Item`);
-
+           
+            if (quantity === 0) {
+                alert('Please confirm at leat 1 Item');
+                return;
             }
+
+            if (quantity === 1) {
+                alert(`Your ${quantity} Item is confirmed, Thank your for visit`);
+                quantity =0;
+                return;
+            }
+
+            alert(`Your ${quantity} Items are confirmed, Thank your for visit`)
             quantity = 0;
         }
     </script>
