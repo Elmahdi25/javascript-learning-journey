@@ -418,6 +418,11 @@ code {
 <td>Booleans &amp; If Statements</td>
 <td>Covered</td>
 </tr>
+<tr>
+<td><a href="#chapter-07--functions">07</a></td>
+<td>Functions</td>
+<td>Covered</td>
+</tr>
 </tbody>
 </table>
 <p>Each chapter uses a stable two-digit number. Subsections use the same prefix, such as <strong>03.1</strong>, so new lessons can be added without renumbering earlier chapters.</p>
@@ -1454,6 +1459,151 @@ cartQuantity += <span class="hljs-number">1</span>; <span class="hljs-comment">/
 <li>Ternary expressions choose values; short-circuit operators can guard code or provide defaults.</li>
 </ul>
 <p><img src="docs/12.gif" alt="12"></p>
+<h2 id="chapter-07--functions">Chapter 07 — Functions</h2>
+<h3 id="071-creating-and-calling-a-function">07.1 Creating and calling a function</h3>
+<p>A <strong>function</strong> groups code that I can reuse instead of repeating it.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">function</span> <span class="hljs-title function_">showMessage</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;Hello!&#x27;</span>);
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">2</span> + <span class="hljs-number">2</span>);
+}
+
+<span class="hljs-title function_">showMessage</span>();
+<span class="hljs-title function_">showMessage</span>();
+</div></code></pre>
+<ul>
+<li><code>function</code> declares the function.</li>
+<li><code>showMessage</code> is its name.</li>
+<li><code>{ ... }</code> contains its body.</li>
+<li><code>showMessage()</code> calls it and runs the code inside.</li>
+</ul>
+<p><strong>Declaring a function does not run its body.</strong> Each call runs it again.</p>
+<p>I use clear camelCase names that describe an action, such as <code>calculateTax</code> or <code>pickComputerMove</code>.</p>
+<h3 id="072-parameters-and-arguments-inputs">07.2 Parameters and arguments: inputs</h3>
+<p><strong>Parameters</strong> are names declared in a function's parentheses. <strong>Arguments</strong> are the actual values supplied when calling it.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">function</span> <span class="hljs-title function_">greet</span>(<span class="hljs-params">name</span>) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Hello, <span class="hljs-subst">${name}</span>!`</span>);
+}
+
+<span class="hljs-title function_">greet</span>(<span class="hljs-string">&#x27;Mehdi&#x27;</span>); <span class="hljs-comment">// &quot;Hello, Mehdi!&quot;</span>
+<span class="hljs-title function_">greet</span>(<span class="hljs-string">&#x27;Sara&#x27;</span>);  <span class="hljs-comment">// &quot;Hello, Sara!&quot;</span>
+</div></code></pre>
+<p>Here, <code>name</code> is the parameter, and <code>'Mehdi'</code> is an argument.</p>
+<p>Parameters let the same function work with different inputs.</p>
+<p>A function can take multiple parameters, separated by commas. Arguments match them by position:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">function</span> <span class="hljs-title function_">showTotal</span>(<span class="hljs-params">price, quantity</span>) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(price * quantity);
+}
+
+<span class="hljs-title function_">showTotal</span>(<span class="hljs-number">5</span>, <span class="hljs-number">3</span>); <span class="hljs-comment">// 15</span>
+</div></code></pre>
+<h3 id="073-return-values-outputs">07.3 Return values: outputs</h3>
+<p><code>return</code> sends a value back to the code that called the function.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">function</span> <span class="hljs-title function_">add</span>(<span class="hljs-params">firstNumber, secondNumber</span>) {
+  <span class="hljs-keyword">return</span> firstNumber + secondNumber;
+}
+
+<span class="hljs-keyword">const</span> total = <span class="hljs-title function_">add</span>(<span class="hljs-number">5</span>, <span class="hljs-number">3</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(total); <span class="hljs-comment">// 8</span>
+</div></code></pre>
+<p>I can store the returned value, display it, or use it in another calculation.</p>
+<p><strong><code>console.log()</code> displays a value; <code>return</code> makes a value available to the caller.</strong> They are different operations.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">function</span> <span class="hljs-title function_">displaySum</span>(<span class="hljs-params">a, b</span>) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a + b);
+}
+
+<span class="hljs-keyword">const</span> result = <span class="hljs-title function_">displaySum</span>(<span class="hljs-number">5</span>, <span class="hljs-number">3</span>);
+<span class="hljs-comment">// Prints 8, but result contains undefined.</span>
+</div></code></pre>
+<p>A function returns <code>undefined</code> if it finishes without returning a value.</p>
+<h3 id="074-return-ends-the-current-function-call">07.4 Return ends the current function call</h3>
+<p>Once JavaScript reaches <code>return</code>, it exits that function call immediately.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">function</span> <span class="hljs-title function_">checkQuantity</span>(<span class="hljs-params">quantity</span>) {
+  <span class="hljs-keyword">if</span> (quantity &gt; <span class="hljs-number">10</span>) {
+    <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;Cart is full.&#x27;</span>;
+  }
+
+  <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;Quantity accepted.&#x27;</span>;
+}
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">checkQuantity</span>(<span class="hljs-number">11</span>)); <span class="hljs-comment">// &quot;Cart is full.&quot;</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">checkQuantity</span>(<span class="hljs-number">5</span>));  <span class="hljs-comment">// &quot;Quantity accepted.&quot;</span>
+</div></code></pre>
+<p>Code after a return is not executed on that path.</p>
+<h3 id="075-scope-where-variables-are-accessible">07.5 Scope: where variables are accessible</h3>
+<p>Parameters and variables declared inside a function are local to it.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">function</span> <span class="hljs-title function_">createMessage</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">const</span> message = <span class="hljs-string">&#x27;Hello!&#x27;</span>;
+  <span class="hljs-keyword">return</span> message;
+}
+
+<span class="hljs-keyword">const</span> greeting = <span class="hljs-title function_">createMessage</span>();
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(greeting); <span class="hljs-comment">// &quot;Hello!&quot;</span>
+
+<span class="hljs-comment">// console.log(message); // ReferenceError: message is not defined.</span>
+</div></code></pre>
+<p>Returning <code>message</code> gives the caller its <strong>value</strong>. It does not make the local variable accessible outside the function.</p>
+<p>Variables declared with <code>let</code> or <code>const</code> inside an <code>if</code> block are also limited to that block.</p>
+<p>I prefer local variables and return values over unnecessary global variables. This reduces naming conflicts and makes functions easier to understand.</p>
+<h3 id="076-default-parameters">07.6 Default parameters</h3>
+<p>A default parameter provides a value when an argument is omitted or explicitly passed as <code>undefined</code>.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">function</span> <span class="hljs-title function_">calculateTax</span>(<span class="hljs-params">costInCents, taxRate = <span class="hljs-number">0.1</span></span>) {
+  <span class="hljs-keyword">return</span> <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">round</span>(costInCents * taxRate);
+}
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">calculateTax</span>(<span class="hljs-number">2000</span>, <span class="hljs-number">0.2</span>)); <span class="hljs-comment">// 400 cents</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">calculateTax</span>(<span class="hljs-number">5000</span>));      <span class="hljs-comment">// 500 cents</span>
+</div></code></pre>
+<ul>
+<li>The first call supplies a 20% rate.</li>
+<li>The second uses the default 10% rate.</li>
+</ul>
+<p>Without a default, a missing argument gives the parameter the value <code>undefined</code>. Using it in multiplication can produce <code>NaN</code>.</p>
+<p>A supplied value of <code>0</code> is kept; it does not trigger the default.</p>
+<h3 id="077-reusing-code-in-rock-paper-scissors">07.7 Reusing code in Rock Paper Scissors</h3>
+<p>Instead of copying the computer-move logic into every button, I put it in one function:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">function</span> <span class="hljs-title function_">pickComputerMove</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">const</span> randomNumber = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">random</span>();
+
+  <span class="hljs-keyword">if</span> (randomNumber &lt; <span class="hljs-number">1</span> / <span class="hljs-number">3</span>) {
+    <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;rock&#x27;</span>;
+  } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (randomNumber &lt; <span class="hljs-number">2</span> / <span class="hljs-number">3</span>) {
+    <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;paper&#x27;</span>;
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;scissors&#x27;</span>;
+  }
+}
+
+<span class="hljs-keyword">const</span> computerMove = <span class="hljs-title function_">pickComputerMove</span>();
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(computerMove);
+</div></code></pre>
+<p>The game can use a second function, <code>playGame(playerMove)</code>, to handle different player choices:</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;playGame(&#x27;rock&#x27;);&quot;</span>&gt;</span>Rock<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;playGame(&#x27;paper&#x27;);&quot;</span>&gt;</span>Paper<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;playGame(&#x27;scissors&#x27;);&quot;</span>&gt;</span>Scissors<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+</div></code></pre>
+<p>Inside <code>playGame</code>, I can call <code>pickComputerMove()</code>, compare the moves, and display the result.</p>
+<p><strong>Functions can call other functions.</strong> This lets me split a larger task into smaller, reusable steps.</p>
+<p>Removing duplication means I only need to update shared logic in one place.</p>
+<h3 id="078-tracing-a-function-call">07.8 Tracing a function call</h3>
+<p>To understand the execution order, I follow the code step by step:</p>
+<ol>
+<li>The caller supplies arguments.</li>
+<li>The function receives them through its parameters.</li>
+<li>Its body runs from top to bottom.</li>
+<li><code>return</code> sends a result back and ends the call.</li>
+<li>The caller continues using that result.</li>
+</ol>
+<h3 id="079-chapter-recap">07.9 Chapter recap</h3>
+<ul>
+<li>Functions group reusable code and reduce duplication.</li>
+<li>Declaring a function and calling it are separate actions.</li>
+<li>Parameters receive inputs; arguments supply them.</li>
+<li><code>return</code> provides an output and ends the current call.</li>
+<li>Logging a result does not return it.</li>
+<li>Local variables and parameters stay inside their scope.</li>
+<li>Default parameters handle omitted or undefined arguments.</li>
+<li>Functions can call other functions to organize larger tasks.</li>
+</ul>
 <h2 id="feedback-and-contributions">Feedback and contributions</h2>
 <p>This is a personal learning repository. Suggestions, clear explanations, and feedback are welcome through GitHub issues. I want to understand improvements and practice applying them myself.</p>
 <h2 id="credits-and-license">Credits and license</h2>
