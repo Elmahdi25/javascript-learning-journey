@@ -35,7 +35,7 @@ This repository is a learning journal that will grow as I continue the course.
 | [05](#chapter-05--variables) | Variables | Covered |
 | [06](#chapter-06--booleans--if-statements) | Booleans & If Statements | Covered |
 | [07](#chapter-07--functions) | Functions | Covered |
-| [08](#chapter-08--objects--json) | Objects & JSON | In progress |
+| [08](#chapter-08--objects--json) | Objects, JSON & localStorage | Covered |
 
 Each chapter uses a stable two-digit number. Subsections use the same prefix, such as **03.1**, so new lessons can be added without renumbering earlier chapters.
 
@@ -1525,6 +1525,272 @@ console.log(restoredProduct.price); // 1090
 - A score object keeps related counters together.
 - JSON is a text format for exchanging and storing data.
 - `JSON.stringify()` creates JSON text; `JSON.parse()` reads it.
+
+### 08.11 Saving data with localStorage
+
+Variables hold the running page's data. Refreshing the page starts the script again and recreates those variables.
+
+`localStorage` keeps saved data across refreshes and browser sessions, unless it is cleared. Its data belongs to the website's origin.
+
+| Method | Purpose |
+| --- | --- |
+| `setItem(key, value)` | Save or replace an entry |
+| `getItem(key)` | Read an entry |
+| `removeItem(key)` | Delete an entry |
+
+```js
+localStorage.setItem('message', 'Hello');
+
+console.log(localStorage.getItem('message')); // "Hello"
+
+localStorage.removeItem('message');
+
+console.log(localStorage.getItem('message')); // null
+```
+
+The key identifies the entry. Saving under the same key replaces its previous value.
+
+### 08.12 Saving and restoring objects
+
+localStorage stores strings. To save an object, I convert it to JSON text:
+
+```js
+localStorage.setItem('score', JSON.stringify(score));
+```
+
+To restore it, I read the saved text and parse it:
+
+```js
+let score = JSON.parse(localStorage.getItem('score'));
+
+if (score === null) {
+  score = {
+    wins: 0,
+    losses: 0,
+    ties: 0
+  };
+}
+```
+
+The sequence is:
+
+1. `getItem()` reads the saved string.
+2. `JSON.parse()` converts it into a JavaScript object.
+3. If the entry is missing, `getItem()` returns `null`.
+4. `JSON.parse(null)` returns `null`, so the condition creates a zero score.
+
+A shorter version uses a default value:
+
+```js
+let score = JSON.parse(localStorage.getItem('score')) || {
+  wins: 0,
+  losses: 0,
+  ties: 0
+};
+```
+
+Here, `||` supplies the default object when the parsed result is falsy. This example assumes any saved score contains valid JSON in the expected format.
+
+### 08.13 The current score and saved score are separate
+
+Changing the JavaScript object does not automatically update localStorage.
+
+```js
+score.wins++;
+
+// Explicitly save the updated score.
+localStorage.setItem('score', JSON.stringify(score));
+```
+
+Likewise, deleting the saved entry does not change the current object.
+
+| Action | Current score object | Saved entry |
+| --- | --- | --- |
+| `score.wins++` | Changes | Unchanged |
+| `setItem(...)` | Unchanged | Saved or replaced |
+| `removeItem('score')` | Unchanged | Deleted |
+| Refresh | Recreated by initialization | Remains unless previously deleted |
+
+### 08.14 Resetting correctly
+
+Reset must update the running game and handle its saved data:
+
+```js
+function resetScore() {
+  score.wins = 0;
+  score.losses = 0;
+  score.ties = 0;
+
+  localStorage.removeItem('score');
+}
+```
+
+- The property assignments reset the current game.
+- `removeItem()` deletes the saved entry.
+- It does not restart the script or rerun the initialization condition.
+- On the next refresh, missing storage causes initialization to create a zero score.
+
+If I play before refreshing, the next round updates the zero score and saves it again.
+
+Alternatively, I can save the zero score instead of removing the entry:
+
+```js
+localStorage.setItem('score', JSON.stringify(score));
+```
+
+Both approaches work with the initialization above.
+
+### 08.15 null and undefined
+
+| Value | Typical meaning |
+| --- | --- |
+| `undefined` | A value has not been supplied or assigned |
+| `null` | An explicit empty value; also returned by some APIs for missing results |
+
+Both are falsy, but they are different values:
+
+```js
+console.log(null === undefined); // false
+```
+
+Default parameters apply to `undefined`, not `null`:
+
+```js
+function greet(name = 'Guest') {
+  return name;
+}
+
+console.log(greet(undefined)); // "Guest"
+console.log(greet(null));      // null
+```
+
+### 08.16 Properties and methods on primitive values
+
+Strings are primitive values, but JavaScript lets me access properties and methods through automatic wrapping, often called **autoboxing**.
+
+```js
+console.log('hello'.length);        // 5
+console.log('hello'.toUpperCase()); // "HELLO"
+```
+
+The uppercase method returns a new string; it does not modify the original:
+
+```js
+const message = 'hello';
+const uppercaseMessage = message.toUpperCase();
+
+console.log(message);          // "hello"
+console.log(uppercaseMessage); // "HELLO"
+```
+
+Numbers and booleans also support wrapper-based property access. `null` and `undefined` do not.
+
+### 08.17 Object references
+
+Assigning an object to another variable does not create an independent copy. Both variables refer to the same object.
+
+```js
+const firstScore = { wins: 0 };
+const secondScore = firstScore;
+
+secondScore.wins = 5;
+
+console.log(firstScore.wins); // 5
+```
+
+I imagine both variables holding the same ticket to one object in memory.
+
+`const` prevents reassigning the variable, but allows changes to the referenced object:
+
+```js
+firstScore.wins = 10; // Allowed.
+// firstScore = {};  // Not allowed.
+```
+
+### 08.18 Comparing objects
+
+`===` compares object identity, not property contents.
+
+```js
+const first = { wins: 0 };
+const second = { wins: 0 };
+const third = first;
+
+console.log(first === second); // false: separate objects.
+console.log(first === third);  // true: same object.
+```
+
+To compare a particular value, I access that property:
+
+```js
+console.log(first.wins === second.wins); // true
+```
+
+Matching one property does not prove that every property matches.
+
+### 08.19 Destructuring
+
+Destructuring reads properties into variables with matching names:
+
+```js
+const product = {
+  name: 'Shirt',
+  price: 799
+};
+
+const { name, price } = product;
+
+console.log(name);  // "Shirt"
+console.log(price); // 799
+```
+
+This is a shorter way to write:
+
+```js
+const name = product.name;
+const price = product.price;
+```
+
+It does not remove those properties from the object or create a live connection to them.
+
+### 08.20 Shorthand properties and methods
+
+When a property name matches a variable name, I can write it once:
+
+```js
+const message = 'Good job!';
+
+const notification = {
+  message
+};
+```
+
+`{ message }` means `{ message: message }`.
+
+Methods also have a shorter syntax:
+
+```js
+const notification = {
+  message,
+
+  showMessage() {
+    console.log('Good job!');
+  }
+};
+
+notification.showMessage();
+```
+
+### 08.21 Completed chapter recap
+
+- Objects group related data and methods.
+- JSON converts supported data to and from text.
+- localStorage keeps strings across page loads.
+- The current object and saved text must be updated separately.
+- Resetting properties changes the running game; removing storage changes what can be restored.
+- Object assignment shares a reference rather than creating an independent copy.
+- Object equality checks identity, not matching contents.
+- Destructuring and shorthand syntax make object code more concise.
 
 ## Feedback and contributions
 

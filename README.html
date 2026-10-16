@@ -425,8 +425,8 @@ code {
 </tr>
 <tr>
 <td><a href="#chapter-08--objects--json">08</a></td>
-<td>Objects &amp; JSON</td>
-<td>In progress</td>
+<td>Objects, JSON &amp; localStorage</td>
+<td>Covered</td>
 </tr>
 </tbody>
 </table>
@@ -1856,6 +1856,248 @@ person.<span class="hljs-title function_">sayHello</span>();
 <li>A score object keeps related counters together.</li>
 <li>JSON is a text format for exchanging and storing data.</li>
 <li><code>JSON.stringify()</code> creates JSON text; <code>JSON.parse()</code> reads it.</li>
+</ul>
+<h3 id="0811-saving-data-with-localstorage">08.11 Saving data with localStorage</h3>
+<p>Variables hold the running page's data. Refreshing the page starts the script again and recreates those variables.</p>
+<p><code>localStorage</code> keeps saved data across refreshes and browser sessions, unless it is cleared. Its data belongs to the website's origin.</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>setItem(key, value)</code></td>
+<td>Save or replace an entry</td>
+</tr>
+<tr>
+<td><code>getItem(key)</code></td>
+<td>Read an entry</td>
+</tr>
+<tr>
+<td><code>removeItem(key)</code></td>
+<td>Delete an entry</td>
+</tr>
+</tbody>
+</table>
+<pre class="hljs"><code><div><span class="hljs-variable language_">localStorage</span>.<span class="hljs-title function_">setItem</span>(<span class="hljs-string">&#x27;message&#x27;</span>, <span class="hljs-string">&#x27;Hello&#x27;</span>);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">localStorage</span>.<span class="hljs-title function_">getItem</span>(<span class="hljs-string">&#x27;message&#x27;</span>)); <span class="hljs-comment">// &quot;Hello&quot;</span>
+
+<span class="hljs-variable language_">localStorage</span>.<span class="hljs-title function_">removeItem</span>(<span class="hljs-string">&#x27;message&#x27;</span>);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">localStorage</span>.<span class="hljs-title function_">getItem</span>(<span class="hljs-string">&#x27;message&#x27;</span>)); <span class="hljs-comment">// null</span>
+</div></code></pre>
+<p>The key identifies the entry. Saving under the same key replaces its previous value.</p>
+<h3 id="0812-saving-and-restoring-objects">08.12 Saving and restoring objects</h3>
+<p>localStorage stores strings. To save an object, I convert it to JSON text:</p>
+<pre class="hljs"><code><div><span class="hljs-variable language_">localStorage</span>.<span class="hljs-title function_">setItem</span>(<span class="hljs-string">&#x27;score&#x27;</span>, <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(score));
+</div></code></pre>
+<p>To restore it, I read the saved text and parse it:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> score = <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">parse</span>(<span class="hljs-variable language_">localStorage</span>.<span class="hljs-title function_">getItem</span>(<span class="hljs-string">&#x27;score&#x27;</span>));
+
+<span class="hljs-keyword">if</span> (score === <span class="hljs-literal">null</span>) {
+  score = {
+    <span class="hljs-attr">wins</span>: <span class="hljs-number">0</span>,
+    <span class="hljs-attr">losses</span>: <span class="hljs-number">0</span>,
+    <span class="hljs-attr">ties</span>: <span class="hljs-number">0</span>
+  };
+}
+</div></code></pre>
+<p>The sequence is:</p>
+<ol>
+<li><code>getItem()</code> reads the saved string.</li>
+<li><code>JSON.parse()</code> converts it into a JavaScript object.</li>
+<li>If the entry is missing, <code>getItem()</code> returns <code>null</code>.</li>
+<li><code>JSON.parse(null)</code> returns <code>null</code>, so the condition creates a zero score.</li>
+</ol>
+<p>A shorter version uses a default value:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> score = <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">parse</span>(<span class="hljs-variable language_">localStorage</span>.<span class="hljs-title function_">getItem</span>(<span class="hljs-string">&#x27;score&#x27;</span>)) || {
+  <span class="hljs-attr">wins</span>: <span class="hljs-number">0</span>,
+  <span class="hljs-attr">losses</span>: <span class="hljs-number">0</span>,
+  <span class="hljs-attr">ties</span>: <span class="hljs-number">0</span>
+};
+</div></code></pre>
+<p>Here, <code>||</code> supplies the default object when the parsed result is falsy. This example assumes any saved score contains valid JSON in the expected format.</p>
+<h3 id="0813-the-current-score-and-saved-score-are-separate">08.13 The current score and saved score are separate</h3>
+<p>Changing the JavaScript object does not automatically update localStorage.</p>
+<pre class="hljs"><code><div>score.<span class="hljs-property">wins</span>++;
+
+<span class="hljs-comment">// Explicitly save the updated score.</span>
+<span class="hljs-variable language_">localStorage</span>.<span class="hljs-title function_">setItem</span>(<span class="hljs-string">&#x27;score&#x27;</span>, <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(score));
+</div></code></pre>
+<p>Likewise, deleting the saved entry does not change the current object.</p>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Current score object</th>
+<th>Saved entry</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>score.wins++</code></td>
+<td>Changes</td>
+<td>Unchanged</td>
+</tr>
+<tr>
+<td><code>setItem(...)</code></td>
+<td>Unchanged</td>
+<td>Saved or replaced</td>
+</tr>
+<tr>
+<td><code>removeItem('score')</code></td>
+<td>Unchanged</td>
+<td>Deleted</td>
+</tr>
+<tr>
+<td>Refresh</td>
+<td>Recreated by initialization</td>
+<td>Remains unless previously deleted</td>
+</tr>
+</tbody>
+</table>
+<h3 id="0814-resetting-correctly">08.14 Resetting correctly</h3>
+<p>Reset must update the running game and handle its saved data:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">function</span> <span class="hljs-title function_">resetScore</span>(<span class="hljs-params"></span>) {
+  score.<span class="hljs-property">wins</span> = <span class="hljs-number">0</span>;
+  score.<span class="hljs-property">losses</span> = <span class="hljs-number">0</span>;
+  score.<span class="hljs-property">ties</span> = <span class="hljs-number">0</span>;
+
+  <span class="hljs-variable language_">localStorage</span>.<span class="hljs-title function_">removeItem</span>(<span class="hljs-string">&#x27;score&#x27;</span>);
+}
+</div></code></pre>
+<ul>
+<li>The property assignments reset the current game.</li>
+<li><code>removeItem()</code> deletes the saved entry.</li>
+<li>It does not restart the script or rerun the initialization condition.</li>
+<li>On the next refresh, missing storage causes initialization to create a zero score.</li>
+</ul>
+<p>If I play before refreshing, the next round updates the zero score and saves it again.</p>
+<p>Alternatively, I can save the zero score instead of removing the entry:</p>
+<pre class="hljs"><code><div><span class="hljs-variable language_">localStorage</span>.<span class="hljs-title function_">setItem</span>(<span class="hljs-string">&#x27;score&#x27;</span>, <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(score));
+</div></code></pre>
+<p>Both approaches work with the initialization above.</p>
+<h3 id="0815-null-and-undefined">08.15 null and undefined</h3>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Typical meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>undefined</code></td>
+<td>A value has not been supplied or assigned</td>
+</tr>
+<tr>
+<td><code>null</code></td>
+<td>An explicit empty value; also returned by some APIs for missing results</td>
+</tr>
+</tbody>
+</table>
+<p>Both are falsy, but they are different values:</p>
+<pre class="hljs"><code><div><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-literal">null</span> === <span class="hljs-literal">undefined</span>); <span class="hljs-comment">// false</span>
+</div></code></pre>
+<p>Default parameters apply to <code>undefined</code>, not <code>null</code>:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">function</span> <span class="hljs-title function_">greet</span>(<span class="hljs-params">name = <span class="hljs-string">&#x27;Guest&#x27;</span></span>) {
+  <span class="hljs-keyword">return</span> name;
+}
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">greet</span>(<span class="hljs-literal">undefined</span>)); <span class="hljs-comment">// &quot;Guest&quot;</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">greet</span>(<span class="hljs-literal">null</span>));      <span class="hljs-comment">// null</span>
+</div></code></pre>
+<h3 id="0816-properties-and-methods-on-primitive-values">08.16 Properties and methods on primitive values</h3>
+<p>Strings are primitive values, but JavaScript lets me access properties and methods through automatic wrapping, often called <strong>autoboxing</strong>.</p>
+<pre class="hljs"><code><div><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;hello&#x27;</span>.<span class="hljs-property">length</span>);        <span class="hljs-comment">// 5</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;hello&#x27;</span>.<span class="hljs-title function_">toUpperCase</span>()); <span class="hljs-comment">// &quot;HELLO&quot;</span>
+</div></code></pre>
+<p>The uppercase method returns a new string; it does not modify the original:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> message = <span class="hljs-string">&#x27;hello&#x27;</span>;
+<span class="hljs-keyword">const</span> uppercaseMessage = message.<span class="hljs-title function_">toUpperCase</span>();
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(message);          <span class="hljs-comment">// &quot;hello&quot;</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(uppercaseMessage); <span class="hljs-comment">// &quot;HELLO&quot;</span>
+</div></code></pre>
+<p>Numbers and booleans also support wrapper-based property access. <code>null</code> and <code>undefined</code> do not.</p>
+<h3 id="0817-object-references">08.17 Object references</h3>
+<p>Assigning an object to another variable does not create an independent copy. Both variables refer to the same object.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> firstScore = { <span class="hljs-attr">wins</span>: <span class="hljs-number">0</span> };
+<span class="hljs-keyword">const</span> secondScore = firstScore;
+
+secondScore.<span class="hljs-property">wins</span> = <span class="hljs-number">5</span>;
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(firstScore.<span class="hljs-property">wins</span>); <span class="hljs-comment">// 5</span>
+</div></code></pre>
+<p>I imagine both variables holding the same ticket to one object in memory.</p>
+<p><code>const</code> prevents reassigning the variable, but allows changes to the referenced object:</p>
+<pre class="hljs"><code><div>firstScore.<span class="hljs-property">wins</span> = <span class="hljs-number">10</span>; <span class="hljs-comment">// Allowed.</span>
+<span class="hljs-comment">// firstScore = {};  // Not allowed.</span>
+</div></code></pre>
+<h3 id="0818-comparing-objects">08.18 Comparing objects</h3>
+<p><code>===</code> compares object identity, not property contents.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> first = { <span class="hljs-attr">wins</span>: <span class="hljs-number">0</span> };
+<span class="hljs-keyword">const</span> second = { <span class="hljs-attr">wins</span>: <span class="hljs-number">0</span> };
+<span class="hljs-keyword">const</span> third = first;
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(first === second); <span class="hljs-comment">// false: separate objects.</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(first === third);  <span class="hljs-comment">// true: same object.</span>
+</div></code></pre>
+<p>To compare a particular value, I access that property:</p>
+<pre class="hljs"><code><div><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(first.<span class="hljs-property">wins</span> === second.<span class="hljs-property">wins</span>); <span class="hljs-comment">// true</span>
+</div></code></pre>
+<p>Matching one property does not prove that every property matches.</p>
+<h3 id="0819-destructuring">08.19 Destructuring</h3>
+<p>Destructuring reads properties into variables with matching names:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> product = {
+  <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;Shirt&#x27;</span>,
+  <span class="hljs-attr">price</span>: <span class="hljs-number">799</span>
+};
+
+<span class="hljs-keyword">const</span> { name, price } = product;
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(name);  <span class="hljs-comment">// &quot;Shirt&quot;</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(price); <span class="hljs-comment">// 799</span>
+</div></code></pre>
+<p>This is a shorter way to write:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> name = product.<span class="hljs-property">name</span>;
+<span class="hljs-keyword">const</span> price = product.<span class="hljs-property">price</span>;
+</div></code></pre>
+<p>It does not remove those properties from the object or create a live connection to them.</p>
+<h3 id="0820-shorthand-properties-and-methods">08.20 Shorthand properties and methods</h3>
+<p>When a property name matches a variable name, I can write it once:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> message = <span class="hljs-string">&#x27;Good job!&#x27;</span>;
+
+<span class="hljs-keyword">const</span> notification = {
+  message
+};
+</div></code></pre>
+<p><code>{ message }</code> means <code>{ message: message }</code>.</p>
+<p>Methods also have a shorter syntax:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> notification = {
+  message,
+
+  <span class="hljs-title function_">showMessage</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;Good job!&#x27;</span>);
+  }
+};
+
+notification.<span class="hljs-title function_">showMessage</span>();
+</div></code></pre>
+<h3 id="0821-completed-chapter-recap">08.21 Completed chapter recap</h3>
+<ul>
+<li>Objects group related data and methods.</li>
+<li>JSON converts supported data to and from text.</li>
+<li>localStorage keeps strings across page loads.</li>
+<li>The current object and saved text must be updated separately.</li>
+<li>Resetting properties changes the running game; removing storage changes what can be restored.</li>
+<li>Object assignment shares a reference rather than creating an independent copy.</li>
+<li>Object equality checks identity, not matching contents.</li>
+<li>Destructuring and shorthand syntax make object code more concise.</li>
 </ul>
 <h2 id="feedback-and-contributions">Feedback and contributions</h2>
 <p>This is a personal learning repository. Suggestions, clear explanations, and feedback are welcome through GitHub issues. I want to understand improvements and practice applying them myself.</p>
