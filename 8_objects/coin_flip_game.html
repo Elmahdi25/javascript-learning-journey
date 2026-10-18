@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coin Flipe Game</title>
+</head>
+
+<body>
+    <style>
+        .heads,
+        .tails,
+        .clear {
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            width: 100px;
+            height: 100px;
+            font-size: 25px;
+            cursor: pointer;
+            border: none;
+            margin-right: 15px;
+            background-color: rgb(111, 169, 226);
+            color: white;
+            border-radius: 50px;
+        }
+
+        .clear {
+            background-color: rgb(241, 51, 76);
+        }
+
+        button:hover {
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .heads:active,
+        .tails:active,
+        .clear:active {
+            transform: translate(1px, 1px);
+
+        }
+    </style>
+    <button onclick="play_game('heads')" class="heads">Heads</button>
+    <button onclick="play_game('tails')" class="tails">Tails</button>
+    <button onclick="clear_score()" class="clear">Clear</button>
+    <script>
+        let get_score = localStorage.getItem('score');
+        let js_score_object = JSON.parse(get_score);
+        let score = js_score_object;
+        if (score === null) {
+            score = {wins:0, loses:0}
+        }
+
+        function play_game(guess) {
+
+            let computer_move = pick_computer_move();
+            let result = '';
+            if (guess === computer_move) {
+                result = 'You Win';
+            } else {
+                result = 'You Lose'
+            }
+
+            if (result === 'You Win') {
+                score.wins += 1;
+            } else if (result === 'You Lose') {
+                score.loses += 1;
+            }
+
+
+
+            alert(`You pick ${guess}, Computer pick ${computer_move}. ${result}. \nScore: Wins: ${score.wins}, Losses: ${score.loses}`);
+            /*-----------------------------*/
+            localStorage.setItem('score', JSON.stringify(score));
+
+        };
+
+
+        function pick_computer_move() {
+            let random_nbr = Math.random();
+            let computer_move = '';
+            if (random_nbr >= 0 && random_nbr < 1 / 2) {
+                computer_move = 'heads';
+            } else {
+                computer_move = 'tails';
+            }
+            return computer_move;
+        }
+
+        function clear_score() {
+            score.wins= 0;
+            score.loses= 0;
+            localStorage.removeItem('score')
+            alert(`Score has been reset.\nWins: ${score.wins}, Loses: ${score.loses}`);
+        }
+
+    </script>
+</body>
+
+</html>
