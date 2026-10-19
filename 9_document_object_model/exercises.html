@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM_EXERCISES</title>
+</head>
+
+<body>
+    <h1>DOm</h1>
+    <!--EX1-->
+    <button class="hello">Hello!</button>
+    <button class="world">World</button>
+    <!--EX2-->
+    <button onclick="coin_flip('heads')" class="heads">Heads</button>
+    <button onclick="coin_flip('tails')" class="tails">Tails</button>
+    <p class="choose"></p>
+    <!--EX3-->
+    <input 
+        class="name_input" 
+        type="text" 
+        placeholder="Name"
+        onkeydown="handle_enter_btn(event)"
+        >
+    <button onclick="submit()">submit</button>
+    <p class="your_name"></p>
+        <!--EX4-->
+        <input
+            onkeydown="handle_enter_btn_2(event)" 
+            type="number"
+            class="price_input_2">
+        <button onclick="calculate()">Calculate</button>
+        <p class="final_price_2"></p>
+        <!--EX5-->
+        <input
+            onkeyup="handle_btn()"
+            placeholder="Type something" 
+            class="input_value">
+            <p class="keyupp"></p>
+    <script src="./exercises.js"></script>
+</body>
+
+</html>

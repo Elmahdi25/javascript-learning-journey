@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Variables</title>
+</head>
+
+<body>
+    <!--OPEN INSPECT in GOOGLE CHROME-->
+
+    <h1>Cart Quantity</h1>
+
+    <button class="show_quantity" onclick="update_quantity('show_quantity')">Show Quantity</button>
+
+
+    <button onclick="update_quantity('add_to_cart')">Add to cart</button>
+    <button onclick="update_quantity('2')">+2</button>
+    <button onclick="update_quantity('3')">+3</button>
+    <button onclick="update_quantity('4')">+4</button>
+    <button onclick="update_quantity('5')">+5</button>
+
+    <button onclick="update_quantity('remove_from_cart')" class="remove">Remove from cart</button>
+    <button class="remove" onclick="update_quantity('-2')">-2</button>
+    <button class="remove" onclick="update_quantity('-3')">-3</button>
+
+
+    <button class="reset" onclick=" update_quantity('reset')">Reset</button>
+
+    <button class="confirm" onclick="confirm_items()">Confirm</button>
+    <div class="container">
+        <p class="current"></p>
+        <p class="reset_quantity_items">reset quantit</p>
+        <p class="confirm_quantity_items">Confirm quantit</p>
+        <p class="show_quantity_items">show quantit</p>
+
+    </div>
+
+    <script>
+
+        let quantity = 0;
+
+        function update_quantity(nbr_quantity) {
+            if (nbr_quantity === 'show_quantity') {
+                update_html('show_quantity');
+            } else if (nbr_quantity === 'add_to_cart') {
+                update_html('add_to_cart');
+            } else if (nbr_quantity === '2') {
+                update_html('+2');
+            } else if (nbr_quantity === '3') {
+                update_html('+3');
+            } else if (nbr_quantity === '4') {
+                update_html('+4');
+            } else if (nbr_quantity === '5') {
+                update_html('+5');
+            } else if (nbr_quantity === 'remove_from_cart') {
+                update_html('remove_from_cart');
+            } else if (nbr_quantity === '-2') {
+                update_html('-2');
+            } else if (nbr_quantity === '-3') {
+                update_html('-3');
+            } else if (nbr_quantity === 'reset') {
+                update_html('reset');
+
+            }
+        }
+
+        function confirm_items() {
+
+            let confirm_quantity_items = document.querySelector('.confirm_quantity_items');
+
+            if (quantity === 0) {
+                confirm_quantity_items.innerHTML = 'Please confirm at leat 1 Item' 
+                return;
+            }
+
+            if (quantity === 1) {
+                confirm_quantity_items.innerHTML= `Your ${quantity} Item is confirmed, Thank your for visit`;
+                quantity = 0;
+                return;
+            }
+
+            confirm_quantity_items.innerHTML=`Your ${quantity} Items are confirmed, Thank your for visit`;
+            quantity = 0;
+        }
+
+        function update_html(action) {
+            let show_quantity_items = document.querySelector('.show_quantity_items');
+            let reset_quantity_items = document.querySelector('.reset_quantity_items');
+
+            let current = document.querySelector('.current');
+            if (action === 'show_quantity') {
+                show_quantity_items.innerHTML = `Cart quantity: ${quantity}`;
+            } else if (action === 'add_to_cart') {
+                if (!(quantity + 1 <= 10)) {
+                    current.innerHTML = 'The cart is Full';
+                    return;
+                }
+                quantity++;
+                current.innerHTML = `Cart quantity: ${quantity}`;
+            } else if (action === '+2') {
+                if (!(quantity + 2 <= 10)) {
+                    current.innerHTML = 'The cart is Full';
+                    return;
+                }
+                quantity += 2;
+                current.innerHTML = `Cart quantity: ${quantity}`;
+            } else if (action === '+3') {
+                if (!(quantity + 2 <= 10)) {
+                    current.innerHTML = 'The cart is Full';
+                    return;
+                }
+                quantity += 3;
+                current.innerHTML = `Cart quantity: ${quantity}`;
+            } else if (action === '+4') {
+                if (!(quantity + 2 <= 10)) {
+                    current.innerHTML = 'The cart is Full';
+                    return;
+                }
+                quantity += 4;
+                current.innerHTML = `Cart quantity: ${quantity}`;
+            } else if (action === '+5') {
+                if (!(quantity + 5 <= 10)) {
+                    current.innerHTML = 'The cart is Full';
+                    return;
+                }
+                quantity += 5;
+                current.innerHTML = `Cart quantity: ${quantity}`;
+            } else if (action === 'remove_from_cart') {
+                if (!(quantity - 1 >= 0)) {
+                    current.innerHTML = `Not enough Items in the Cart`;
+                    return;
+                }
+                quantity--;
+                current.innerHTML = `Cart quantity: ${quantity}`;
+            } else if (action === '-2') {
+                if (!(quantity - 2 >= 0)) {
+                    current.innerHTML = 'Not enough Items in the Cart';
+                    return;
+                }
+                quantity -= 2;
+                current.innerHTML = `Cart quantity: ${quantity}`;
+            } else if (action === '-3') {
+                if (!(quantity - 3 >= 0)) {
+                    current.innerHTML = 'Not enough Items in the Cart';
+                    return;
+                }
+                quantity -= 3;
+                current.innerHTML = `Cart quantity: ${quantity}`;
+            } else if (action === 'reset') {
+                quantity = 0;
+                reset_quantity_items.innerHTML = `Cart was reset, Feel free to choose again. Cart quantity: ${quantity}`;
+                current.innerHTML = `Cart quantity: ${quantity}`
+            }
+        }
+    </script>
+</body>
+
+</html>
