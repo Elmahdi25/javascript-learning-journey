@@ -36,6 +36,7 @@ This repository is a learning journal that will grow as I continue the course.
 | [06](#chapter-06--booleans--if-statements) | Booleans & If Statements | Covered |
 | [07](#chapter-07--functions) | Functions | Covered |
 | [08](#chapter-08--objects--json) | Objects, JSON & localStorage | Covered |
+| [09](#chapter-09--dom-document-object-model) | DOM (Document Object Model) | Covered |
 
 Each chapter uses a stable two-digit number. Subsections use the same prefix, such as **03.1**, so new lessons can be added without renumbering earlier chapters.
 
@@ -1791,6 +1792,331 @@ notification.showMessage();
 - Object assignment shares a reference rather than creating an independent copy.
 - Object equality checks identity, not matching contents.
 - Destructuring and shorthand syntax make object code more concise.
+
+## Chapter 09 — DOM (Document Object Model)
+
+### 09.1 What is the DOM?
+
+The **DOM (Document Object Model)** represents an HTML page as objects that JavaScript can access and modify.
+
+The browser creates a DOM representation of the HTML document. JavaScript can use the `document` object to find elements, read their content, and change the page.
+
+```js
+document.body.innerHTML = 'Hello';
+```
+
+This replaces everything inside the `<body>` with the text `Hello`.
+
+The DOM connects JavaScript to the web page, allowing me to create interactive websites.
+
+### 09.2 Accessing properties of the document object
+
+The `document` object has properties that let me access different parts of the page.
+
+```js
+// Get the current page title.
+console.log(document.title);
+
+// Change the title displayed in the browser tab.
+document.title = 'Good job!';
+
+// Access the body element.
+console.log(document.body);
+```
+
+- `document` represents the current HTML document.
+- `document.title` gets or changes the page title.
+- `document.body` gives me access to the body element.
+- Dot notation lets me access an object's properties.
+
+### 09.3 Understanding innerHTML
+
+The `innerHTML` property lets me read or replace the HTML content inside an element.
+
+```js
+// Get the HTML inside the body.
+console.log(document.body.innerHTML);
+
+// Replace everything inside the body.
+document.body.innerHTML = 'Hello';
+```
+
+I can also insert HTML elements as a string:
+
+```js
+document.body.innerHTML = '<button>Good job</button>';
+```
+
+This replaces the existing body content with a new button.
+
+**Important:** Assigning to `document.body.innerHTML` replaces all existing content inside the body. Assigning to an individual element's `innerHTML` changes only that element's content.
+
+For plain text, `textContent` is generally preferable because it does not interpret the assigned value as HTML.
+
+### 09.4 Selecting HTML elements with querySelector()
+
+The `document.querySelector()` method finds the first HTML element that matches a CSS selector.
+
+```html
+<button>Hello</button>
+<button class="js-button">Second button</button>
+```
+
+```js
+// Select the first button.
+console.log(document.querySelector('button'));
+
+// Select the button with a specific class.
+console.log(document.querySelector('.js-button'));
+```
+
+Common selectors:
+
+| Selector | Meaning |
+| --- | --- |
+| `'button'` | Select the first button element |
+| `'.js-button'` | Select the first element with the class `js-button` |
+| `'#my-button'` | Select the element with the ID `my-button` |
+
+The dot (`.`) selects a class, while the hash (`#`) selects an ID.
+
+If no matching element exists, `querySelector()` returns `null`.
+
+### 09.5 Saving an HTML element in a variable
+
+HTML elements can be accessed in JavaScript and stored in variables.
+
+```js
+const buttonElement = document.querySelector('.js-button');
+
+console.log(buttonElement);
+```
+
+I can then use the variable to access the element's properties.
+
+```js
+console.log(buttonElement.innerHTML);
+
+buttonElement.innerHTML = 'Changed';
+```
+
+This changes the text inside the selected button.
+
+**Important distinction:**
+
+```js
+// Stores the text inside the button.
+let buttonText = document.querySelector('.js-button').innerHTML;
+
+// Stores the button element itself.
+const buttonElement = document.querySelector('.js-button');
+```
+
+Changing `buttonText` only changes the variable. Changing `buttonElement.innerHTML` changes the actual content displayed on the page.
+
+### 09.6 Making a YouTube subscribe button interactive
+
+The DOM allows JavaScript to respond to user actions and update HTML elements.
+
+**HTML:**
+
+```html
+<p>YouTube Subscribe Button</p>
+
+<button class="js-subscribe-button" onclick="changeSubscribeButton()">
+  Subscribe
+</button>
+```
+
+**JavaScript:**
+
+```js
+function changeSubscribeButton() {
+  const buttonElement = document.querySelector('.js-subscribe-button');
+
+  if (buttonElement.innerHTML === 'Subscribe') {
+    buttonElement.innerHTML = 'Subscribed';
+  } else {
+    buttonElement.innerHTML = 'Subscribe';
+  }
+}
+```
+
+When the button is clicked:
+
+1. JavaScript selects the button using `querySelector()`.
+2. It reads the current text using `innerHTML`.
+3. An `if...else` statement checks the text.
+4. The button changes from `Subscribe` to `Subscribed`, or back again.
+
+This combines the DOM, functions, variables, conditions, and click events.
+
+### 09.7 Reading input values
+
+Input elements allow users to enter information. The `.value` property lets JavaScript read what the user entered.
+
+```html
+<input class="cost-input" placeholder="Cost of order">
+<button onclick="calculate()">Calculate</button>
+
+<p class="cost-result"></p>
+```
+
+```js
+function calculate() {
+  const costInput = Number(
+    document.querySelector('.cost-input').value
+  );
+
+  const costResult = document.querySelector('.cost-result');
+
+  costResult.textContent = costInput;
+}
+```
+
+- `querySelector()` selects the input element.
+- `.value` reads the input's current value as a string.
+- `Number()` converts the string to a number.
+- `textContent` displays the result inside the paragraph.
+
+### 09.8 Mini project: Amazon shipping calculator
+
+The goal is to calculate the total order cost, including shipping when necessary.
+
+**Rules:**
+
+- Orders below $40 have a $10 shipping fee.
+- Orders of $40 or more have free shipping.
+
+```html
+<p>Amazon Shipping Calculator</p>
+<p>Orders under $40 = $10 shipping</p>
+<p>Orders $40 or more = FREE shipping</p>
+
+<input
+  type="number"
+  class="cost-input"
+  placeholder="Cost of order"
+>
+
+<button onclick="calculate()">Calculate</button>
+
+<p class="cost-result"></p>
+```
+
+```js
+function calculate() {
+  const costInput = Number(
+    document.querySelector('.cost-input').value
+  );
+
+  const costResult = document.querySelector('.cost-result');
+
+  let totalCost = costInput;
+
+  if (totalCost < 40) {
+    totalCost += 10;
+  }
+
+  costResult.textContent = `$${totalCost}`;
+}
+```
+
+**Algorithm:**
+
+1. Read the order cost from the input.
+2. Convert the input value to a number.
+3. Check whether the order costs less than $40.
+4. Add $10 if shipping is required.
+5. Display the final total on the page.
+
+Example results:
+
+| Order cost | Shipping | Total |
+| ---: | ---: | ---: |
+| $25 | $10 | $35 |
+| $39 | $10 | $49 |
+| $40 | $0 | $40 |
+| $60 | $0 | $60 |
+
+### 09.9 Handling keyboard events
+
+JavaScript can respond to keyboard actions as well as mouse clicks.
+
+The `keydown` event occurs when a key is pressed. In HTML, `onkeydown` is an event-handler attribute that specifies what code should run when this event occurs.
+
+```html
+<input
+  class="cost-input"
+  onkeydown="handleCostKeydown(event)"
+  placeholder="Cost of order"
+>
+```
+
+```js
+function handleCostKeydown(event) {
+  if (event.key === 'Enter') {
+    calculate();
+  }
+}
+```
+
+- `onkeydown` connects the keyboard event to the handler.
+- `event` contains information about the keyboard action.
+- `event.key` identifies the pressed key.
+- When the key is `Enter`, the function calls `calculate()`.
+
+**Workflow:**
+
+1. The user types an order cost.
+2. The user presses Enter.
+3. The input's `keydown` event occurs.
+4. `handleCostKeydown(event)` checks the pressed key.
+5. If the key is Enter, `calculate()` runs.
+6. The result appears on the page.
+
+Alternatively, I can use `addEventListener()` in JavaScript:
+
+```js
+const costInput = document.querySelector('.cost-input');
+
+costInput.addEventListener('keydown', function(event) {
+  if (event.key === 'Enter') {
+    calculate();
+  }
+});
+```
+
+Here, the event name is `'keydown'`, without the `on` prefix.
+
+### 09.10 DOM and event-handler recap
+
+| Concept | Purpose |
+| --- | --- |
+| `document` | Access the current HTML document |
+| `document.title` | Read or change the page title |
+| `document.body` | Access the body element |
+| `innerHTML` | Read or replace HTML content |
+| `textContent` | Read or replace text content |
+| `querySelector()` | Find the first matching element |
+| `.value` | Read an input's current value |
+| `onclick` | Run code when an element is clicked |
+| `onkeydown` | Run code when a key is pressed |
+| `addEventListener()` | Register an event listener in JavaScript |
+| `event.key` | Identify the key that was pressed |
+
+### 09.11 Chapter recap
+
+- The DOM represents the HTML document as objects that JavaScript can access and modify.
+- The `document` object provides access to the page and its elements.
+- Dot notation lets me access object properties such as `document.title` and `document.body`.
+- `innerHTML` can read or replace an element's HTML content.
+- `querySelector()` selects an element using a CSS selector.
+- Storing an HTML element in a variable allows me to reuse it.
+- `.value` reads user input, while `textContent` displays text on the page.
+- Click and keyboard events let users interact with JavaScript.
+- Functions and conditions allow me to build interactive features such as a subscribe button and a shipping calculator.
+- The DOM connects JavaScript logic to the visible web page.
 
 ## Feedback and contributions
 

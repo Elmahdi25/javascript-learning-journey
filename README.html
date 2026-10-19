@@ -428,6 +428,11 @@ code {
 <td>Objects, JSON &amp; localStorage</td>
 <td>Covered</td>
 </tr>
+<tr>
+<td><a href="#chapter-09--dom-document-object-model">09</a></td>
+<td>DOM (Document Object Model)</td>
+<td>Covered</td>
+</tr>
 </tbody>
 </table>
 <p>Each chapter uses a stable two-digit number. Subsections use the same prefix, such as <strong>03.1</strong>, so new lessons can be added without renumbering earlier chapters.</p>
@@ -2098,6 +2103,337 @@ notification.<span class="hljs-title function_">showMessage</span>();
 <li>Object assignment shares a reference rather than creating an independent copy.</li>
 <li>Object equality checks identity, not matching contents.</li>
 <li>Destructuring and shorthand syntax make object code more concise.</li>
+</ul>
+<h2 id="chapter-09--dom-document-object-model">Chapter 09 — DOM (Document Object Model)</h2>
+<h3 id="091-what-is-the-dom">09.1 What is the DOM?</h3>
+<p>The <strong>DOM (Document Object Model)</strong> represents an HTML page as objects that JavaScript can access and modify.</p>
+<p>The browser creates a DOM representation of the HTML document. JavaScript can use the <code>document</code> object to find elements, read their content, and change the page.</p>
+<pre class="hljs"><code><div><span class="hljs-variable language_">document</span>.<span class="hljs-property">body</span>.<span class="hljs-property">innerHTML</span> = <span class="hljs-string">&#x27;Hello&#x27;</span>;
+</div></code></pre>
+<p>This replaces everything inside the <code>&lt;body&gt;</code> with the text <code>Hello</code>.</p>
+<p>The DOM connects JavaScript to the web page, allowing me to create interactive websites.</p>
+<h3 id="092-accessing-properties-of-the-document-object">09.2 Accessing properties of the document object</h3>
+<p>The <code>document</code> object has properties that let me access different parts of the page.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// Get the current page title.</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">document</span>.<span class="hljs-property">title</span>);
+
+<span class="hljs-comment">// Change the title displayed in the browser tab.</span>
+<span class="hljs-variable language_">document</span>.<span class="hljs-property">title</span> = <span class="hljs-string">&#x27;Good job!&#x27;</span>;
+
+<span class="hljs-comment">// Access the body element.</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">document</span>.<span class="hljs-property">body</span>);
+</div></code></pre>
+<ul>
+<li><code>document</code> represents the current HTML document.</li>
+<li><code>document.title</code> gets or changes the page title.</li>
+<li><code>document.body</code> gives me access to the body element.</li>
+<li>Dot notation lets me access an object's properties.</li>
+</ul>
+<h3 id="093-understanding-innerhtml">09.3 Understanding innerHTML</h3>
+<p>The <code>innerHTML</code> property lets me read or replace the HTML content inside an element.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// Get the HTML inside the body.</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">document</span>.<span class="hljs-property">body</span>.<span class="hljs-property">innerHTML</span>);
+
+<span class="hljs-comment">// Replace everything inside the body.</span>
+<span class="hljs-variable language_">document</span>.<span class="hljs-property">body</span>.<span class="hljs-property">innerHTML</span> = <span class="hljs-string">&#x27;Hello&#x27;</span>;
+</div></code></pre>
+<p>I can also insert HTML elements as a string:</p>
+<pre class="hljs"><code><div><span class="hljs-variable language_">document</span>.<span class="hljs-property">body</span>.<span class="hljs-property">innerHTML</span> = <span class="hljs-string">&#x27;&lt;button&gt;Good job&lt;/button&gt;&#x27;</span>;
+</div></code></pre>
+<p>This replaces the existing body content with a new button.</p>
+<p><strong>Important:</strong> Assigning to <code>document.body.innerHTML</code> replaces all existing content inside the body. Assigning to an individual element's <code>innerHTML</code> changes only that element's content.</p>
+<p>For plain text, <code>textContent</code> is generally preferable because it does not interpret the assigned value as HTML.</p>
+<h3 id="094-selecting-html-elements-with-queryselector">09.4 Selecting HTML elements with querySelector()</h3>
+<p>The <code>document.querySelector()</code> method finds the first HTML element that matches a CSS selector.</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">button</span>&gt;</span>Hello<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;js-button&quot;</span>&gt;</span>Second button<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-comment">// Select the first button.</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#x27;button&#x27;</span>));
+
+<span class="hljs-comment">// Select the button with a specific class.</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#x27;.js-button&#x27;</span>));
+</div></code></pre>
+<p>Common selectors:</p>
+<table>
+<thead>
+<tr>
+<th>Selector</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>'button'</code></td>
+<td>Select the first button element</td>
+</tr>
+<tr>
+<td><code>'.js-button'</code></td>
+<td>Select the first element with the class <code>js-button</code></td>
+</tr>
+<tr>
+<td><code>'#my-button'</code></td>
+<td>Select the element with the ID <code>my-button</code></td>
+</tr>
+</tbody>
+</table>
+<p>The dot (<code>.</code>) selects a class, while the hash (<code>#</code>) selects an ID.</p>
+<p>If no matching element exists, <code>querySelector()</code> returns <code>null</code>.</p>
+<h3 id="095-saving-an-html-element-in-a-variable">09.5 Saving an HTML element in a variable</h3>
+<p>HTML elements can be accessed in JavaScript and stored in variables.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> buttonElement = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#x27;.js-button&#x27;</span>);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buttonElement);
+</div></code></pre>
+<p>I can then use the variable to access the element's properties.</p>
+<pre class="hljs"><code><div><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buttonElement.<span class="hljs-property">innerHTML</span>);
+
+buttonElement.<span class="hljs-property">innerHTML</span> = <span class="hljs-string">&#x27;Changed&#x27;</span>;
+</div></code></pre>
+<p>This changes the text inside the selected button.</p>
+<p><strong>Important distinction:</strong></p>
+<pre class="hljs"><code><div><span class="hljs-comment">// Stores the text inside the button.</span>
+<span class="hljs-keyword">let</span> buttonText = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#x27;.js-button&#x27;</span>).<span class="hljs-property">innerHTML</span>;
+
+<span class="hljs-comment">// Stores the button element itself.</span>
+<span class="hljs-keyword">const</span> buttonElement = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#x27;.js-button&#x27;</span>);
+</div></code></pre>
+<p>Changing <code>buttonText</code> only changes the variable. Changing <code>buttonElement.innerHTML</code> changes the actual content displayed on the page.</p>
+<h3 id="096-making-a-youtube-subscribe-button-interactive">09.6 Making a YouTube subscribe button interactive</h3>
+<p>The DOM allows JavaScript to respond to user actions and update HTML elements.</p>
+<p><strong>HTML:</strong></p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>YouTube Subscribe Button<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;js-subscribe-button&quot;</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;changeSubscribeButton()&quot;</span>&gt;</span>
+  Subscribe
+<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+</div></code></pre>
+<p><strong>JavaScript:</strong></p>
+<pre class="hljs"><code><div><span class="hljs-keyword">function</span> <span class="hljs-title function_">changeSubscribeButton</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">const</span> buttonElement = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#x27;.js-subscribe-button&#x27;</span>);
+
+  <span class="hljs-keyword">if</span> (buttonElement.<span class="hljs-property">innerHTML</span> === <span class="hljs-string">&#x27;Subscribe&#x27;</span>) {
+    buttonElement.<span class="hljs-property">innerHTML</span> = <span class="hljs-string">&#x27;Subscribed&#x27;</span>;
+  } <span class="hljs-keyword">else</span> {
+    buttonElement.<span class="hljs-property">innerHTML</span> = <span class="hljs-string">&#x27;Subscribe&#x27;</span>;
+  }
+}
+</div></code></pre>
+<p>When the button is clicked:</p>
+<ol>
+<li>JavaScript selects the button using <code>querySelector()</code>.</li>
+<li>It reads the current text using <code>innerHTML</code>.</li>
+<li>An <code>if...else</code> statement checks the text.</li>
+<li>The button changes from <code>Subscribe</code> to <code>Subscribed</code>, or back again.</li>
+</ol>
+<p>This combines the DOM, functions, variables, conditions, and click events.</p>
+<h3 id="097-reading-input-values">09.7 Reading input values</h3>
+<p>Input elements allow users to enter information. The <code>.value</code> property lets JavaScript read what the user entered.</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;cost-input&quot;</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">&quot;Cost of order&quot;</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;calculate()&quot;</span>&gt;</span>Calculate<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;cost-result&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-keyword">function</span> <span class="hljs-title function_">calculate</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">const</span> costInput = <span class="hljs-title class_">Number</span>(
+    <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#x27;.cost-input&#x27;</span>).<span class="hljs-property">value</span>
+  );
+
+  <span class="hljs-keyword">const</span> costResult = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#x27;.cost-result&#x27;</span>);
+
+  costResult.<span class="hljs-property">textContent</span> = costInput;
+}
+</div></code></pre>
+<ul>
+<li><code>querySelector()</code> selects the input element.</li>
+<li><code>.value</code> reads the input's current value as a string.</li>
+<li><code>Number()</code> converts the string to a number.</li>
+<li><code>textContent</code> displays the result inside the paragraph.</li>
+</ul>
+<h3 id="098-mini-project-amazon-shipping-calculator">09.8 Mini project: Amazon shipping calculator</h3>
+<p>The goal is to calculate the total order cost, including shipping when necessary.</p>
+<p><strong>Rules:</strong></p>
+<ul>
+<li>Orders below $40 have a $10 shipping fee.</li>
+<li>Orders of $40 or more have free shipping.</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Amazon Shipping Calculator<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Orders under $40 = $10 shipping<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Orders $40 or more = FREE shipping<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">input</span>
+  <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;number&quot;</span>
+  <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;cost-input&quot;</span>
+  <span class="hljs-attr">placeholder</span>=<span class="hljs-string">&quot;Cost of order&quot;</span>
+&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;calculate()&quot;</span>&gt;</span>Calculate<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;cost-result&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-keyword">function</span> <span class="hljs-title function_">calculate</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">const</span> costInput = <span class="hljs-title class_">Number</span>(
+    <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#x27;.cost-input&#x27;</span>).<span class="hljs-property">value</span>
+  );
+
+  <span class="hljs-keyword">const</span> costResult = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#x27;.cost-result&#x27;</span>);
+
+  <span class="hljs-keyword">let</span> totalCost = costInput;
+
+  <span class="hljs-keyword">if</span> (totalCost &lt; <span class="hljs-number">40</span>) {
+    totalCost += <span class="hljs-number">10</span>;
+  }
+
+  costResult.<span class="hljs-property">textContent</span> = <span class="hljs-string">`$<span class="hljs-subst">${totalCost}</span>`</span>;
+}
+</div></code></pre>
+<p><strong>Algorithm:</strong></p>
+<ol>
+<li>Read the order cost from the input.</li>
+<li>Convert the input value to a number.</li>
+<li>Check whether the order costs less than $40.</li>
+<li>Add $10 if shipping is required.</li>
+<li>Display the final total on the page.</li>
+</ol>
+<p>Example results:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:right">Order cost</th>
+<th style="text-align:right">Shipping</th>
+<th style="text-align:right">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">$25</td>
+<td style="text-align:right">$10</td>
+<td style="text-align:right">$35</td>
+</tr>
+<tr>
+<td style="text-align:right">$39</td>
+<td style="text-align:right">$10</td>
+<td style="text-align:right">$49</td>
+</tr>
+<tr>
+<td style="text-align:right">$40</td>
+<td style="text-align:right">$0</td>
+<td style="text-align:right">$40</td>
+</tr>
+<tr>
+<td style="text-align:right">$60</td>
+<td style="text-align:right">$0</td>
+<td style="text-align:right">$60</td>
+</tr>
+</tbody>
+</table>
+<h3 id="099-handling-keyboard-events">09.9 Handling keyboard events</h3>
+<p>JavaScript can respond to keyboard actions as well as mouse clicks.</p>
+<p>The <code>keydown</code> event occurs when a key is pressed. In HTML, <code>onkeydown</code> is an event-handler attribute that specifies what code should run when this event occurs.</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">input</span>
+  <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;cost-input&quot;</span>
+  <span class="hljs-attr">onkeydown</span>=<span class="hljs-string">&quot;handleCostKeydown(event)&quot;</span>
+  <span class="hljs-attr">placeholder</span>=<span class="hljs-string">&quot;Cost of order&quot;</span>
+&gt;</span>
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-keyword">function</span> <span class="hljs-title function_">handleCostKeydown</span>(<span class="hljs-params">event</span>) {
+  <span class="hljs-keyword">if</span> (event.<span class="hljs-property">key</span> === <span class="hljs-string">&#x27;Enter&#x27;</span>) {
+    <span class="hljs-title function_">calculate</span>();
+  }
+}
+</div></code></pre>
+<ul>
+<li><code>onkeydown</code> connects the keyboard event to the handler.</li>
+<li><code>event</code> contains information about the keyboard action.</li>
+<li><code>event.key</code> identifies the pressed key.</li>
+<li>When the key is <code>Enter</code>, the function calls <code>calculate()</code>.</li>
+</ul>
+<p><strong>Workflow:</strong></p>
+<ol>
+<li>The user types an order cost.</li>
+<li>The user presses Enter.</li>
+<li>The input's <code>keydown</code> event occurs.</li>
+<li><code>handleCostKeydown(event)</code> checks the pressed key.</li>
+<li>If the key is Enter, <code>calculate()</code> runs.</li>
+<li>The result appears on the page.</li>
+</ol>
+<p>Alternatively, I can use <code>addEventListener()</code> in JavaScript:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> costInput = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#x27;.cost-input&#x27;</span>);
+
+costInput.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&#x27;keydown&#x27;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params">event</span>) {
+  <span class="hljs-keyword">if</span> (event.<span class="hljs-property">key</span> === <span class="hljs-string">&#x27;Enter&#x27;</span>) {
+    <span class="hljs-title function_">calculate</span>();
+  }
+});
+</div></code></pre>
+<p>Here, the event name is <code>'keydown'</code>, without the <code>on</code> prefix.</p>
+<h3 id="0910-dom-and-event-handler-recap">09.10 DOM and event-handler recap</h3>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>document</code></td>
+<td>Access the current HTML document</td>
+</tr>
+<tr>
+<td><code>document.title</code></td>
+<td>Read or change the page title</td>
+</tr>
+<tr>
+<td><code>document.body</code></td>
+<td>Access the body element</td>
+</tr>
+<tr>
+<td><code>innerHTML</code></td>
+<td>Read or replace HTML content</td>
+</tr>
+<tr>
+<td><code>textContent</code></td>
+<td>Read or replace text content</td>
+</tr>
+<tr>
+<td><code>querySelector()</code></td>
+<td>Find the first matching element</td>
+</tr>
+<tr>
+<td><code>.value</code></td>
+<td>Read an input's current value</td>
+</tr>
+<tr>
+<td><code>onclick</code></td>
+<td>Run code when an element is clicked</td>
+</tr>
+<tr>
+<td><code>onkeydown</code></td>
+<td>Run code when a key is pressed</td>
+</tr>
+<tr>
+<td><code>addEventListener()</code></td>
+<td>Register an event listener in JavaScript</td>
+</tr>
+<tr>
+<td><code>event.key</code></td>
+<td>Identify the key that was pressed</td>
+</tr>
+</tbody>
+</table>
+<h3 id="0911-chapter-recap">09.11 Chapter recap</h3>
+<ul>
+<li>The DOM represents the HTML document as objects that JavaScript can access and modify.</li>
+<li>The <code>document</code> object provides access to the page and its elements.</li>
+<li>Dot notation lets me access object properties such as <code>document.title</code> and <code>document.body</code>.</li>
+<li><code>innerHTML</code> can read or replace an element's HTML content.</li>
+<li><code>querySelector()</code> selects an element using a CSS selector.</li>
+<li>Storing an HTML element in a variable allows me to reuse it.</li>
+<li><code>.value</code> reads user input, while <code>textContent</code> displays text on the page.</li>
+<li>Click and keyboard events let users interact with JavaScript.</li>
+<li>Functions and conditions allow me to build interactive features such as a subscribe button and a shipping calculator.</li>
+<li>The DOM connects JavaScript logic to the visible web page.</li>
 </ul>
 <h2 id="feedback-and-contributions">Feedback and contributions</h2>
 <p>This is a personal learning repository. Suggestions, clear explanations, and feedback are welcome through GitHub issues. I want to understand improvements and practice applying them myself.</p>
