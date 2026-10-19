@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./practice.css">
+
+    <title>Practice</title>
+</head>
+
+<body>
+    <div class="first-ex">
+        <h3 class="ex-title">Youtube Subscribe Button</h3>
+        <button onclick="change_subscribe_btn()" class="subscribe-btn">Subscribe</button>
+    </div>
+
+
+    <div class="second-ex">
+        <h1>Rock Paper Scissors</h1>
+    
+        <button onclick="play('rock')">Rock</button>
+        <button onclick="play('paper')">Paper</button>
+        <button onclick="play('scissors')">Scissors</button>
+        
+        <p class="start"></p>
+        <p class="result"></p>
+        <p class="moves"></p>
+        <p class="score"></p>
+    
+        <button onclick="reset()">Reset score</button>
+    </div>
+
+
+    <div class="third-ex">
+       <h3>Amazon Shipping Calculator</h3>
+       <p>Orders under $40=+10$ shipping.</p>
+       <p>Orders over $40 = FREE shipping.</p>
+       <input 
+            class="cost_order"
+            type="number" 
+            placeholder="Cost of order"
+            onkeydown="handle_enter_btn(event)"
+            
+            >
+       <button onclick="calculate()">Calculate</button>
+       <p class="final_price"></p>
+    </div>
+
+   
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script src="./script.js"></script>
+</body>
+
+</html>

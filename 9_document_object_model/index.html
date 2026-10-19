@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document object model</title>
+</head>
+
+<body>
+
+    <button class="first-btn" style="cursor: pointer;">Hello</button>
+    <button id="second-btn" class="second-btn" style="cursor: pointer;">Second button</button>
+
+    <script>
+        console.log(document.querySelector('button').innerHTML);
+        document.querySelector('button').innerHTML = 'HELLO WORLD'; 
+        const btn_element = document.querySelector('.second-btn').innerHTML = 'second-btn-changed'; 
+
+        console.log(btn_element);
+        
+        
+
+        /*console.log('hey');
+        document.body.innerHTML= 'Hello My name is Elmahdi';
+        document.title = 'Good Job!'
+
+        console.log(document.title);
+        document.title = 'Changed'
+        console.log(document.title);
+
+        console.log(document.body);
+        console.log(typeof document.body);
+        console.log(document.body.innerHTML);
+        document.body.innerHTML = '<button style="background-color:pink;"">GOOD JOB!</button>'*/
+
+    </script>
+</body>
+
+</html>
