@@ -2118,6 +2118,19 @@ Here, the event name is `'keydown'`, without the `on` prefix.
 - Functions and conditions allow me to build interactive features such as a subscribe button and a shipping calculator.
 - The DOM connects JavaScript logic to the visible web page.
 
+![13](docs/13.png)
+
+<br>
+
+![14](docs/14.gif)
+<br>
+
+![15](docs/15.gif)
+<br>
+
+![16](docs/16.png)
+
+
 ## Feedback and contributions
 
 This is a personal learning repository. Suggestions, clear explanations, and feedback are welcome through GitHub issues. I want to understand improvements and practice applying them myself.
