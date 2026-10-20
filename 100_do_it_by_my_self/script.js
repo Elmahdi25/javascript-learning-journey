@@ -1,56 +1,93 @@
-function play_game(decision) {
-  let computer_move = pick_computer_move();
-  function pick_computer_move() {
-    let computer_move = "";
+let get_score = localStorage.getItem("score");
+let js_score_object = JSON.parse(get_score);
+let score = js_score_object;
+/*if (!score) short cut for score === null bcs null it s a falsy value*/
+if (score === null) {
+  score = {
+    wins: 0,
+    losses: 0,
+    ties: 0,
+  };
+}
 
-    let random_nbr = Math.random();
-    if (random_nbr >= 0 && random_nbr < 1 / 3) {
-      computer_move = "rock";
-    } else if (random_nbr >= 1 / 3 && random_nbr < 2 / 3) {
-      computer_move = "paper";
-    } else {
-      computer_move = "scissors";
-    }
-
-    return computer_move;
-  }
+function play(play_move) {
+  const robot_move = pick_robot_move();
 
   let result = "";
 
-  if (decision === "rock") {
-    if (computer_move === "rock") {
+  if (play_move === "rock") {
+    if (robot_move === "rock") {
       result = "Tie";
-    } else if (computer_move === "paper") {
+    } else if (robot_move === "paper") {
       result = "You Lose";
     } else {
-      result = "You win";
-    }
-  } else if (decision === "paper") {
-    if (computer_move === "rock") {
       result = "You Win";
-    } else if (computer_move === "paper") {
-      result = "Tie";
-    } else {
+    }
+  } else if (play_move === "scissors") {
+    if (robot_move === "rock") {
       result = "You Lose";
+    } else if (robot_move === "paper") {
+      result = "You Win";
+    } else {
+      result = "Tie";
     }
   } else {
-    if (computer_move === "rock") {
-      result = "You Lose";
-    } else if (computer_move === "paper") {
+    if (robot_move === "rock") {
       result = "You Win";
-    } else {
+    } else if (robot_move === "paper") {
       result = "Tie";
+    } else {
+      result = "You Lose";
     }
   }
 
-  let word1 = decision;
-  let decision_capitalized = word1.charAt(0).toUpperCase() + word1.slice(1);
+  if (result === "You Win") {
+    score.wins++;
+  } else if (result === "You Lose") {
+    score.losses++;
+  } else if (result === "Tie") {
+    score.ties++;
+  }
+  /*******************************************************/
+  let score_json = JSON.stringify(score);
+  localStorage.setItem("score", score_json);
+  /*******************************************************/
 
-  let word2 = computer_move;
-  let computer_move_capitalized =
-    word2.charAt(0).toUpperCase() + word2.slice(1);
+  document.querySelector(".result").innerHTML = result;
 
-  alert(
-    `You picked ${decision_capitalized}, Robot picked ${computer_move_capitalized}, ${result}`,
-  );
+  document.querySelector(".moves").innerHTML =
+    `You ${play_move} - ${robot_move} Computer`;
+
+  update_score_element();
+}
+
+function update_score_element() {
+  document.querySelector(".score").innerHTML =
+    `Wins: ${score.wins}, Losses: ${score.losses}, Ties: ${score.ties}`;
+}
+function pick_robot_move() {
+  let robot_move = "";
+  let random_nbr = Math.random();
+
+  if (random_nbr >= 0 && random_nbr < 1 / 3) {
+    robot_move = "rock";
+  } else if (random_nbr >= 1 / 3 && random_nbr < 2 / 3) {
+    robot_move = "paper";
+  } else {
+    robot_move = "scissors";
+  }
+
+  return robot_move;
+}
+
+function reset() {
+  score.wins = 0;
+  score.losses = 0;
+  score.ties = 0;
+  localStorage.removeItem("score");
+
+  document.querySelector(".result").innerHTML = "";
+  document.querySelector(".moves").innerHTML = "";
+
+  update_score_element();
 }
