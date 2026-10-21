@@ -2448,7 +2448,7 @@ costInput.<span class="hljs-title function_">addEventListener</span>(<span class
 <br></p>
 <p><img src="docs/16.png" alt="16"></p>
 <h2 id="chapter-10-arrays--loops">Chapter 10: Arrays &amp; Loops</h2>
-<h3 id="111-arrays">11.1 Arrays</h3>
+<h3 id="101-arrays">10.1 Arrays</h3>
 <p>An <strong>array</strong> stores multiple values inside a single variable.</p>
 <pre class="hljs"><code><div><span class="hljs-keyword">const</span> myArray = [<span class="hljs-number">10</span>, <span class="hljs-number">20</span>, <span class="hljs-number">30</span>, <span class="hljs-number">40</span>];
 </div></code></pre>
@@ -2459,7 +2459,7 @@ costInput.<span class="hljs-title function_">addEventListener</span>(<span class
 <p>Get the number of elements using <code>.length</code>.</p>
 <pre class="hljs"><code><div><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(myArray.<span class="hljs-property">length</span>); <span class="hljs-comment">// 4</span>
 </div></code></pre>
-<h3 id="112-modifying-arrays">11.2 Modifying Arrays</h3>
+<h3 id="102-modifying-arrays">10.2 Modifying Arrays</h3>
 <p><strong>Add an element</strong> with <code>.push()</code>:</p>
 <pre class="hljs"><code><div>myArray.<span class="hljs-title function_">push</span>(<span class="hljs-number">50</span>);
 </div></code></pre>
@@ -2470,7 +2470,7 @@ costInput.<span class="hljs-title function_">addEventListener</span>(<span class
 <p>Check whether a value is an array using <code>Array.isArray()</code>:</p>
 <pre class="hljs"><code><div><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">Array</span>.<span class="hljs-title function_">isArray</span>(myArray)); <span class="hljs-comment">// true</span>
 </div></code></pre>
-<h3 id="113-while-loops">11.3 While Loops</h3>
+<h3 id="103-while-loops">10.3 While Loops</h3>
 <p>A <code>while</code> loop repeats code while a condition is <code>true</code>.</p>
 <pre class="hljs"><code><div><span class="hljs-keyword">let</span> i = <span class="hljs-number">1</span>;
 
@@ -2480,7 +2480,7 @@ costInput.<span class="hljs-title function_">addEventListener</span>(<span class
 }
 </div></code></pre>
 <p><strong>Important:</strong> Update the variable used in the condition. Otherwise, the loop might never stop.</p>
-<h3 id="114-for-loops">11.4 For Loops</h3>
+<h3 id="104-for-loops">10.4 For Loops</h3>
 <p>A <code>for</code> loop combines initialization, condition, and update in one statement.</p>
 <pre class="hljs"><code><div><span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">1</span>; i &lt;= <span class="hljs-number">5</span>; i++) {
     <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(i);
@@ -2492,7 +2492,7 @@ costInput.<span class="hljs-title function_">addEventListener</span>(<span class
 <li><code>i &lt;= 5</code> — check the condition before each iteration.</li>
 <li><code>i++</code> — increase the counter after each iteration.</li>
 </ol>
-<h3 id="115-looping-through-an-array">11.5 Looping Through an Array</h3>
+<h3 id="105-looping-through-an-array">10.5 Looping Through an Array</h3>
 <p>Use a loop to access each element of an array.</p>
 <pre class="hljs"><code><div><span class="hljs-keyword">const</span> fruits = [<span class="hljs-string">&quot;Apple&quot;</span>, <span class="hljs-string">&quot;Banana&quot;</span>, <span class="hljs-string">&quot;Orange&quot;</span>];
 
@@ -2501,7 +2501,7 @@ costInput.<span class="hljs-title function_">addEventListener</span>(<span class
 }
 </div></code></pre>
 <p>Using <code>i &lt; fruits.length</code> prevents accessing an index outside the array.</p>
-<h3 id="116-the-accumulator-pattern">11.6 The Accumulator Pattern</h3>
+<h3 id="106-the-accumulator-pattern">10.6 The Accumulator Pattern</h3>
 <p>An <strong>accumulator</strong> stores a result that changes during a loop.</p>
 <pre class="hljs"><code><div><span class="hljs-keyword">const</span> numbers = [<span class="hljs-number">10</span>, <span class="hljs-number">20</span>, <span class="hljs-number">30</span>];
 <span class="hljs-keyword">let</span> total = <span class="hljs-number">0</span>;
@@ -2513,7 +2513,7 @@ costInput.<span class="hljs-title function_">addEventListener</span>(<span class
 <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(total); <span class="hljs-comment">// 60</span>
 </div></code></pre>
 <p>The variable <code>total</code> keeps the running sum of the elements.</p>
-<h3 id="117-working-with-input-elements">11.7 Working with Input Elements</h3>
+<h3 id="107-working-with-input-elements">10.7 Working with Input Elements</h3>
 <p>To read a value from an HTML input:</p>
 <pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;todo-value&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">&quot;Todo name&quot;</span>&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;addTodo()&quot;</span>&gt;</span>Add<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
@@ -2536,7 +2536,7 @@ value = <span class="hljs-string">&quot;&quot;</span>;
 <pre class="hljs"><code><div><span class="hljs-keyword">const</span> input = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&quot;.todo-value&quot;</span>);
 input.<span class="hljs-property">value</span> = <span class="hljs-string">&quot;&quot;</span>;
 </div></code></pre>
-<h3 id="118-building-a-simple-to-do-list">11.8 Building a Simple To-Do List</h3>
+<h3 id="108-building-a-simple-to-do-list">10.8 Building a Simple To-Do List</h3>
 <p>Store tasks in an array and use a function to add new tasks.</p>
 <pre class="hljs"><code><div><span class="hljs-keyword">const</span> todoArray = [];
 
@@ -2551,7 +2551,7 @@ input.<span class="hljs-property">value</span> = <span class="hljs-string">&quot
 }
 </div></code></pre>
 <p>The array stores the tasks, while the input allows the user to enter a new task.</p>
-<h3 id="119-generating-html-dynamically">11.9 Generating HTML Dynamically</h3>
+<h3 id="109-generating-html-dynamically">10.9 Generating HTML Dynamically</h3>
 <p>You can use a loop to generate HTML from an array.</p>
 <pre class="hljs"><code><div><span class="hljs-keyword">const</span> todoArray = [<span class="hljs-string">&quot;Learn JavaScript&quot;</span>, <span class="hljs-string">&quot;Practice loops&quot;</span>];
 <span class="hljs-keyword">let</span> todoHTML = <span class="hljs-string">&quot;&quot;</span>;
@@ -2568,7 +2568,7 @@ input.<span class="hljs-property">value</span> = <span class="hljs-string">&quot
 </div></code></pre>
 <p>The loop builds a string containing HTML, and <code>innerHTML</code> inserts that HTML into the page.</p>
 <p><strong>Note:</strong> If the values come from users, inserting them directly through <code>innerHTML</code> can create a cross-site scripting (XSS) risk. For user-provided text, prefer safer DOM methods such as <code>textContent</code>.</p>
-<h3 id="1110-using-a-render-function">11.10 Using a Render Function</h3>
+<h3 id="1010-using-a-render-function">10.10 Using a Render Function</h3>
 <p>A render function updates the page based on the current array.</p>
 <pre class="hljs"><code><div><span class="hljs-keyword">const</span> todoArray = [];
 

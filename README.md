@@ -2135,7 +2135,7 @@ Here, the event name is `'keydown'`, without the `on` prefix.
 
 ## Chapter 10: Arrays & Loops
 
-### 11.1 Arrays
+### 10.1 Arrays
 
 An **array** stores multiple values inside a single variable.
 
@@ -2156,7 +2156,7 @@ Get the number of elements using `.length`.
 console.log(myArray.length); // 4
 ```
 
-### 11.2 Modifying Arrays
+### 10.2 Modifying Arrays
 
 **Add an element** with `.push()`:
 
@@ -2178,7 +2178,7 @@ Check whether a value is an array using `Array.isArray()`:
 console.log(Array.isArray(myArray)); // true
 ```
 
-### 11.3 While Loops
+### 10.3 While Loops
 
 A `while` loop repeats code while a condition is `true`.
 
@@ -2193,7 +2193,7 @@ while (i <= 5) {
 
 **Important:** Update the variable used in the condition. Otherwise, the loop might never stop.
 
-### 11.4 For Loops
+### 10.4 For Loops
 
 A `for` loop combines initialization, condition, and update in one statement.
 
@@ -2209,7 +2209,7 @@ The three parts are:
 2. `i <= 5` — check the condition before each iteration.
 3. `i++` — increase the counter after each iteration.
 
-### 11.5 Looping Through an Array
+### 10.5 Looping Through an Array
 
 Use a loop to access each element of an array.
 
@@ -2223,7 +2223,7 @@ for (let i = 0; i < fruits.length; i++) {
 
 Using `i < fruits.length` prevents accessing an index outside the array.
 
-### 11.6 The Accumulator Pattern
+### 10.6 The Accumulator Pattern
 
 An **accumulator** stores a result that changes during a loop.
 
@@ -2240,7 +2240,7 @@ console.log(total); // 60
 
 The variable `total` keeps the running sum of the elements.
 
-### 11.7 Working with Input Elements
+### 10.7 Working with Input Elements
 
 To read a value from an HTML input:
 
@@ -2276,7 +2276,7 @@ const input = document.querySelector(".todo-value");
 input.value = "";
 ```
 
-### 11.8 Building a Simple To-Do List
+### 10.8 Building a Simple To-Do List
 
 Store tasks in an array and use a function to add new tasks.
 
@@ -2296,7 +2296,7 @@ function addTodo() {
 
 The array stores the tasks, while the input allows the user to enter a new task.
 
-### 11.9 Generating HTML Dynamically
+### 10.9 Generating HTML Dynamically
 
 You can use a loop to generate HTML from an array.
 
@@ -2322,7 +2322,7 @@ The loop builds a string containing HTML, and `innerHTML` inserts that HTML into
 
 **Note:** If the values come from users, inserting them directly through `innerHTML` can create a cross-site scripting (XSS) risk. For user-provided text, prefer safer DOM methods such as `textContent`.
 
-### 11.10 Using a Render Function
+### 10.10 Using a Render Function
 
 A render function updates the page based on the current array.
 
