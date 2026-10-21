@@ -37,6 +37,7 @@ This repository is a learning journal that will grow as I continue the course.
 | [07](#chapter-07--functions) | Functions | Covered |
 | [08](#chapter-08--objects--json) | Objects, JSON & localStorage | Covered |
 | [09](#chapter-09--dom-document-object-model) | DOM (Document Object Model) | Covered |
+| [10](#chapter-10-arrays--loops) | Arrays, loops, accumulator pattern, and dynamic HTML | Covered |
 
 Each chapter uses a stable two-digit number. Subsections use the same prefix, such as **03.1**, so new lessons can be added without renumbering earlier chapters.
 
@@ -2129,6 +2130,233 @@ Here, the event name is `'keydown'`, without the `on` prefix.
 <br>
 
 ![16](docs/16.png)
+
+
+
+## Chapter 10: Arrays & Loops
+
+### 11.1 Arrays
+
+An **array** stores multiple values inside a single variable.
+
+```javascript
+const myArray = [10, 20, 30, 40];
+```
+
+Access an element using its index. Array indexes start at `0`.
+
+```javascript
+console.log(myArray[0]); // 10
+console.log(myArray[2]); // 30
+```
+
+Get the number of elements using `.length`.
+
+```javascript
+console.log(myArray.length); // 4
+```
+
+### 11.2 Modifying Arrays
+
+**Add an element** with `.push()`:
+
+```javascript
+myArray.push(50);
+```
+
+**Remove an element** with `.splice()`:
+
+```javascript
+myArray.splice(1, 1);
+```
+
+The first argument is the index where the operation starts. The second argument is the number of elements to remove.
+
+Check whether a value is an array using `Array.isArray()`:
+
+```javascript
+console.log(Array.isArray(myArray)); // true
+```
+
+### 11.3 While Loops
+
+A `while` loop repeats code while a condition is `true`.
+
+```javascript
+let i = 1;
+
+while (i <= 5) {
+    console.log(i);
+    i++;
+}
+```
+
+**Important:** Update the variable used in the condition. Otherwise, the loop might never stop.
+
+### 11.4 For Loops
+
+A `for` loop combines initialization, condition, and update in one statement.
+
+```javascript
+for (let i = 1; i <= 5; i++) {
+    console.log(i);
+}
+```
+
+The three parts are:
+
+1. `let i = 1` — initialize the counter.
+2. `i <= 5` — check the condition before each iteration.
+3. `i++` — increase the counter after each iteration.
+
+### 11.5 Looping Through an Array
+
+Use a loop to access each element of an array.
+
+```javascript
+const fruits = ["Apple", "Banana", "Orange"];
+
+for (let i = 0; i < fruits.length; i++) {
+    console.log(fruits[i]);
+}
+```
+
+Using `i < fruits.length` prevents accessing an index outside the array.
+
+### 11.6 The Accumulator Pattern
+
+An **accumulator** stores a result that changes during a loop.
+
+```javascript
+const numbers = [10, 20, 30];
+let total = 0;
+
+for (let i = 0; i < numbers.length; i++) {
+    total += numbers[i];
+}
+
+console.log(total); // 60
+```
+
+The variable `total` keeps the running sum of the elements.
+
+### 11.7 Working with Input Elements
+
+To read a value from an HTML input:
+
+```html
+<input class="todo-value" type="text" placeholder="Todo name">
+<button onclick="addTodo()">Add</button>
+```
+
+```javascript
+function addTodo() {
+    const input = document.querySelector(".todo-value");
+    const todoValue = input.value;
+
+    console.log(todoValue);
+
+    input.value = "";
+}
+```
+
+**Important difference:**
+
+```javascript
+let value = document.querySelector(".todo-value").value;
+value = "";
+```
+
+This only changes the JavaScript variable. It does not clear the HTML input.
+
+Instead, keep a reference to the input element and update its `.value` property:
+
+```javascript
+const input = document.querySelector(".todo-value");
+input.value = "";
+```
+
+### 11.8 Building a Simple To-Do List
+
+Store tasks in an array and use a function to add new tasks.
+
+```javascript
+const todoArray = [];
+
+function addTodo() {
+    const input = document.querySelector(".todo-value");
+    const todoValue = input.value;
+
+    todoArray.push(todoValue);
+    input.value = "";
+
+    console.log(todoArray);
+}
+```
+
+The array stores the tasks, while the input allows the user to enter a new task.
+
+### 11.9 Generating HTML Dynamically
+
+You can use a loop to generate HTML from an array.
+
+```javascript
+const todoArray = ["Learn JavaScript", "Practice loops"];
+let todoHTML = "";
+
+for (let i = 0; i < todoArray.length; i++) {
+    const todo = todoArray[i];
+    todoHTML += `<p>${todo}</p>`;
+}
+
+document.querySelector(".todo-list").innerHTML = todoHTML;
+```
+
+Example HTML:
+
+```html
+<div class="todo-list"></div>
+```
+
+The loop builds a string containing HTML, and `innerHTML` inserts that HTML into the page.
+
+**Note:** If the values come from users, inserting them directly through `innerHTML` can create a cross-site scripting (XSS) risk. For user-provided text, prefer safer DOM methods such as `textContent`.
+
+### 11.10 Using a Render Function
+
+A render function updates the page based on the current array.
+
+```javascript
+const todoArray = [];
+
+function renderTodoList() {
+    let todoHTML = "";
+
+    for (let i = 0; i < todoArray.length; i++) {
+        todoHTML += `<p>${todoArray[i]}</p>`;
+    }
+
+    document.querySelector(".todo-list").innerHTML = todoHTML;
+}
+```
+
+Call `renderTodoList()` whenever the array changes so that the displayed list stays up to date.
+
+---
+
+## Key Takeaways
+
+- Arrays store multiple values in one variable.
+- Array indexes start at `0`.
+- `.length` returns the number of elements.
+- `.push()` adds an element to the end of an array.
+- `.splice()` can remove elements from an array.
+- `while` and `for` loops repeat code while their conditions are satisfied.
+- Loops can access every element in an array.
+- The accumulator pattern builds a result over multiple iterations.
+- `.value` reads or changes the value of an HTML input.
+- `innerHTML` can insert HTML into an element.
+- Render functions help keep the page synchronized with the data.
 
 
 ## Feedback and contributions
