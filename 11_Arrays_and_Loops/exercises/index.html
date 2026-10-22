@@ -10,134 +10,33 @@
 <body>
     <h1>ARRAYS LOOPS APPLICATION</h1>
     <script>
-        array = [];
-        for (let index = 0; index < array.length; index++) {
-            const element = array[index];
-            /*EX--1*/
-            const nums = [10, 20, 30];
-            console.log(nums);
-
-            nums[2] = 99;
-            console.log(nums);
-            /*EX--2*/
-            const list_1 = [10, 20, 30];
-            const list_2 = ['Elmahdi', 'jack', 'Luft'];
-            function getLastValue(array) {
-                const lastIndex = array.length - 1
-                const last_index_value = array[lastIndex]
-                console.log(last_index_value);
-            }
-
-            getLastValue(list_1)
-            getLastValue(list_2)
-            /*EX--3*/
-            function array_swap(array) {
-                const last_index = array.length - 1;
-                let last_index_value = array[last_index];
-                let first_index_value = array[0];
-
-                array[0] = last_index_value;
-                array[last_index] = first_index_value;
-
-                console.log(array);
-
-
-            }
-
-            const list_3 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-            const list_4 = ['Hello', 'Elmahdi', 'Good bye'];
-            array_swap(list_3);
-            array_swap(list_4);
-
-            /*EX--4 FOOR-LOOP*/
-            console.log('----------EX--4--------');
-            for (let i = 0; i <= 10; i += 2) {
-                console.log(i);
-            }
-
-            /*EX--5- FOOR-LOOP*/
-            console.log('-----EX--5-------------');
-            for (let i = 5; i >= 0; i--) {
-                console.log(i);
-            };
-
-            /*EX--6- WHILE-LOOP*/
-            console.log('------EX--6------------');
-
-            let i = -2;
-            while (i < 10) {
-                i += 2;
-                console.log(i);
-            };
-
-
-            /*EX--7- WHILE-LOOP*/
-            console.log('-------EX--7----------');
-            let index = 5;
-            while (index >= 0) {
-                console.log(index);
-                index--;
-            };
-            /*EX--8- WHILE-LOOP*/
-            console.log('-------EX--8----------');
-
-
-            function array_add_one_by_value(array) {
-                const new_array = [];
-                for (let i = 0; i < array.length; i++) {
-                    const element = array[i] + 1;
-                    new_array.push(element);
+        /*EX--13- WHILE-LOOP*/
+        console.log("-------EX--13----------");
+        function count_words(words_array) {
+            let object_words = {};
+            for (let i = 0; i < words_array.length; i++) {
+                const element = words_array[i];
+                object_words[element] = 0;
+                for (let j = 0; j < words_array.length; j++) {
+                    const element_2 = words_array[j];
+                    if (element === element_2) {
+                        object_words[element]++;
+                    }
                 }
-                console.log(new_array);
-            }
-            let list_5 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-            let list_6 = [15, 20, 7, 77, 101, 87, 99, 12.5, 30, -2];
-            array_add_one_by_value(list_5);
-            array_add_one_by_value(list_6);
-
-            /*EX--9- WHILE-LOOP*/
-            console.log('-------EX--9----------');
-            function add_num(array, num) {
-                const new_array = [];
-                for (let i = 0; i < array.length; i++) {
-                    const element = array[i] + num;
-                    new_array.push(element)
-                }
-                console.log(new_array);
             }
 
 
-
-            let list_7 = [1, 2, 3];
-            let list_8 = [2.65, 101, 44];
-            let list_9 = [-8, -1, 0];
-            add_num(list_7, 2);
-            add_num(list_8, 8);
-            add_num(list_9, 5.5);
-            /*EX--10- WHILE-LOOP*/
-
+            console.log(object_words);
         }
 
-        console.log('-------EX--10----------');
+
+        let words_array = ['elmahdi', 'raid', 'dina', 'fati', 'elmahdi', 'fati','nourdin','elmahdi'];
+        count_words(words_array);
 
 
-        function add_arrays(array_1, array_2) {
-            const new_array = [];
-            for (let i = 0; i < array_1.length; i++) {
-                const element = array_1[i] + array_2[i];
-                new_array.push(element)
-            }
-            console.log(new_array);
-            
 
-        }
-        let list_10 = [1, 1, 2];
-        let list_11 = [1, 1, 3];
-        let list_12 = [10, 22, 33.6];
-        let list_13 = [20, 22, 33];
-        add_arrays(list_10, list_11);
-        add_arrays(list_12, list_13);
     </script>
+
 </body>
 
 </html>
