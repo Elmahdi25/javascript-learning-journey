@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>training</title>
+</head>
+
+<body>
+    <style>
+        /*.subscribe {
+            color: black;
+            background-color: rgb(249, 46, 46);
+            border: none;
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .is-subscribed {
+            background-color: gray;
+        }*/
+    </style>
+    <input class="date_input" type="date">
+    <button onclick="add()" class="add">Add</button>
+    <div class="time"></div>
+    <script>
+        let time_list = [];
+        let date_input = document.querySelector('.date_input');
+        let date_value = date_input.value;
+        /*let [year, mounth, day] = date_value.split('-');
+        let formatted_date = `${day}-${mounth}-${year}`;*/
+        time_list.push(date_value);
+        console.log(time_list);
+        
+        let time_box = document.querySelector('.time');
+        function add() {
+
+            time_box.innerHTML = "";
+            for (let i = 0; i < time_list.length; i++) {
+                const element = time_list[i];
+                time_box.innerHTML += `<p>${element}</p>`
+            }
+            console.log(date_value);
+            
+            console.log(time_list);
+
+
+        }
+['25-']
+
+
+        /*
+        function subscribe() {
+            let subscribe = document.querySelector('.subscribe')
+            if (subscribe.innerHTML === 'subscribe') {
+                subscribe.classList.add("is-subscribed")
+                subscribe.innerHTML = 'subscribed'
+            } else {
+                subscribe.classList.remove("is-subscribed")
+                subscribe.innerHTML = 'subscribe'
+            }
+        }*/
+    </script>
+</body>
+
+</html>
