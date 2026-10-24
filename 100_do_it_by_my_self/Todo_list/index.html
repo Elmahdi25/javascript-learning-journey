@@ -1,83 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todo Liste</title>
+    <title>Todo List</title>
 </head>
-
 <body>
-    <style>
-        .task {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            vertical-align: middle;
-        }
-    </style>
-    <h1>Todo Liste</h1>
-    <input onkeydown="handle_enter_btn(event)" class="todo_input" type="text" placeholder="Task name">
+    <input onkeydown="handle_enter_btn(event)"  class="todo_input" type="text" placeholder="Todo name">
     <input class="date_input" type="date">
-    <button onclick="add()">Add</button>
-    <div class="tasks_box">
-
-    </div>
-    <script>
-
-
-        let todo_list = [];
-        let tasks_box = document.querySelector('.tasks_box');
-        let div_counter = "";
-
-        function add() {
-            /*----------------------------------------------------*/
-            const todo_input = document.querySelector('.todo_input');
-            let todo_value = todo_input.value;
-            const date_input = document.querySelector('.date_input');
-            let date_value = date_input.value;
-            const [year, month, day] = date_value.split('-')
-            let formatted_date = `${day} /${month}/${year}`
-            /*----------------------------------------------------*/
-            /*----------------------------------------------------*/
-            todo_list.push({
-                name: todo_value,
-                date: formatted_date
-            });
-            todo_input.value = "";
-            date_input.value = "";
-            /*----------------------------------------------------*/
-            tasks_box.innerHTML = "";
-            div_counter=0;
-            /*----------------------------------------------------*/
-            for (let i = 0; i < todo_list.length; i++) {
-                const element = todo_list[i];
-                tasks_box.innerHTML += `
-                   <div class = "task nbr_${div_counter++}" >
-                        <p>${element.name}</p>
-                        <p>${date_value ? element.date : 'Please select a date'}</p>
-                        <button onclick="delete_task()">Delete</button>
-                    </div>
-                    `
-                
-            }
-            console.log(todo_list);
-            
-        }
-        function delete_task() {
-          todo_list.splice(div_counter,1)
-          add();
-        }
-
-        function handle_enter_btn(event) {
-            if (event.key === 'Enter') {
-                add();
-            }
-        }
-
-
-
-    </script>
+    <button onclick="add_task()">Add</button>
+    <div class="tasks_box"></div>
+    <script src="./script.js"></script>
 </body>
-
 </html>
