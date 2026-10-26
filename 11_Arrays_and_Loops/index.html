@@ -108,22 +108,61 @@
         my_2_Array.splice(1,2)
         console.log(my_2_Array);*/
 
-        const array1 = [1,2,3,4];
-        const array2 = array1;
-        
+        const array1 = [1, 2, 3, 4];
+        const array2 = array1.slice();
+
         array2.push(5);
         console.log(array2);
         console.log(array1);
-        
+
+        const [first_index, seconde_index] = [1, 2, 3];
+
+
+        for (let i = 1; i <= 15; i++) {
+            if (i % 3 === 0) {
+                continue;
+            }
+            console.log(i);
+
+            /*if (i === 8) {
+                break;
+            }*/
+
+        }
+        console.log('--------------------');
 
 
 
 
 
 
+        let counter = 0;
+        while (counter <= 10) {
 
+            if (counter === 3) {
+                counter++;
+                continue;
+            }
+            console.log(counter);
+            counter++;
+        }
 
+        function doubled_array(nbrs_array) {
+            let new_array = []
+            for (let i = 0; i < nbrs_array.length; i++) {
+                const element = nbrs_array[i] * 2;
+                if (element === 0) {
+                    break;
+                }
+                new_array.push(element);
+                
+            }
+            return new_array;
 
+        }
+
+        let array_list = [1, 1, 0, 5]
+        console.log(doubled_array(array_list));
 
 
 
