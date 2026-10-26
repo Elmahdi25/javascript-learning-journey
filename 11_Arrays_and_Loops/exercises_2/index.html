@@ -10,7 +10,28 @@
 <body>
     <h1>Arrays and loops exercises part 2</h1>
     <script>
-        
+        console.log("---EX-5---");
+        let nums = [];
+        let new_nums = [];
+        let x = ""
+        for (let i = 1; i <= 30; i++) {
+            nums.push(i)
+            for (let j = 0; j < nums.length; j++) {
+                let element = nums[j];
+                if ((element % 3 === 0) && (element % 5 === 0)) {
+                    element = 'FizzBuzz';
+                } else if (element % 5 === 0) {
+                    element = 'Buzz';
+                } else if (element % 3 === 0) {
+                    element = 'Fizz '
+                }
+                x=element
+            }
+            new_nums.push(x)
+        }
+        console.log(nums);
+        console.log(new_nums);
+
     </script>
 </body>
 

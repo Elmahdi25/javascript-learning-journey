@@ -118,3 +118,28 @@ remove_last_2_eggs(list_9);
 remove_last_2_eggs(list_10);
 remove_last_2_eggs(list_11);
 remove_last_2_eggs(list_12);
+
+console.log("---EX-4---");
+/* USING SLICE FOR MAKING  ACOPY OF THE ORIGINAL ARRAY*/
+function remove_last_2eggs(foods_array) {
+  let reversed_array = foods_array.slice();
+  reversed_array.reverse();
+  let result = [];
+  let egg_counter = 0;
+  for (let i = 0; i < reversed_array.length; i++) {
+    const element = reversed_array[i];
+    if (element === "egg" && egg_counter <= 1) {
+      egg_counter++;
+      continue;
+    } else {
+      result.push(element);
+    }
+  }
+
+  result.reverse();
+  console.log(foods_array);
+  console.log(reversed_array);
+  console.log(result);
+}
+const lis_12 = ["egg", "apple", "egg", "egg", "ham", "tomato"];
+remove_last_2eggs(lis_12);
