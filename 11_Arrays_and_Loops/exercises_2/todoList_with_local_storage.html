@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>todo List</title>
+</head>
+
+<body>
+    <h1>Todo List</h1>
+    <input onkeydown="handle_enter_btn(event)" class="todo_input" type="text" placeholder="Todo Name">
+    <input class="date_input" type="date" placeholder="Todo Name">
+    <button onclick="add_task()">Add</button>
+    <div class="tasks_box"></div>
+    <script>
+        let get_value = localStorage.getItem('todo_list');
+        let todo_value_object = JSON.parse(get_value);
+
+        //const tasks_box = document.querySelector('.tasks_box');
+        //tasks_box.innerHTML = `${}`
+        let todo_list = todo_value_object || [];
+        const todo_input = document.querySelector('.todo_input');
+        const date_input = document.querySelector('.date_input');
+
+        function add_task() {
+            const todo_value = todo_input.value;
+            const today = new Date();
+            const date_value =
+                date_input.value ||
+                `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+            let [year, month, day] = date_value.split("-");
+            const formatted_date = `${day}/${month}/${year}`;
+
+            todo_list.push({ name: todo_value, duedate: formatted_date });
+            localStorage.setItem('todo_list', JSON.stringify(todo_list));
+            generate_html();
+        }
+        generate_html();
+
+        function generate_html() {
+            const tasks_box = document.querySelector('.tasks_box');
+            tasks_box.innerHTML = "";
+            for (let i = 0; i < todo_list.length; i++) {
+                const todo_object = todo_list[i];
+                tasks_box.innerHTML += `
+                <p>
+                    ${todo_object.name}    
+                    ${todo_object.duedate} 
+                    <button onclick = "delete_tasks(${i})">Delete</button>   
+                </p>`
+            }
+            todo_input.value = ""
+            date_input.value = ""
+
+        }
+
+        function delete_tasks(task_nbr) {
+            todo_list.splice(task_nbr, 1);
+            console.log(todo_list);
+            localStorage.setItem('todo_list', JSON.stringify(todo_list));
+            generate_html();
+
+        }
+
+        function handle_enter_btn(event) {
+            if (event.key === 'Enter') {
+                add_task();
+            }
+        }
+        console.log(todo_list);
+
+    </script>
+</body>
+
+</html>
