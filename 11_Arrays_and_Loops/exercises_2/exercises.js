@@ -18,14 +18,12 @@ function found_search(search_array, word) {
   }
   console.log(result);
 }
-
 let list_1 = ["Elmahdi", "SARA", "search", "abdo", "Search"];
 let list_2 = ["Elmahdi", "SARA", "abdo", "search"];
 let list_3 = ["Elmahdi", "SARA", "abdo"];
 let list_4 = ["Elmahdi", "SARA", "abdo", "yamaha", "Search"];
 let list_5 = ["Elmahdi", "SARA", "SEARCH", "abdo", "yamaha", "sara"];
 
-"elmahdi".toLowerCase;
 found_search(list_1, "search");
 found_search(list_2, "Elmahdi");
 found_search(list_3, "elmaHDI");
@@ -33,8 +31,24 @@ found_search(list_4, "sara");
 found_search(list_4, "yellow");
 found_search(list_5, "saRa");
 
-console.log("---EX-2---");
+console.log("---EX-1-Method*2*--");
+function finde_index(array, word) {
+  let xx = "";
+  for (let i = 0; i < array.length; i++) {
+    const element = array[i];
+    if (!(element === word)) {
+      xx = -1;
+    } else {
+      xx = i;
+      break;
+    }
+  }
+  console.log(xx);
+}
+const list_0 = ["red", "yellow", "bleu", "green", "yellow"];
+finde_index(list_0, "yellow");
 
+console.log("---EX-2---");
 function remove_egg(food_array) {
   let array_no_egg = [];
   let egg_counter = 0;
@@ -143,3 +157,58 @@ function remove_last_2eggs(foods_array) {
 }
 const lis_12 = ["egg", "apple", "egg", "egg", "ham", "tomato"];
 remove_last_2eggs(lis_12);
+
+console.log("---EX-5---");
+let nums = [];
+let new_nums = [];
+let x = "";
+for (let i = 1; i <= 30; i++) {
+  nums.push(i);
+  for (let j = 0; j < nums.length; j++) {
+    let element = nums[j];
+    if (element % 3 === 0 && element % 5 === 0) {
+      element = "FizzBuzz";
+    } else if (element % 5 === 0) {
+      element = "Buzz";
+    } else if (element % 3 === 0) {
+      element = "Fizz ";
+    }
+    x = element;
+  }
+  new_nums.push(x);
+}
+console.log(nums);
+console.log(new_nums);
+
+
+
+console.log("---EX-6---");
+
+function find_index(array, word) {
+  let index = -1;
+  for (let i = 0; i < array.length; i++) {
+    const element = array[i];
+    if (element === word) {
+      index = i;
+    } else {
+      index;
+    }
+  }
+  return index;
+}
+
+const list = ["green", "red", "green", "red", "yellow"];
+//find_index(list, 'red');
+
+function unique(array) {
+  let unique_words = [];
+  for (let i = 0; i < array.length; i++) {
+    const element = array[i];
+    if (find_index(unique_words, element) === -1) {
+      unique_words.push(element);
+    }
+  }
+  console.log(unique_words);
+}
+const list_32 = ["green", "red", "green", "red", "yellow"];
+unique(list_32);
