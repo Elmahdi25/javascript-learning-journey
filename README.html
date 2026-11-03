@@ -438,9 +438,13 @@ code {
 <td>Arrays, loops, accumulator pattern, and dynamic HTML</td>
 <td>Covered</td>
 </tr>
+<tr>
+<td><a href="#chapter-11-advanced-functions">11</a></td>
+<td>Functions as values, callbacks, timers, auto-play, and <code>forEach</code></td>
+<td>Covered</td>
+</tr>
 </tbody>
 </table>
-<p>Each chapter uses a stable two-digit number. Subsections use the same prefix, such as <strong>03.1</strong>, so new lessons can be added without renumbering earlier chapters.</p>
 <h2 id="preview">Preview</h2>
 <p>From my first popup to calculating a shopping total:</p>
 <pre class="hljs"><code><div><span class="hljs-title function_">alert</span>(<span class="hljs-string">&#x27;Hello!&#x27;</span>);
@@ -2598,6 +2602,470 @@ input.<span class="hljs-property">value</span> = <span class="hljs-string">&quot
 <li><code>innerHTML</code> can insert HTML into an element.</li>
 <li>Render functions help keep the page synchronized with the data.</li>
 </ul>
+<h2 id="chapter-11-advanced-functions">chapter-11-advanced-functions</h2>
+<p>In this chapter, I learned how to treat functions as values, pass them into other functions, schedule callbacks, and loop through arrays using <code>forEach</code>. I applied these ideas to my rock-paper-scissors game and to-do list.</p>
+<h3 id="111-functions-are-values">11.1 Functions are values</h3>
+<p>A function is reusable code, but it is also a value. I can store it in a variable, put it in an object, or pass it to another function.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">function</span> <span class="hljs-title function_">greeting</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;Hello&#x27;</span>);
+}
+
+<span class="hljs-title function_">greeting</span>(); <span class="hljs-comment">// Hello</span>
+
+<span class="hljs-keyword">const</span> greeting_two = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;Hello again&#x27;</span>);
+};
+
+<span class="hljs-title function_">greeting_two</span>(); <span class="hljs-comment">// Hello again</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-keyword">typeof</span> greeting_two); <span class="hljs-comment">// function</span>
+</div></code></pre>
+<p>The second example uses a function expression. <code>function () { ... }</code> has no explicit name in its syntax: it is an anonymous function expression. The variable gives me a way to access it.</p>
+<table>
+<thead>
+<tr>
+<th>Expression</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>greeting_two</code></td>
+<td>Access the function value</td>
+</tr>
+<tr>
+<td><code>greeting_two()</code></td>
+<td>Call the function and get its return value</td>
+</tr>
+<tr>
+<td><code>typeof greeting_two</code></td>
+<td>Check its type: <code>&quot;function&quot;</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Parentheses matter:</strong> accessing a function and executing it are different actions.</p>
+<h3 id="112-function-declarations-and-hoisting">11.2 Function declarations and hoisting</h3>
+<p>A function declaration can be called before its declaration appears in its scope:</p>
+<pre class="hljs"><code><div><span class="hljs-title function_">greet</span>(); <span class="hljs-comment">// Hello</span>
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">greet</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;Hello&#x27;</span>);
+}
+</div></code></pre>
+<p>A function expression assigned to <code>const</code> must be initialized before I access or call it:</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// say_hello(); // ReferenceError if called here</span>
+
+<span class="hljs-keyword">const</span> say_hello = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;Hello&#x27;</span>);
+};
+
+<span class="hljs-title function_">say_hello</span>();
+</div></code></pre>
+<p>This is a practical difference between these forms. A function declaration is not simply interchangeable with a variable assignment in every situation.</p>
+<h3 id="113-functions-inside-objects-methods">11.3 Functions inside objects: methods</h3>
+<p>A function stored as an object's property is called a method.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> game = {
+  <span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;Rock Paper Scissors&#x27;</span>,
+  <span class="hljs-attr">start</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;Game started&#x27;</span>);
+  }
+};
+
+game.<span class="hljs-title function_">start</span>(); <span class="hljs-comment">// Game started</span>
+</div></code></pre>
+<p>I use dot notation to access the method and parentheses to call it.</p>
+<h3 id="114-callback-functions">11.4 Callback functions</h3>
+<p>A callback is a function passed to another function so that the receiving code can call it.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">function</span> <span class="hljs-title function_">run</span>(<span class="hljs-params">callback</span>) {
+  <span class="hljs-title function_">callback</span>();
+}
+
+<span class="hljs-title function_">run</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;The callback is running&#x27;</span>);
+});
+</div></code></pre>
+<p>Step by step:</p>
+<ol>
+<li>I create a function and pass it to <code>run</code>.</li>
+<li>The parameter <code>callback</code> receives that function value.</li>
+<li><code>callback()</code> executes it.</li>
+</ol>
+<p><strong>A callback is not automatically asynchronous.</strong> In this example, it runs immediately. Timer callbacks run later; <code>forEach</code> callbacks run synchronously.</p>
+<h3 id="115-arrow-functions-used-in-my-project">11.5 Arrow functions used in my project</h3>
+<p>An arrow function is another function syntax:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> normal_function = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;Hello&#x27;</span>);
+};
+
+<span class="hljs-keyword">const</span> <span class="hljs-title function_">arrow_function</span> = (<span class="hljs-params"></span>) =&gt; {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;Hello&#x27;</span>);
+};
+</div></code></pre>
+<p>For the callbacks in this chapter, I use the following structure:</p>
+<pre class="hljs"><code><div>() =&gt; {
+  <span class="hljs-comment">// Code to run when this function is called.</span>
+}
+</div></code></pre>
+<p><code>()</code> contains the parameters, <code>=&gt;</code> introduces the arrow function, and <code>{ ... }</code> contains its body. Creating the function does not execute its body.</p>
+<p>Arrow functions have differences from regular functions, including how <code>this</code> works; they are not interchangeable in every context.</p>
+<h3 id="116-settimeout-run-once-later">11.6 setTimeout: run once later</h3>
+<pre class="hljs"><code><div><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;A&#x27;</span>);
+
+<span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;B&#x27;</span>);
+}, <span class="hljs-number">2000</span>);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;C&#x27;</span>);
+</div></code></pre>
+<p>Output:</p>
+<pre class="hljs"><code><div>A
+C
+B
+</div></code></pre>
+<p>JavaScript prints <code>A</code>, asks the browser to set up a timer, and continues to print <code>C</code>. After at least two seconds, the callback can run when JavaScript is available.</p>
+<p><strong>Setting an alarm does not mean standing still until it rings.</strong> I set it, continue doing other things, and handle it later.</p>
+<table>
+<thead>
+<tr>
+<th>Part</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>First argument</td>
+<td>Callback function to run later</td>
+</tr>
+<tr>
+<td>Second argument</td>
+<td>Delay in milliseconds</td>
+</tr>
+<tr>
+<td><code>2000</code> milliseconds</td>
+<td>Two seconds</td>
+</tr>
+<tr>
+<td>Return value</td>
+<td>Timer ID, usable with <code>clearTimeout</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="117-synchronous-and-asynchronous-execution">11.7 Synchronous and asynchronous execution</h3>
+<p>Synchronous statements run in order. Scheduling a timer allows later synchronous statements to execute before the timer callback.</p>
+<p>The timer does not interrupt code that is already running. If a long synchronous loop keeps JavaScript busy past the delay, the callback waits.</p>
+<blockquote>
+<p>“Ready after the delay” does not mean “guaranteed to execute at that exact moment.”</p>
+</blockquote>
+<p>The statements inside a timer callback also run in order when that callback gets its turn.</p>
+<h3 id="118-setinterval-a-repeating-alarm">11.8 setInterval: a repeating alarm</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> interval_id = <span class="hljs-built_in">setInterval</span>(<span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;New round&#x27;</span>);
+}, <span class="hljs-number">1000</span>);
+</div></code></pre>
+<p>This registers a repeating timer. Here, <strong>registered</strong> means the browser has set up the timer; the callback has not necessarily run yet.</p>
+<table>
+<thead>
+<tr>
+<th>Approximate time</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Start</td>
+<td>Register the timer and save its ID</td>
+</tr>
+<tr>
+<td>After one second</td>
+<td>Run the callback for the first time</td>
+</tr>
+<tr>
+<td>After two seconds</td>
+<td>Run it again</td>
+</tr>
+<tr>
+<td>Later ticks</td>
+<td>Continue repeating until canceled</td>
+</tr>
+</tbody>
+</table>
+<p>The delay is a requested interval, not an exact timing guarantee. Busy JavaScript and browser scheduling can delay execution.</p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Repetition</th>
+<th>Cancellation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>setTimeout(callback, delay)</code></td>
+<td>Once</td>
+<td><code>clearTimeout(id)</code></td>
+</tr>
+<tr>
+<td><code>setInterval(callback, delay)</code></td>
+<td>Repeatedly</td>
+<td><code>clearInterval(id)</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="119-what-repeats-and-what-runs-once">11.9 What repeats and what runs once?</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> rounds = <span class="hljs-number">0</span>;
+
+<span class="hljs-keyword">const</span> interval_id = <span class="hljs-built_in">setInterval</span>(<span class="hljs-function">() =&gt;</span> {
+  rounds++;
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(rounds);
+}, <span class="hljs-number">1000</span>);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;Timer started&#x27;</span>);
+</div></code></pre>
+<p><code>Timer started</code> prints immediately, once. The callback increments and prints <code>rounds</code> on each tick: <code>1</code>, then <code>2</code>, then <code>3</code>, and so on.</p>
+<p>Only the callback repeats. The surrounding script does not restart.</p>
+<p>If <code>console.log(rounds)</code> were outside the callback, immediately after registration, it would print <code>0</code> once.</p>
+<h3 id="1110-timer-ids-and-clearinterval">11.10 Timer IDs and clearInterval</h3>
+<p>In browser JavaScript, <code>setInterval</code> returns a numeric ID identifying its timer.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> interval_id = <span class="hljs-built_in">setInterval</span>(<span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;Round&#x27;</span>);
+}, <span class="hljs-number">1000</span>);
+
+<span class="hljs-comment">// Later, for example in a Stop button handler:</span>
+<span class="hljs-comment">// clearInterval(interval_id);</span>
+</div></code></pre>
+<p>Think of the ID as an order number: I use it to identify which order to cancel.</p>
+<p>Suppose the returned ID is <code>7</code>:</p>
+<pre class="hljs"><code><div><span class="hljs-built_in">clearInterval</span>(interval_id);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(interval_id); <span class="hljs-comment">// Still 7 in this example</span>
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>After cancellation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Timer identified by <code>7</code></td>
+<td>Canceled</td>
+</tr>
+<tr>
+<td>Variable <code>interval_id</code></td>
+<td>Still contains <code>7</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>clearInterval</code> cancels future executions; it does not erase or reassign my variable, and it does not interrupt a callback already executing. Calling it with an ID that does not identify an active timer has no effect.</p>
+<h3 id="1111-practical-project-rock-paper-scissors-auto-play">11.11 Practical project: rock-paper-scissors auto-play</h3>
+<p>This function connects to my existing <code>pick_robot_move()</code> and <code>play()</code> functions:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> interval_id;
+<span class="hljs-keyword">let</span> is_auto_playing = <span class="hljs-literal">false</span>;
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">auto_play</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">if</span> (!is_auto_playing) {
+    interval_id = <span class="hljs-built_in">setInterval</span>(<span class="hljs-function">() =&gt;</span> {
+      <span class="hljs-keyword">const</span> player_move = <span class="hljs-title function_">pick_robot_move</span>();
+      <span class="hljs-title function_">play</span>(player_move);
+    }, <span class="hljs-number">1000</span>);
+
+    is_auto_playing = <span class="hljs-literal">true</span>;
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-built_in">clearInterval</span>(interval_id);
+    is_auto_playing = <span class="hljs-literal">false</span>;
+  }
+}
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>interval_id</code></td>
+<td>Keep the timer ID so I can cancel it</td>
+</tr>
+<tr>
+<td><code>is_auto_playing</code></td>
+<td>Remember whether auto-play is on or off</td>
+</tr>
+</tbody>
+</table>
+<p>Both variables live outside <code>auto_play()</code>, so their values remain available between button clicks.</p>
+<p><strong>First click:</strong> the flag is <code>false</code>, so <code>!is_auto_playing</code> is <code>true</code>. The function creates a timer, saves its ID, and immediately sets the flag to <code>true</code>. It then finishes; it does not wait for the first round.</p>
+<p><strong>Each tick:</strong> the callback chooses a random player move and passes it to <code>play(player_move)</code>.</p>
+<p><strong>Second click:</strong> the flag is <code>true</code>, so the condition is <code>false</code>. The <code>else</code> branch cancels the timer and sets the flag to <code>false</code>.</p>
+<p><strong>Third click:</strong> a new timer is created.</p>
+<p>Setting the flag alone does not stop the timer. <code>clearInterval(interval_id)</code> performs cancellation; the flag records the state for the next click.</p>
+<h3 id="1112-one-tick-two-random-moves">11.12 One tick, two random moves</h3>
+<p>My callback contains:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> player_move = <span class="hljs-title function_">pick_robot_move</span>();
+<span class="hljs-title function_">play</span>(player_move);
+</div></code></pre>
+<p>Inside <code>play</code>, another random choice happens:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">function</span> <span class="hljs-title function_">play</span>(<span class="hljs-params">play_move</span>) {
+  <span class="hljs-keyword">const</span> robot_move = <span class="hljs-title function_">pick_robot_move</span>();
+  <span class="hljs-comment">// Compare moves, update score, save, and display.</span>
+}
+</div></code></pre>
+<p>Despite its name, <code>pick_robot_move()</code> can choose a move for either side because it simply returns a random move.</p>
+<p>For example:</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Example value or action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>First random call</td>
+<td>Player gets <code>&quot;✊&quot;</code></td>
+</tr>
+<tr>
+<td><code>play(player_move)</code></td>
+<td>Calls <code>play(&quot;✊&quot;)</code></td>
+</tr>
+<tr>
+<td>Parameter <code>play_move</code></td>
+<td>Receives <code>&quot;✊&quot;</code></td>
+</tr>
+<tr>
+<td>Second random call inside <code>play</code></td>
+<td>Computer gets <code>&quot;✌️&quot;</code></td>
+</tr>
+<tr>
+<td>Comparison</td>
+<td>Player wins</td>
+</tr>
+<tr>
+<td>Remaining game code</td>
+<td>Update score, save it, and update the page</td>
+</tr>
+</tbody>
+</table>
+<p>Keeping the player's random choice inside the callback makes a fresh choice each round. Choosing it outside would reuse the same player move on every tick.</p>
+<h3 id="1113-resetting-the-score-and-stopping-auto-play">11.13 Resetting the score and stopping auto-play</h3>
+<p>I improved my reset function so the game stays stopped after a reset:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">function</span> <span class="hljs-title function_">reset</span>(<span class="hljs-params"></span>) {
+  score.<span class="hljs-property">wins</span> = <span class="hljs-number">0</span>;
+  score.<span class="hljs-property">losses</span> = <span class="hljs-number">0</span>;
+  score.<span class="hljs-property">ties</span> = <span class="hljs-number">0</span>;
+
+  <span class="hljs-built_in">clearInterval</span>(interval_id);
+  is_auto_playing = <span class="hljs-literal">false</span>;
+
+  <span class="hljs-variable language_">localStorage</span>.<span class="hljs-title function_">removeItem</span>(<span class="hljs-string">&#x27;score&#x27;</span>);
+
+  <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#x27;.result&#x27;</span>).<span class="hljs-property">innerHTML</span> = <span class="hljs-string">&#x27;&#x27;</span>;
+  <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#x27;.moves&#x27;</span>).<span class="hljs-property">innerHTML</span> = <span class="hljs-string">&#x27;&#x27;</span>;
+
+  <span class="hljs-title function_">update_score_element</span>();
+}
+</div></code></pre>
+<p>Reset now updates the in-memory score, stops the timer, resets the flag, removes the saved score, and refreshes the display. Removing the storage entry alone would not reset the current score object or cancel the timer.</p>
+<h3 id="1114-foreach-run-a-callback-for-each-array-element">11.14 forEach: run a callback for each array element</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> tasks = [<span class="hljs-string">&#x27;Make dinner&#x27;</span>, <span class="hljs-string">&#x27;Wash dishes&#x27;</span>, <span class="hljs-string">&#x27;Learn JavaScript&#x27;</span>];
+
+tasks.<span class="hljs-title function_">forEach</span>(<span class="hljs-function">(<span class="hljs-params">value, index</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(index, value);
+});
+</div></code></pre>
+<p>Output:</p>
+<pre class="hljs"><code><div>0 Make dinner
+1 Wash dishes
+2 Learn JavaScript
+</div></code></pre>
+<p><code>forEach</code> supplies the current element as the first argument and its index as the second. The parameter names are my choice.</p>
+<p>Unlike a timer, this callback runs synchronously for each present element. Passing a callback does not by itself make code asynchronous.</p>
+<h3 id="1115-skipping-an-element-with-return">11.15 Skipping an element with return</h3>
+<pre class="hljs"><code><div>tasks.<span class="hljs-title function_">forEach</span>(<span class="hljs-function">(<span class="hljs-params">value</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (value === <span class="hljs-string">&#x27;Wash dishes&#x27;</span>) {
+    <span class="hljs-keyword">return</span>;
+  }
+
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(value);
+});
+</div></code></pre>
+<p><code>return</code> ends only the current callback call. <code>forEach</code> then continues with the next element. Here, it has an effect similar to <code>continue</code> in a regular loop.</p>
+<p><code>forEach</code> has no normal <code>break</code> statement. If I need to stop iteration early, I can choose a regular <code>for</code> loop instead.</p>
+<h3 id="1116-applying-foreach-to-my-to-do-list">11.16 Applying forEach to my to-do list</h3>
+<p>This example assumes my existing <code>todo_list</code> array and <code>.tasks_box</code> container. It uses DOM elements to display task text:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">function</span> <span class="hljs-title function_">generate_HTML</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">const</span> tasks_box = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#x27;.tasks_box&#x27;</span>);
+  tasks_box.<span class="hljs-property">innerHTML</span> = <span class="hljs-string">&#x27;&#x27;</span>;
+
+  todo_list.<span class="hljs-title function_">forEach</span>(<span class="hljs-function">(<span class="hljs-params">task, index</span>) =&gt;</span> {
+    <span class="hljs-keyword">const</span> row = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">createElement</span>(<span class="hljs-string">&#x27;p&#x27;</span>);
+    row.<span class="hljs-property">textContent</span> = <span class="hljs-string">`<span class="hljs-subst">${index + <span class="hljs-number">1</span>}</span>. <span class="hljs-subst">${task.name}</span> — <span class="hljs-subst">${task.date}</span>`</span>;
+    tasks_box.<span class="hljs-title function_">appendChild</span>(row);
+  });
+}
+</div></code></pre>
+<p><code>task</code> gives me the object directly, so I no longer need <code>const task = todo_list[i]</code>. The index starts at zero; <code>index + 1</code> gives a display number starting at one.</p>
+<h3 id="1117-common-mistakes-i-now-understand">11.17 Common mistakes I now understand</h3>
+<table>
+<thead>
+<tr>
+<th>Mistake</th>
+<th>Explanation or correction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Passing <code>play(move)</code> directly to the timer</td>
+<td>It calls <code>play</code> immediately; pass a function such as <code>() =&gt; play(move)</code></td>
+</tr>
+<tr>
+<td>Expecting an immediate first round</td>
+<td>An interval's first callback waits for its delay</td>
+</tr>
+<tr>
+<td>Assuming the delay guarantees exact timing</td>
+<td>The callback also needs JavaScript to be available</td>
+</tr>
+<tr>
+<td>Setting only <code>is_auto_playing = false</code></td>
+<td>Also call <code>clearInterval(interval_id)</code> to cancel the timer</td>
+</tr>
+<tr>
+<td>Expecting cancellation to erase the ID</td>
+<td>The variable keeps its value unless I reassign it</td>
+</tr>
+<tr>
+<td>Creating several timers accidentally</td>
+<td>Use the flag to decide whether to start or stop</td>
+</tr>
+<tr>
+<td>Resetting scores while leaving auto-play active</td>
+<td>The next round changes the score again; cancel the timer too</td>
+</tr>
+<tr>
+<td>Assuming every callback is asynchronous</td>
+<td><code>forEach</code> callbacks run synchronously</td>
+</tr>
+<tr>
+<td>Expecting <code>return</code> to stop all of <code>forEach</code></td>
+<td>It ends only the current callback call</td>
+</tr>
+</tbody>
+</table>
+<h3 id="1118-chapter-recap">11.18 Chapter recap</h3>
+<p>Functions are values that I can store and pass around. A callback runs when its receiving code calls it. Timers schedule callbacks without blocking the following code; <code>forEach</code> calls its callback synchronously. My auto-play feature uses a timer ID for cancellation and a separate flag for its start/stop state.</p>
+<h3 id="1119-auto-play-workflow">11.19 Auto-play workflow</h3>
+<pre><code class="language-mermaid"><div class="mermaid">flowchart TD
+    A["Click Auto Play"] --> B{"Currently playing?"}
+    B -->|No| C["Create timer, save ID, set flag true"]
+    C --> D["Timer tick when JavaScript is available"]
+    D --> E["Choose player move and call play"]
+    E --> F["Choose computer move; compare; save and display score"]
+    F --> D
+    B -->|Yes| G["Cancel timer and set flag false"]
+    H["Click Reset"] --> I["Zero score, cancel timer, set flag false, clear display and saved score"]
+</div></code></pre>
+<p>The repeat path operates only while the timer remains active. Stopping or resetting cancels future ticks; starting again creates a new timer.</p>
 <h2 id="feedback-and-contributions">Feedback and contributions</h2>
 <p>This is a personal learning repository. Suggestions, clear explanations, and feedback are welcome through GitHub issues. I want to understand improvements and practice applying them myself.</p>
 <h2 id="credits-and-license">Credits and license</h2>

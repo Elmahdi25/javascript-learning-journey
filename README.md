@@ -38,8 +38,8 @@ This repository is a learning journal that will grow as I continue the course.
 | [08](#chapter-08--objects--json) | Objects, JSON & localStorage | Covered |
 | [09](#chapter-09--dom-document-object-model) | DOM (Document Object Model) | Covered |
 | [10](#chapter-10-arrays--loops) | Arrays, loops, accumulator pattern, and dynamic HTML | Covered |
+| [11](#chapter-11-advanced-functions) | Functions as values, callbacks, timers, auto-play, and `forEach` | Covered |
 
-Each chapter uses a stable two-digit number. Subsections use the same prefix, such as **03.1**, so new lessons can be added without renumbering earlier chapters.
 
 ## Preview
 
@@ -2358,6 +2358,431 @@ Call `renderTodoList()` whenever the array changes so that the displayed list st
 - `innerHTML` can insert HTML into an element.
 - Render functions help keep the page synchronized with the data.
 
+
+## chapter-11-advanced-functions
+
+In this chapter, I learned how to treat functions as values, pass them into other functions, schedule callbacks, and loop through arrays using `forEach`. I applied these ideas to my rock-paper-scissors game and to-do list.
+
+### 11.1 Functions are values
+
+A function is reusable code, but it is also a value. I can store it in a variable, put it in an object, or pass it to another function.
+
+```javascript
+function greeting() {
+  console.log('Hello');
+}
+
+greeting(); // Hello
+
+const greeting_two = function () {
+  console.log('Hello again');
+};
+
+greeting_two(); // Hello again
+console.log(typeof greeting_two); // function
+```
+
+The second example uses a function expression. `function () { ... }` has no explicit name in its syntax: it is an anonymous function expression. The variable gives me a way to access it.
+
+| Expression | Meaning |
+| --- | --- |
+| `greeting_two` | Access the function value |
+| `greeting_two()` | Call the function and get its return value |
+| `typeof greeting_two` | Check its type: `"function"` |
+
+**Parentheses matter:** accessing a function and executing it are different actions.
+
+### 11.2 Function declarations and hoisting
+
+A function declaration can be called before its declaration appears in its scope:
+
+```javascript
+greet(); // Hello
+
+function greet() {
+  console.log('Hello');
+}
+```
+
+A function expression assigned to `const` must be initialized before I access or call it:
+
+```javascript
+// say_hello(); // ReferenceError if called here
+
+const say_hello = function () {
+  console.log('Hello');
+};
+
+say_hello();
+```
+
+This is a practical difference between these forms. A function declaration is not simply interchangeable with a variable assignment in every situation.
+
+### 11.3 Functions inside objects: methods
+
+A function stored as an object's property is called a method.
+
+```javascript
+const game = {
+  title: 'Rock Paper Scissors',
+  start: function () {
+    console.log('Game started');
+  }
+};
+
+game.start(); // Game started
+```
+
+I use dot notation to access the method and parentheses to call it.
+
+### 11.4 Callback functions
+
+A callback is a function passed to another function so that the receiving code can call it.
+
+```javascript
+function run(callback) {
+  callback();
+}
+
+run(function () {
+  console.log('The callback is running');
+});
+```
+
+Step by step:
+
+1. I create a function and pass it to `run`.
+2. The parameter `callback` receives that function value.
+3. `callback()` executes it.
+
+**A callback is not automatically asynchronous.** In this example, it runs immediately. Timer callbacks run later; `forEach` callbacks run synchronously.
+
+### 11.5 Arrow functions used in my project
+
+An arrow function is another function syntax:
+
+```javascript
+const normal_function = function () {
+  console.log('Hello');
+};
+
+const arrow_function = () => {
+  console.log('Hello');
+};
+```
+
+For the callbacks in this chapter, I use the following structure:
+
+```javascript
+() => {
+  // Code to run when this function is called.
+}
+```
+
+`()` contains the parameters, `=>` introduces the arrow function, and `{ ... }` contains its body. Creating the function does not execute its body.
+
+Arrow functions have differences from regular functions, including how `this` works; they are not interchangeable in every context.
+
+### 11.6 setTimeout: run once later
+
+```javascript
+console.log('A');
+
+setTimeout(() => {
+  console.log('B');
+}, 2000);
+
+console.log('C');
+```
+
+Output:
+
+```text
+A
+C
+B
+```
+
+JavaScript prints `A`, asks the browser to set up a timer, and continues to print `C`. After at least two seconds, the callback can run when JavaScript is available.
+
+**Setting an alarm does not mean standing still until it rings.** I set it, continue doing other things, and handle it later.
+
+| Part | Purpose |
+| --- | --- |
+| First argument | Callback function to run later |
+| Second argument | Delay in milliseconds |
+| `2000` milliseconds | Two seconds |
+| Return value | Timer ID, usable with `clearTimeout` |
+
+### 11.7 Synchronous and asynchronous execution
+
+Synchronous statements run in order. Scheduling a timer allows later synchronous statements to execute before the timer callback.
+
+The timer does not interrupt code that is already running. If a long synchronous loop keeps JavaScript busy past the delay, the callback waits.
+
+> “Ready after the delay” does not mean “guaranteed to execute at that exact moment.”
+
+The statements inside a timer callback also run in order when that callback gets its turn.
+
+### 11.8 setInterval: a repeating alarm
+
+```javascript
+const interval_id = setInterval(() => {
+  console.log('New round');
+}, 1000);
+```
+
+This registers a repeating timer. Here, **registered** means the browser has set up the timer; the callback has not necessarily run yet.
+
+| Approximate time | Action |
+| --- | --- |
+| Start | Register the timer and save its ID |
+| After one second | Run the callback for the first time |
+| After two seconds | Run it again |
+| Later ticks | Continue repeating until canceled |
+
+The delay is a requested interval, not an exact timing guarantee. Busy JavaScript and browser scheduling can delay execution.
+
+| Function | Repetition | Cancellation |
+| --- | --- | --- |
+| `setTimeout(callback, delay)` | Once | `clearTimeout(id)` |
+| `setInterval(callback, delay)` | Repeatedly | `clearInterval(id)` |
+
+### 11.9 What repeats and what runs once?
+
+```javascript
+let rounds = 0;
+
+const interval_id = setInterval(() => {
+  rounds++;
+  console.log(rounds);
+}, 1000);
+
+console.log('Timer started');
+```
+
+`Timer started` prints immediately, once. The callback increments and prints `rounds` on each tick: `1`, then `2`, then `3`, and so on.
+
+Only the callback repeats. The surrounding script does not restart.
+
+If `console.log(rounds)` were outside the callback, immediately after registration, it would print `0` once.
+
+### 11.10 Timer IDs and clearInterval
+
+In browser JavaScript, `setInterval` returns a numeric ID identifying its timer.
+
+```javascript
+const interval_id = setInterval(() => {
+  console.log('Round');
+}, 1000);
+
+// Later, for example in a Stop button handler:
+// clearInterval(interval_id);
+```
+
+Think of the ID as an order number: I use it to identify which order to cancel.
+
+Suppose the returned ID is `7`:
+
+```javascript
+clearInterval(interval_id);
+console.log(interval_id); // Still 7 in this example
+```
+
+| Item | After cancellation |
+| --- | --- |
+| Timer identified by `7` | Canceled |
+| Variable `interval_id` | Still contains `7` |
+
+`clearInterval` cancels future executions; it does not erase or reassign my variable, and it does not interrupt a callback already executing. Calling it with an ID that does not identify an active timer has no effect.
+
+### 11.11 Practical project: rock-paper-scissors auto-play
+
+This function connects to my existing `pick_robot_move()` and `play()` functions:
+
+```javascript
+let interval_id;
+let is_auto_playing = false;
+
+function auto_play() {
+  if (!is_auto_playing) {
+    interval_id = setInterval(() => {
+      const player_move = pick_robot_move();
+      play(player_move);
+    }, 1000);
+
+    is_auto_playing = true;
+  } else {
+    clearInterval(interval_id);
+    is_auto_playing = false;
+  }
+}
+```
+
+| Variable | Responsibility |
+| --- | --- |
+| `interval_id` | Keep the timer ID so I can cancel it |
+| `is_auto_playing` | Remember whether auto-play is on or off |
+
+Both variables live outside `auto_play()`, so their values remain available between button clicks.
+
+**First click:** the flag is `false`, so `!is_auto_playing` is `true`. The function creates a timer, saves its ID, and immediately sets the flag to `true`. It then finishes; it does not wait for the first round.
+
+**Each tick:** the callback chooses a random player move and passes it to `play(player_move)`.
+
+**Second click:** the flag is `true`, so the condition is `false`. The `else` branch cancels the timer and sets the flag to `false`.
+
+**Third click:** a new timer is created.
+
+Setting the flag alone does not stop the timer. `clearInterval(interval_id)` performs cancellation; the flag records the state for the next click.
+
+### 11.12 One tick, two random moves
+
+My callback contains:
+
+```javascript
+const player_move = pick_robot_move();
+play(player_move);
+```
+
+Inside `play`, another random choice happens:
+
+```javascript
+function play(play_move) {
+  const robot_move = pick_robot_move();
+  // Compare moves, update score, save, and display.
+}
+```
+
+Despite its name, `pick_robot_move()` can choose a move for either side because it simply returns a random move.
+
+For example:
+
+| Step | Example value or action |
+| --- | --- |
+| First random call | Player gets `"✊"` |
+| `play(player_move)` | Calls `play("✊")` |
+| Parameter `play_move` | Receives `"✊"` |
+| Second random call inside `play` | Computer gets `"✌️"` |
+| Comparison | Player wins |
+| Remaining game code | Update score, save it, and update the page |
+
+Keeping the player's random choice inside the callback makes a fresh choice each round. Choosing it outside would reuse the same player move on every tick.
+
+### 11.13 Resetting the score and stopping auto-play
+
+I improved my reset function so the game stays stopped after a reset:
+
+```javascript
+function reset() {
+  score.wins = 0;
+  score.losses = 0;
+  score.ties = 0;
+
+  clearInterval(interval_id);
+  is_auto_playing = false;
+
+  localStorage.removeItem('score');
+
+  document.querySelector('.result').innerHTML = '';
+  document.querySelector('.moves').innerHTML = '';
+
+  update_score_element();
+}
+```
+
+Reset now updates the in-memory score, stops the timer, resets the flag, removes the saved score, and refreshes the display. Removing the storage entry alone would not reset the current score object or cancel the timer.
+
+### 11.14 forEach: run a callback for each array element
+
+```javascript
+const tasks = ['Make dinner', 'Wash dishes', 'Learn JavaScript'];
+
+tasks.forEach((value, index) => {
+  console.log(index, value);
+});
+```
+
+Output:
+
+```text
+0 Make dinner
+1 Wash dishes
+2 Learn JavaScript
+```
+
+`forEach` supplies the current element as the first argument and its index as the second. The parameter names are my choice.
+
+Unlike a timer, this callback runs synchronously for each present element. Passing a callback does not by itself make code asynchronous.
+
+### 11.15 Skipping an element with return
+
+```javascript
+tasks.forEach((value) => {
+  if (value === 'Wash dishes') {
+    return;
+  }
+
+  console.log(value);
+});
+```
+
+`return` ends only the current callback call. `forEach` then continues with the next element. Here, it has an effect similar to `continue` in a regular loop.
+
+`forEach` has no normal `break` statement. If I need to stop iteration early, I can choose a regular `for` loop instead.
+
+### 11.16 Applying forEach to my to-do list
+
+This example assumes my existing `todo_list` array and `.tasks_box` container. It uses DOM elements to display task text:
+
+```javascript
+function generate_HTML() {
+  const tasks_box = document.querySelector('.tasks_box');
+  tasks_box.innerHTML = '';
+
+  todo_list.forEach((task, index) => {
+    const row = document.createElement('p');
+    row.textContent = `${index + 1}. ${task.name} — ${task.date}`;
+    tasks_box.appendChild(row);
+  });
+}
+```
+
+`task` gives me the object directly, so I no longer need `const task = todo_list[i]`. The index starts at zero; `index + 1` gives a display number starting at one.
+
+### 11.17 Common mistakes I now understand
+
+| Mistake | Explanation or correction |
+| --- | --- |
+| Passing `play(move)` directly to the timer | It calls `play` immediately; pass a function such as `() => play(move)` |
+| Expecting an immediate first round | An interval's first callback waits for its delay |
+| Assuming the delay guarantees exact timing | The callback also needs JavaScript to be available |
+| Setting only `is_auto_playing = false` | Also call `clearInterval(interval_id)` to cancel the timer |
+| Expecting cancellation to erase the ID | The variable keeps its value unless I reassign it |
+| Creating several timers accidentally | Use the flag to decide whether to start or stop |
+| Resetting scores while leaving auto-play active | The next round changes the score again; cancel the timer too |
+| Assuming every callback is asynchronous | `forEach` callbacks run synchronously |
+| Expecting `return` to stop all of `forEach` | It ends only the current callback call |
+
+### 11.18 Chapter recap
+
+Functions are values that I can store and pass around. A callback runs when its receiving code calls it. Timers schedule callbacks without blocking the following code; `forEach` calls its callback synchronously. My auto-play feature uses a timer ID for cancellation and a separate flag for its start/stop state.
+
+### 11.19 Auto-play workflow
+
+```mermaid
+flowchart TD
+    A["Click Auto Play"] --> B{"Currently playing?"}
+    B -->|No| C["Create timer, save ID, set flag true"]
+    C --> D["Timer tick when JavaScript is available"]
+    D --> E["Choose player move and call play"]
+    E --> F["Choose computer move; compare; save and display score"]
+    F --> D
+    B -->|Yes| G["Cancel timer and set flag false"]
+    H["Click Reset"] --> I["Zero score, cancel timer, set flag false, clear display and saved score"]
+```
+
+The repeat path operates only while the timer remains active. Stopping or resetting cancels future ticks; starting again creates a new timer.
 
 ## Feedback and contributions
 

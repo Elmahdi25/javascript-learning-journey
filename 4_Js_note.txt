@@ -1,0 +1,155 @@
+4_Js
+
+**_1.Basics of javascript_**
+
+1.givin instruction to the computer (code)
+
+2.The computer follows our instructions (running tghe code)
+
+**_2.Syntax_**
+
+- rules that we have to follow when using a pragramming language
+- similar to English (garmmar even if it's wrong u can understand the meaning)
+- in programming, we have to follow the rules of syntax **exactly**
+
+**3.strings**
+
+- Strings follow the same order of operations as numbers: expressions inside parentheses are always evaluated first.
+- character could be :
+  - Letter
+  - number
+  - symbol
+  - _escape character \\'=> "I \\' m Learning javasxript"_
+  - \\" double cote that just a text
+  - \\n => new line
+  - `` => Template string let us do functions Inside strings
+
+**5.Variables**
+
+- You cannot use reserved words, such as let.
+- A variable name cannot start with a number.
+- Special characters are not allowed, except $ and \_.
+- Variable names cannot contain spaces.
+
+quantity = quantity + 2;
+
+// Equivalent to:
+
+quantity += 2;
+
+&#x20; quantity = quantity + 2; <=> quantity += 2;
+
+&#x20; quantity = quantity + 1; <=> quantity += 2; <=> quantity++;
+
+- &#x20;Camelcase we capitalizeeveryword except the first one
+- PascalCase CartQuantity => capitamize every first leter on eachword
+- kebab-case cart-quantity
+- snake_case cart_quantity
+
+- best practice is to used Const not let if we know that were not gonna change the variable
+- we don t use Var anymore because it doesn t handl the scope rule even if u set var to another variable oitside the scope with sam nam you will get an error
+- falsy values false, 0, '', Nan(not a number => invalid number in math(cnsole.log('text' /5))), undefined => smtg don't defined dont have a value, null
+
+**_8.Objects_**
+
+- Object: An object groups multiple values together
+- **_OBJECT IS A VALUE AND WE CAN PUT IT INSIDE A VALUE_**
+- syntax = const product = {name:'socks', color, 'red', price:1090}
+- name,color,price=> propertys
+- 'socks', 'red', 1090=> values
+- acces a property => product.name => socks
+- change a property's value => product.name = 'shoes' => new value : name:'shoes'
+- add a new property => product.stock = '2 left'
+- delete a property => delete product.color => product = {name:'socks', price:1090}
+- console.log(product\['name']);=> socks => (called bracket notation)
+- differenece between dot notation and braket notation is that **braket notation let us use propertie that Don't work with dot notation**
+- **between bracket we can use variables, calculation anything can give us a value not just string**
+- functions Inside Object called **Method** => Math.random()
+- Math=> object random()=> function
+- built-in Object=> objects provided by the language (Javascript)
+- JSON it's a syntax that similar to js obects but with less features
+- JSON doesn't support single quote Always double quotes => ""
+- JSON doesn't support functions
+- why we use it => JSON is universol so we can tranfer data between computers
+- when we store DATA
+- buil-in JSON object convert JS object to JSON
+- from JS===> JSON we use **_JSON.stringify()_**
+- from JSON=====> JS we use **_JSON.parse()_**
+- to save a value Inside locoalstorach we use the fucntion setItem()=> localstorage.setItem()
+- setItem fct takes tow parametres that are strings the name of what we are saving and what we are saving => localStorage.setItem('name', 'content')=> localStorage.setItem('greeting', 'Hello')
+- to get the value that we are save previously we use getItem and it takes one parametre wich is the name of the content that we put in setItem => localstorage.getItem('greeting')
+- is smtg doesn't exist in local storage it give us NULL
+- js has a speciel feature called Auto Boxing => JS **wrasp** automatically this strings in a special object and this object has the proferty length and the method upperCase
+- auto boxin work wit values like string Numbers and booleans
+- does not work with null and undefined
+- to get the value from an object that has the same name as property
+- &#x20;const age = user_infos.age; **_<short-cut_**<i>></i> const {age} = user_infos;
+- &#x20;and this called **_distructuring_**
+- **with _distructuring_** we can access multiple properties from an object =>
+- &#x20;const {name ,age} = user_infos;=> conole.log(name)=> Elmahdi
+
+short handed property =>
+
+user2_infos{greeting: greeting}
+
+**_9.Document_object_model_**
+
+- We can have HTML element Inside Javascript.
+- One of the most important feature of DOM (document_object_model)is combine HTML and Javascript together and gives Javascript the control of the webpage.
+- **_document.body.innerHTML_** can let us change the entire body with new code not just strings
+- **_document.querySelector('button')=>_** Let us get any element from the page and put it Inside Javascript.
+- every HTML elemnt has a property .innerHTML wich let us control the html Inside the html element
+- Whenever we get a value from the DOM, the value will be a string
+- Clicks, keydowns => events / onclick,onkeydown => event listeners
+- .classList = gives us control of the class attribute
+
+10\. **_Arrays and Loops_**
+
+- Array is a special type of object typeod \[1,2] => is an object
+- arrays have methods and properties we can use
+- array_name.push(value) => Added the value at the end of the array
+- array_name.slice(parametre1,parametre2) => the 1st is about wich index do you want from ur array the 2nd one is about how many u want to delete Fromm the 1st one you choose
+-
+
+**_11.TODO LIST_**
+
+- we should call the function at the start so we can get Always the updates values
+- any time we add a value we should update the interface by Calling the function
+
+**_12.ARRAY and LOOPS PART2_**
+
+- Array are references as the object so when we do
+
+=> const array1 = [1,2,3,4];
+const array2 = array1;
+
+the array2 has the same reference not having the same values
+
+so when we push smtg to array2 it will apply also for array1 bcs they have the same reference
+
+- if we want to have a copie of the value and after modifir the new array as much as we want we can use array.splice();
+
+=>
+const array1 = [1,2,3,4];
+const array2 = array1.splice();=> copie teh values and modfifie after without touch array1
+
+* if we use continue ga3 dakchi limn mora continue kaytskipa okat3awd loop again 
+
+* if we use continue on while loop we should do the increment step manually 
+
+* we can end the loop by using break or returning what we want 
+
+&#x20;
+
+
+**_9.advanced-Function_**
+1. the normal way to creat a function give us an advantage that called hoisting that let us call the fucntion before it  
+exmale 
+
+call  greeting => hello
+
+
+output => hello
+
+
+2.forEach loop has no continue if you want to skip you can use return and there is no break if u want it use a nor for loop
