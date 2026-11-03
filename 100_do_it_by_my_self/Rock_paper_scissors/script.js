@@ -9,32 +9,49 @@ if (score === null) {
     ties: 0,
   };
 }
+let interval_id = "";
+let is_auto_playing = false;
+function auto_play() {
+  if (!is_auto_playing) {
+    interval_id = setInterval(() => {
+      const player_move = pick_robot_move();
+      play(player_move);
+    }, 1000);
+    is_auto_playing = true;
+  } else {
+    clearInterval(interval_id);
+    is_auto_playing = false;
+  }
+}
 
+let rock = "✊";
+let paper = "✋";
+let scissors = "✌️";
 function play(play_move) {
   const robot_move = pick_robot_move();
 
   let result = "";
 
-  if (play_move === "rock") {
-    if (robot_move === "rock") {
+  if (play_move === rock) {
+    if (robot_move === rock) {
       result = "Tie";
-    } else if (robot_move === "paper") {
+    } else if (robot_move === paper) {
       result = "You Lose";
     } else {
       result = "You Win";
     }
-  } else if (play_move === "scissors") {
-    if (robot_move === "rock") {
+  } else if (play_move === scissors) {
+    if (robot_move === rock) {
       result = "You Lose";
-    } else if (robot_move === "paper") {
+    } else if (robot_move === paper) {
       result = "You Win";
     } else {
       result = "Tie";
     }
   } else {
-    if (robot_move === "rock") {
+    if (robot_move === rock) {
       result = "You Win";
-    } else if (robot_move === "paper") {
+    } else if (robot_move === paper) {
       result = "Tie";
     } else {
       result = "You Lose";
@@ -70,11 +87,11 @@ function pick_robot_move() {
   let random_nbr = Math.random();
 
   if (random_nbr >= 0 && random_nbr < 1 / 3) {
-    robot_move = "rock";
+    robot_move = rock;
   } else if (random_nbr >= 1 / 3 && random_nbr < 2 / 3) {
-    robot_move = "paper";
+    robot_move = paper;
   } else {
-    robot_move = "scissors";
+    robot_move = scissors;
   }
 
   return robot_move;
@@ -84,6 +101,8 @@ function reset() {
   score.wins = 0;
   score.losses = 0;
   score.ties = 0;
+  clearInterval(interval_id);
+  is_auto_playing = false;
   localStorage.removeItem("score");
 
   document.querySelector(".result").innerHTML = "";
