@@ -18,6 +18,7 @@ function add_task() {
   generate_HTML();
 }
 generate_HTML();
+
 function generate_HTML() {
   let tasks_box = document.querySelector(".tasks_box");
   tasks_box.innerHTML = "";

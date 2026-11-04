@@ -9,7 +9,17 @@
 
 <body>
     <h1>Hello World</h1>
+    <button class="click_btn">Click</button>
     <script>
+        const click_btn = document.querySelector('.click_btn');
+        const log_click = () => {
+            console.log('Click');
+        }
+        click_btn.addEventListener('click', log_click);
+
+        click_btn.removeEventListener('click', log_click)
+
+        click_btn.addEventListener('click', log_click);
         /*
         greeting();
 
@@ -59,7 +69,7 @@
 
         /*Asynchronus Code => it means set a timer go do smtg else during the timer is going and after it finish give me the output and make it Synchronus Code*/
         /*Synchronus Code => it means execute the code one by one*/
-        setTimeout(function () {
+        /*setTimeout(function () {
             console.log('time out');
         }, 5000);
 
@@ -68,18 +78,43 @@
         /*setInterval(()=>{
             console.log('salam 3awtani');
         }, 3000);*/
+        /*
+                [
+                    'Make dinner',
+                    'Wash dishes',
+                    'Watch Youtube'
+                ].forEach((value, index) => {
+                    if (value === 'Wash dishes') {
+                        return;
+                    }
+                    //console.log(index);
+                    console.log(value);
+                });
+        
+                const regular_fct = function () {
+                    console.log('hallo_2');
+                    return 5;
+                }
+        
+                regular_fct();
+                const arrow_fct = ()=>{
+                    console.log('hallo');
+                    return 5;
+                }
+        
+                arrow_fct();
+        
+                const one_param = (param)=>{
+                    console.log(param + 1);
+                }
+        
+                const object_2 = {
+                    method: ()=>{},
+                    method(){}
+                }
+        */
 
-        [
-            'Make dinner',
-            'Wash dishes',
-            'Watch Youtube'
-        ].forEach((value, index) => {
-            if (value === 'Wash dishes') {
-                return;
-            }
-            //console.log(index);
-            console.log(value);
-        });
+
     </script>
 </body>
 

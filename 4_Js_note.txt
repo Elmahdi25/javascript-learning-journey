@@ -153,3 +153,8 @@ output => hello
 
 
 2.forEach loop has no continue if you want to skip you can use return and there is no break if u want it use a nor for loop
+
+3.every HTML element has a methode called addEventListtener() 
+=> Lets us run some code when we interact with the element
+=> it has 2 parameters the first one is what type of interaction we want to listen to and called event 
+=> the seconde one is a fucntion that we want to run when we click the button

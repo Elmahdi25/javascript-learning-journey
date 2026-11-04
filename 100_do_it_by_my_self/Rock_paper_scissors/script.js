@@ -11,6 +11,7 @@ if (score === null) {
 }
 let interval_id = "";
 let is_auto_playing = false;
+
 function auto_play() {
   if (!is_auto_playing) {
     interval_id = setInterval(() => {
