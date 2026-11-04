@@ -39,14 +39,47 @@ function start() {
   }
 }
 
-console.log('EX------4');
-        let timeout_id;
-        function add() {
-            const added = document.querySelector('.added');
-            added.innerHTML = 'Added';
-            clearTimeout(timeout_id)
-            timeout_id = setTimeout(() => {
-                added.innerHTML = ""
-            }, 2000)
-            
-        }
+console.log("EX------4");
+let timeout_id;
+function add() {
+  const added = document.querySelector(".added");
+  added.innerHTML = "Added";
+  clearTimeout(timeout_id);
+  timeout_id = setTimeout(() => {
+    added.innerHTML = "";
+  }, 2000);
+}
+console.log("EX------5");
+let message_counter = 0;
+let time_interval_id;
+function add() {
+  message_counter++;
+  clearInterval(time_interval_id);
+  time_interval_id = setInterval(() => {
+    if (document.title === "App") {
+      document.title = `(${message_counter}) New Messages`;
+    } else {
+      document.title = "App";
+    }
+  }, 1000);
+}
+
+function remove() {
+  if (message_counter > 0) {
+    message_counter--;
+  }
+
+  clearInterval(time_interval_id);
+
+  if (message_counter === 0) {
+    document.title = "App";
+    return;
+  }
+  time_interval_id = setInterval(() => {
+    if (document.title === "App") {
+      document.title = `(${message_counter}) New Messages`;
+    } else {
+      document.title = "App";
+    }
+  }, 1000);
+}
