@@ -12,7 +12,8 @@ if (score === null) {
 let interval_id = "";
 let is_auto_playing = false;
 
-function auto_play() {
+const auto_play_btn = document.querySelector(".auto_play");
+const auto_play = () => {
   if (!is_auto_playing) {
     interval_id = setInterval(() => {
       const player_move = pick_robot_move();
@@ -23,36 +24,39 @@ function auto_play() {
     clearInterval(interval_id);
     is_auto_playing = false;
   }
-}
+};
 
-let rock = "✊";
-let paper = "✋";
-let scissors = "✌️";
-function play(play_move) {
+auto_play_btn.addEventListener("click", auto_play);
+
+let rock = document.querySelector(".✊");
+let paper = document.querySelector(".✋");
+let scissors = document.querySelector(".✌️");
+
+const play = (play_move) => {
   const robot_move = pick_robot_move();
 
   let result = "";
 
-  if (play_move === rock) {
-    if (robot_move === rock) {
+  if (play_move === "✊") {
+    if (robot_move === "✊") {
       result = "Tie";
-    } else if (robot_move === paper) {
+    } else if (robot_move === "✋") {
       result = "You Lose";
     } else {
       result = "You Win";
     }
-  } else if (play_move === scissors) {
-    if (robot_move === rock) {
+  } else if (play_move === "✌️") {
+    if (robot_move === "✊") {
       result = "You Lose";
-    } else if (robot_move === paper) {
+    } else if (robot_move === "✋") {
       result = "You Win";
     } else {
       result = "Tie";
     }
   } else {
-    if (robot_move === rock) {
+    if (robot_move === "✊") {
       result = "You Win";
-    } else if (robot_move === paper) {
+    } else if (robot_move === "✋") {
       result = "Tie";
     } else {
       result = "You Lose";
@@ -77,8 +81,25 @@ function play(play_move) {
     `You ${play_move} - ${robot_move} Computer`;
 
   update_score_element();
-}
-
+};
+document.body.addEventListener("keydown", (event) => {
+  if (event.key === "r" || event.key === "R") {
+    play("✊");
+  } else if (event.key === "p" || event.key === "P") {
+    play("✋");
+  } else if (event.key === "s" || event.key === "S") {
+    play("✌️");
+  }
+});
+rock.addEventListener("click", () => {
+  play("✊");
+});
+paper.addEventListener("click", () => {
+  play("✋");
+});
+scissors.addEventListener("click", () => {
+  play("✌️");
+});
 function update_score_element() {
   document.querySelector(".score").innerHTML =
     `Wins: ${score.wins}, Losses: ${score.losses}, Ties: ${score.ties}`;
@@ -88,17 +109,18 @@ function pick_robot_move() {
   let random_nbr = Math.random();
 
   if (random_nbr >= 0 && random_nbr < 1 / 3) {
-    robot_move = rock;
+    robot_move = "✊";
   } else if (random_nbr >= 1 / 3 && random_nbr < 2 / 3) {
-    robot_move = paper;
+    robot_move = "✋";
   } else {
-    robot_move = scissors;
+    robot_move = "✌️";
   }
 
   return robot_move;
 }
 
-function reset() {
+const reset_btn = document.querySelector(".reset");
+const reset = () => {
   score.wins = 0;
   score.losses = 0;
   score.ties = 0;
@@ -110,4 +132,6 @@ function reset() {
   document.querySelector(".moves").innerHTML = "";
 
   update_score_element();
-}
+};
+
+reset_btn.addEventListener("click", reset);

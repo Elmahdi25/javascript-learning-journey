@@ -82,7 +82,16 @@ const play = (play_move) => {
 
   update_score_element();
 };
-
+document.body.addEventListener('keydown', (event)=>{
+  if (event.key === 'r' || event.key === 'R') {
+    play('✊')
+  } else if (event.key === "p" || event.key === "P") {
+    play("✋");
+  } else if (event.key === "s" || event.key === "S") {
+    play("✌️");
+  }
+                                       
+})
 rock.addEventListener('click', ()=>{
   play('✊')
 });
