@@ -1,6 +1,8 @@
 let get_todo_values = localStorage.getItem("todo_list");
 let todo_list = JSON.parse(get_todo_values) || [];
-function add_task() {
+
+const add_button = document.querySelector(".add-button");
+const add_task = () => {
   const todo_input = document.querySelector(".todo_input");
   const todo_value = todo_input.value;
   const date_input = document.querySelector(".date_input");
@@ -16,7 +18,11 @@ function add_task() {
   date_input.value = "";
   localStorage.setItem("todo_list", JSON.stringify(todo_list));
   generate_HTML();
-}
+};
+add_button.addEventListener("click", () => {
+  add_task();
+});
+
 generate_HTML();
 function generate_HTML() {
   let tasks_box = document.querySelector(".tasks_box");
@@ -28,28 +34,23 @@ function generate_HTML() {
     <p>
         ${object.name}
         ${object.date}
-        <button onclick=delete_task(${index}) >Delete</button>
+        <button class="delete_btn") >Delete</button>
     </p>
       `;
+    const delete_btns = document.querySelectorAll(".delete_btn");
+    const delete_task = () => {
+      todo_list.splice(index, 1);
+      localStorage.setItem("todo_list", JSON.stringify(todo_list));
+      generate_HTML();
+    };
+    delete_btns.forEach((delete_btn, index) => {
+      delete_btn.addEventListener("click", () => {
+        delete_task();
+      });
+    });
   });
-  /*
-  for (let i = 0; i < todo_list.length; i++) {
-    const object = todo_list[i];
-    tasks_box.innerHTML += `
-    <p>
-        ${object.name}
-        ${object.date}
-        <button onclick=delete_task(${i}) >Delete</button>
-    </p>
-      `;
-  }*/
 }
 
-function delete_task(index) {
-  todo_list.splice(index, 1);
-  localStorage.setItem("todo_list", JSON.stringify(todo_list));
-  generate_HTML();
-}
 function handle_enter_btn(event) {
   if (event.key === "Enter") {
     add_task();

@@ -158,3 +158,5 @@ output => hello
 => Lets us run some code when we interact with the element
 => it has 2 parameters the first one is what type of interaction we want to listen to and called event 
 => the seconde one is a fucntion that we want to run when we click the button
+
+4.querySelectorAll => let us delete all make the point to all the elemt that have the same class => dcument.querySelectorAll('.element')
