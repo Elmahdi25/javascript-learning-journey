@@ -443,6 +443,11 @@ code {
 <td>Functions as values, callbacks, timers, auto-play, and <code>forEach</code></td>
 <td>Covered</td>
 </tr>
+<tr>
+<td><a href="#chapter-12-advanced-functions-part-2">12</a></td>
+<td>Arrow functions, hoisting, shorthand methods, event listeners, <code>filter()</code>, <code>map()</code>, and closures</td>
+<td>Covered</td>
+</tr>
 </tbody>
 </table>
 <h2 id="preview">Preview</h2>
@@ -3066,6 +3071,111 @@ tasks.<span class="hljs-title function_">forEach</span>(<span class="hljs-functi
     H["Click Reset"] --> I["Zero score, cancel timer, set flag false, clear display and saved score"]
 </div></code></pre>
 <p>The repeat path operates only while the timer remains active. Stopping or resetting cancels future ticks; starting again creates a new timer.</p>
+<h2 id="chapter-12-advanced-functions-part-2">Chapter 12 Advanced Functions Part 2</h2>
+<h3 id="121-arrow-functions">12.1 Arrow Functions</h3>
+<p>Arrow functions use <code>=&gt;</code> and can take parameters and return values. They are often used as callbacks, such as the function passed to <code>forEach()</code>.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> <span class="hljs-title function_">add</span> = (<span class="hljs-params">first, second</span>) =&gt; {
+  <span class="hljs-keyword">return</span> first + second;
+};
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">add</span>(<span class="hljs-number">2</span>, <span class="hljs-number">3</span>)); <span class="hljs-comment">// 5</span>
+
+[<span class="hljs-string">&#x27;Rock&#x27;</span>, <span class="hljs-string">&#x27;Paper&#x27;</span>, <span class="hljs-string">&#x27;Scissors&#x27;</span>].<span class="hljs-title function_">forEach</span>(<span class="hljs-function"><span class="hljs-params">move</span> =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(move);
+});
+</div></code></pre>
+<p>With one simple parameter, the parentheses are optional. When the body is a single expression without curly braces, JavaScript returns its result automatically. This is called an <strong>implicit return</strong>.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> <span class="hljs-title function_">double</span> = number =&gt; number * <span class="hljs-number">2</span>;
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">double</span>(<span class="hljs-number">4</span>)); <span class="hljs-comment">// 8</span>
+</div></code></pre>
+<h3 id="122-function-hoisting">12.2 Function Hoisting</h3>
+<p>A function declaration can be called before it appears in the code. An arrow function assigned to a <code>const</code> can be called only after JavaScript has initialized that variable.</p>
+<pre class="hljs"><code><div><span class="hljs-title function_">greet</span>(); <span class="hljs-comment">// Hello!</span>
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">greet</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;Hello!&#x27;</span>);
+}
+
+<span class="hljs-keyword">const</span> <span class="hljs-title function_">sayBye</span> = (<span class="hljs-params"></span>) =&gt; <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;Goodbye!&#x27;</span>);
+<span class="hljs-title function_">sayBye</span>(); <span class="hljs-comment">// Goodbye!</span>
+</div></code></pre>
+<h3 id="123-shorthand-method-syntax">12.3 Shorthand Method Syntax</h3>
+<p>When a function belongs to an object, it is called a <strong>method</strong>. You can write it directly as <code>methodName()</code> inside the object.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> score = {
+  <span class="hljs-attr">wins</span>: <span class="hljs-number">3</span>,
+
+  <span class="hljs-title function_">showWins</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Wins: <span class="hljs-subst">${<span class="hljs-variable language_">this</span>.wins}</span>`</span>);
+  }
+};
+
+score.<span class="hljs-title function_">showWins</span>(); <span class="hljs-comment">// Wins: 3</span>
+</div></code></pre>
+<h3 id="124-adding-and-removing-event-listeners">12.4 Adding and Removing Event Listeners</h3>
+<p><code>addEventListener()</code> registers a function to run when an event happens. Pass the function itself, such as <code>handleClick</code>, so the browser can call it later.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> rockButton = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#x27;.rock-button&#x27;</span>);
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">handleClick</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;You chose rock.&#x27;</span>);
+}
+
+rockButton.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&#x27;click&#x27;</span>, handleClick);
+
+<span class="hljs-comment">// Run this later when the button should stop responding to clicks.</span>
+rockButton.<span class="hljs-title function_">removeEventListener</span>(<span class="hljs-string">&#x27;click&#x27;</span>, handleClick);
+</div></code></pre>
+<p><code>removeEventListener()</code> needs the same element, event type, and function reference. Writing a new arrow function with identical code creates a different function.</p>
+<h3 id="125-keyboard-events-and-the-event-object">12.5 Keyboard Events and the Event Object</h3>
+<p>The browser passes an <code>event</code> object to the listener. For a <code>keydown</code> event, <code>event.key</code> tells you which key the user pressed.</p>
+<pre class="hljs"><code><div><span class="hljs-variable language_">document</span>.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&#x27;keydown&#x27;</span>, <span class="hljs-function"><span class="hljs-params">event</span> =&gt;</span> {
+  <span class="hljs-keyword">if</span> (event.<span class="hljs-property">key</span>.<span class="hljs-title function_">toLowerCase</span>() === <span class="hljs-string">&#x27;r&#x27;</span>) {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;You chose rock.&#x27;</span>);
+  }
+});
+</div></code></pre>
+<h3 id="126-event-listeners-on-dynamically-created-elements">12.6 Event Listeners on Dynamically Created Elements</h3>
+<p><code>querySelector()</code> selects the first matching element. <code>querySelectorAll()</code> returns a <code>NodeList</code> of all matches, and you can loop through it with <code>forEach()</code>.</p>
+<p>For a Todo List, attach each Delete button’s listener <strong>after</strong> inserting the generated HTML. If you render the list again by replacing its HTML, attach listeners to the new buttons as part of that render.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// Run inside renderTodos(), after inserting the list&#x27;s HTML.</span>
+<span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelectorAll</span>(<span class="hljs-string">&#x27;.delete-button&#x27;</span>).<span class="hljs-title function_">forEach</span>(<span class="hljs-function">(<span class="hljs-params">button, index</span>) =&gt;</span> {
+  button.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&#x27;click&#x27;</span>, <span class="hljs-function">() =&gt;</span> {
+    todoList.<span class="hljs-title function_">splice</span>(index, <span class="hljs-number">1</span>);
+    <span class="hljs-title function_">renderTodos</span>();
+  });
+});
+</div></code></pre>
+<h3 id="127-filter">12.7 <code>filter()</code></h3>
+<p><code>filter()</code> creates a new array containing the original elements that pass a condition. The callback returns <code>true</code> to keep an element and <code>false</code> to skip it.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> grades = [<span class="hljs-number">15</span>, <span class="hljs-number">10</span>, <span class="hljs-number">18</span>, <span class="hljs-number">9</span>];
+<span class="hljs-keyword">const</span> passingGrades = grades.<span class="hljs-title function_">filter</span>(<span class="hljs-function"><span class="hljs-params">grade</span> =&gt;</span> grade &gt;= <span class="hljs-number">10</span>);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(passingGrades); <span class="hljs-comment">// [15, 10, 18]</span>
+</div></code></pre>
+<h3 id="128-map">12.8 <code>map()</code></h3>
+<p><code>map()</code> creates a new array using the value returned by the callback for each element. Here, it turns an array of student objects into an array of names.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> students = [
+  { <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;Mehdi&#x27;</span>, <span class="hljs-attr">grade</span>: <span class="hljs-number">15</span> },
+  { <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;Sara&#x27;</span>, <span class="hljs-attr">grade</span>: <span class="hljs-number">18</span> }
+];
+
+<span class="hljs-keyword">const</span> names = students.<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">student</span> =&gt;</span> student.<span class="hljs-property">name</span>);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(names); <span class="hljs-comment">// [&#x27;Mehdi&#x27;, &#x27;Sara&#x27;]</span>
+</div></code></pre>
+<h3 id="129-closures">12.9 Closures</h3>
+<p>A <strong>closure</strong> lets a function keep access to variables from the scope where it was created. In the Todo List example, each click handler can still access its own <code>index</code> after <code>forEach()</code> finishes.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">function</span> <span class="hljs-title function_">createClickHandler</span>(<span class="hljs-params">index</span>) {
+  <span class="hljs-keyword">return</span> <span class="hljs-function">() =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Delete item <span class="hljs-subst">${index}</span>`</span>);
+}
+
+<span class="hljs-keyword">const</span> handleFirstItem = <span class="hljs-title function_">createClickHandler</span>(<span class="hljs-number">0</span>);
+<span class="hljs-keyword">const</span> handleSecondItem = <span class="hljs-title function_">createClickHandler</span>(<span class="hljs-number">1</span>);
+
+<span class="hljs-title function_">handleFirstItem</span>();  <span class="hljs-comment">// Delete item 0</span>
+<span class="hljs-title function_">handleSecondItem</span>(); <span class="hljs-comment">// Delete item 1</span>
+</div></code></pre>
+<p>Each handler keeps access to the <code>index</code> from its own call to <code>createClickHandler()</code>.</p>
 <h2 id="feedback-and-contributions">Feedback and contributions</h2>
 <p>This is a personal learning repository. Suggestions, clear explanations, and feedback are welcome through GitHub issues. I want to understand improvements and practice applying them myself.</p>
 <h2 id="credits-and-license">Credits and license</h2>

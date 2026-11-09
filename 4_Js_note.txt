@@ -160,3 +160,12 @@ output => hello
 => the seconde one is a fucntion that we want to run when we click the button
 
 4.querySelectorAll => let us delete all make the point to all the elemt that have the same class => dcument.querySelectorAll('.element')
+
+
+5.=>includes let check if the element that i am looking for is Inside the array
+=>event.target => where is the input going to 
+
+
+6. .filter(take two parameteres value and index)=> 1 creates a new array []
+   2. return true => put the value in array
+      return false => Don't put the value in the array	

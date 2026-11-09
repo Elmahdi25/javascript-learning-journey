@@ -39,6 +39,7 @@ This repository is a learning journal that will grow as I continue the course.
 | [09](#chapter-09--dom-document-object-model) | DOM (Document Object Model) | Covered |
 | [10](#chapter-10-arrays--loops) | Arrays, loops, accumulator pattern, and dynamic HTML | Covered |
 | [11](#chapter-11-advanced-functions) | Functions as values, callbacks, timers, auto-play, and `forEach` | Covered |
+| [12](#chapter-12-advanced-functions-part-2) | Arrow functions, hoisting, shorthand methods, event listeners, `filter()`, `map()`, and closures | Covered |
 
 
 ## Preview
@@ -2783,6 +2784,154 @@ flowchart TD
 ```
 
 The repeat path operates only while the timer remains active. Stopping or resetting cancels future ticks; starting again creates a new timer.
+
+## Chapter 12 Advanced Functions Part 2
+
+### 12.1 Arrow Functions
+
+Arrow functions use `=>` and can take parameters and return values. They are often used as callbacks, such as the function passed to `forEach()`.
+
+```javascript
+const add = (first, second) => {
+  return first + second;
+};
+
+console.log(add(2, 3)); // 5
+
+['Rock', 'Paper', 'Scissors'].forEach(move => {
+  console.log(move);
+});
+```
+
+With one simple parameter, the parentheses are optional. When the body is a single expression without curly braces, JavaScript returns its result automatically. This is called an **implicit return**.
+
+```javascript
+const double = number => number * 2;
+
+console.log(double(4)); // 8
+```
+
+### 12.2 Function Hoisting
+
+A function declaration can be called before it appears in the code. An arrow function assigned to a `const` can be called only after JavaScript has initialized that variable.
+
+```javascript
+greet(); // Hello!
+
+function greet() {
+  console.log('Hello!');
+}
+
+const sayBye = () => console.log('Goodbye!');
+sayBye(); // Goodbye!
+```
+
+### 12.3 Shorthand Method Syntax
+
+When a function belongs to an object, it is called a **method**. You can write it directly as `methodName()` inside the object.
+
+```javascript
+const score = {
+  wins: 3,
+
+  showWins() {
+    console.log(`Wins: ${this.wins}`);
+  }
+};
+
+score.showWins(); // Wins: 3
+```
+
+### 12.4 Adding and Removing Event Listeners
+
+`addEventListener()` registers a function to run when an event happens. Pass the function itself, such as `handleClick`, so the browser can call it later.
+
+```javascript
+const rockButton = document.querySelector('.rock-button');
+
+function handleClick() {
+  console.log('You chose rock.');
+}
+
+rockButton.addEventListener('click', handleClick);
+
+// Run this later when the button should stop responding to clicks.
+rockButton.removeEventListener('click', handleClick);
+```
+
+`removeEventListener()` needs the same element, event type, and function reference. Writing a new arrow function with identical code creates a different function.
+
+### 12.5 Keyboard Events and the Event Object
+
+The browser passes an `event` object to the listener. For a `keydown` event, `event.key` tells you which key the user pressed.
+
+```javascript
+document.addEventListener('keydown', event => {
+  if (event.key.toLowerCase() === 'r') {
+    console.log('You chose rock.');
+  }
+});
+```
+
+### 12.6 Event Listeners on Dynamically Created Elements
+
+`querySelector()` selects the first matching element. `querySelectorAll()` returns a `NodeList` of all matches, and you can loop through it with `forEach()`.
+
+For a Todo List, attach each Delete button’s listener **after** inserting the generated HTML. If you render the list again by replacing its HTML, attach listeners to the new buttons as part of that render.
+
+```javascript
+// Run inside renderTodos(), after inserting the list's HTML.
+document.querySelectorAll('.delete-button').forEach((button, index) => {
+  button.addEventListener('click', () => {
+    todoList.splice(index, 1);
+    renderTodos();
+  });
+});
+```
+
+### 12.7 `filter()`
+
+`filter()` creates a new array containing the original elements that pass a condition. The callback returns `true` to keep an element and `false` to skip it.
+
+```javascript
+const grades = [15, 10, 18, 9];
+const passingGrades = grades.filter(grade => grade >= 10);
+
+console.log(passingGrades); // [15, 10, 18]
+```
+
+### 12.8 `map()`
+
+`map()` creates a new array using the value returned by the callback for each element. Here, it turns an array of student objects into an array of names.
+
+```javascript
+const students = [
+  { name: 'Mehdi', grade: 15 },
+  { name: 'Sara', grade: 18 }
+];
+
+const names = students.map(student => student.name);
+
+console.log(names); // ['Mehdi', 'Sara']
+```
+
+### 12.9 Closures
+
+A **closure** lets a function keep access to variables from the scope where it was created. In the Todo List example, each click handler can still access its own `index` after `forEach()` finishes.
+
+```javascript
+function createClickHandler(index) {
+  return () => console.log(`Delete item ${index}`);
+}
+
+const handleFirstItem = createClickHandler(0);
+const handleSecondItem = createClickHandler(1);
+
+handleFirstItem();  // Delete item 0
+handleSecondItem(); // Delete item 1
+```
+
+Each handler keeps access to the `index` from its own call to `createClickHandler()`.
 
 ## Feedback and contributions
 
