@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--<title>Advanced exercises part 2</title>-->
+
+    <title>App</title>
+</head>
+
+<body>
+    <h1>Hi</h1>
+    <!-- <h2>Exercise 5</h2>
+    <button class="click_btn">Click</button>
+    <button class="add_to_cart">Add to cart</button>
+    <p class="added"></p> -->
+
+    <!-- <h2>Exercise 6</h2>
+    <button class="add_2">Add</button>
+    <button class="remove">Remove</button> -->
+    
+    <script>
+        /* EX----------1 */
+        /*console.log('EX----------1');
+        const multiply = (a,b)=>{
+            console.log(a*b);
+        }
+
+        multiply(2,3);
+        multiply(7,10); */
+
+        /* EX----------2 */
+        /* console.log('EX----------2');
+        const numbers_1 = [1,-3,5]
+        const numbers_2 = [-2,3,-5, 7,10]
+        const count_positive = (nums)=>{
+            let counter = 0;
+            nums.forEach((nbr)=>{
+                if (nbr>0) {
+                    counter++;
+                }
+            })
+            console.log(counter);
+            
+        }
+        count_positive(numbers_1)
+        count_positive(numbers_2) */
+
+        /* EX----------3 */
+        /* console.log('EX----------3');
+        const numbers_3 = [1, 2, 3]
+        const numbers_4 = [-2, -1, 0, 99]
+        add_num = (array, num) => {
+            console.log(array.map((value) => {
+                return value + num
+            }));
+        }
+
+        add_num(numbers_3, 2);
+        add_num(numbers_4, 2); */
+
+        /* EX----------3 */
+        /* console.log('EX----------3')
+        const foods_1 = ['egg', 'apple', 'egg', 'egg', 'ham',]
+        const foods_2 = ['egg', 'egg', 'egg', 'apple', 'ham', 'apple', 'ham']
+        const remove_egg = (foods) => {
+            let new_food = [];
+            foods.forEach(element => {
+                if (element === 'egg') {
+                    return
+                } else {
+                    new_food.push(element)
+                }
+            })
+            console.log(new_food);
+        }
+
+        remove_egg(foods_1)
+        remove_egg(foods_2) */
+
+
+        /* EX----------4 */
+        /*console.log('EX----------4');
+        const foods_3 = ['egg', 'apple', 'egg', 'egg', 'ham',];
+        const foods_4 = ['egg', 'egg', 'egg', 'apple', 'ham', 'apple', 'ham'];
+        
+        filter method
+                function remove_two_first_egg(foods) {
+                    let egg_counter = 0;
+                    const filter_food = foods.filter((element) => {
+                        if (element === 'egg') {
+                            egg_counter++;
+                            if (egg_counter <= 2) {
+                                return;
+                            }
+                        }
+        
+                        return true;
+                    })
+                    return filter_food;
+                }
+                const result = remove_two_first_egg(foods_3);
+                const result_2 = remove_two_first_egg(foods_4);
+        
+                console.log(result);
+                console.log(result_2); */
+
+
+        /*
+        for loop methode
+        function remove_two_first_egg(foods) {
+            let new_array = [];
+            let egg_counter = 0;
+            for (let i = 0; i < foods.length; i++) {
+                const element = foods[i];
+                if (element === 'egg') {
+                    egg_counter++;
+                    if (egg_counter <= 2) {
+                        continue;
+                    }
+                }
+                new_array.push(element)
+            }
+            console.log(new_array);
+        } 
+        remove_two_first_egg(foods_3);
+        remove_two_first_egg(foods_4);
+ */
+
+        /* EX----------5 */
+        /* console.log('EX----------5');
+        const click_btn = document.querySelector('.click_btn');
+        click_btn.addEventListener('click', () => {
+            click_btn.textContent = 'Loading...'
+            setTimeout(() => {
+                click_btn.textContent = 'Finished!'
+            }, 2000)
+        })
+
+        const add_to_cart = document.querySelector('.add_to_cart');
+        const added = document.querySelector('.added');
+        let timeout_id;
+        add_to_cart.addEventListener('click', () => {
+
+            added.innerHTML = 'Added';
+            clearTimeout(timeout_id);
+            timeout_id = setTimeout(() => {
+                added.innerHTML = ""
+            }, 2000)
+
+        }) */
+        /* EX----------6 */
+        /* console.log('EX----------6');
+        let messages_nbr = 0;
+        let timeinterval_id;
+        const add_2 = document.querySelector('.add_2');
+        const remove = document.querySelector('.remove');
+
+
+
+        add_2.addEventListener('click', () => {
+            messages_nbr++;
+            clearInterval(timeinterval_id)
+            timeinterval_id = setInterval(() => {
+                if (document.title === 'App') {
+                    document.title = `(${messages_nbr}) New messages`
+                } else document.title = 'App';
+            }, 1000)
+        })
+
+        remove.addEventListener('click', () => {
+            if (messages_nbr > 0) {
+                messages_nbr--;
+            }
+            if (messages_nbr === 0) {
+                document.title = 'App';
+                clearInterval(timeinterval_id);
+            }
+        }) */
+        /* EX----------7 */
+        console.log('EX----------7');
+
+    </script>
+</body>
+
+</html>
